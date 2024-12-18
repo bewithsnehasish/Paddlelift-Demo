@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  env: {
+    MAINTENANCE_MODE: process.env.MAINTENANCE_MODE,
+  },
   images: {
     remotePatterns: [
       {
@@ -11,7 +13,17 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "picsum.photos",
+        hostname: "drive.google.com",
+        pathname: "/**", // Allow all paths from this domain
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**", // Allow all paths from this domain
+      },
+      {
+        protocol: "https",
+        hostname: "iili.io",
         pathname: "/**", // Allow all paths from this domain
       },
     ],

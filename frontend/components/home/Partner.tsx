@@ -1,7 +1,9 @@
+// components/PartnersSection.tsx
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
+import { motion, useAnimation } from "framer-motion";
 
 interface PartnerLogo {
   id: number;
@@ -192,32 +194,130 @@ const partnerLogos = [
     originalColor: "rgb(0, 0, 255)",
   },
 ];
+
 const PartnersSection: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const controlsHeader = useAnimation();
+  const controlsPartners = useAnimation();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+
+          // Animate header
+          controlsHeader.start({
+            opacity: 1,
+            x: 0,
+            transition: {
+              type: "spring",
+              stiffness: 50,
+              damping: 10,
+              delay: 0.2,
+            },
+          });
+
+          // Animate partners
+          controlsPartners.start({
+            opacity: 1,
+            transition: {
+              type: "spring",
+              stiffness: 60,
+              damping: 10,
+              delay: 0.4,
+              staggerChildren: 0.1,
+            },
+          });
+
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [controlsHeader, controlsPartners]);
+
+  const headerVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 50,
+        damping: 10,
+      },
+    },
+  };
+
+  const partnerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 60,
+        damping: 10,
+      },
+    },
+  };
+
   return (
-    <section className="relative py-16 bg-gradient-to-br from-gray-900 via-indigo-950 to-gray-900 overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative py-16 bg-[#09090B] overflow-hidden"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
         <div className="pb-4 md:pb-20">
-          {/* Section header */}
-          <div className="mx-auto max-w-3xl pb-12 text-center md:pb-20">
-            <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-gradient-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-gradient-to-l after:from-transparent after:to-indigo-200/50">
-              <span className="inline-flex bg-gradient-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                Trusted Partners
-              </span>
-            </div>
-            <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,theme(colors.gray.200),theme(colors.indigo.200),theme(colors.gray.50),theme(colors.indigo.300),theme(colors.gray.200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-              Our Collaborative Network
+          {/* Header Section */}
+          <motion.div
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            variants={headerVariants}
+            className="max-w-xl"
+          >
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white max-w-2xl leading-[110%]">
+              <span className="text-teal-400">Our</span> Partners
             </h2>
-            <p className="text-lg text-indigo-200/65">
-              Empowering innovation through strategic partnerships that drive
-              technological advancement
+            <p className="mt-3 text-base md:text-lg">
+              Our squad of seasoned specialists. With different team setups for
+              IT and non-IT needs, we are equipped with street-smart knowledge
+              and the know-how to serve our customers with swift turnaround
+              times. This makes us your gateway to top-tier talent that aligns
+              perfectly with your unique requirements.
             </p>
-          </div>
+          </motion.div>
 
           {/* Marquee effect with three rows */}
-          <div className="relative overflow-hidden">
+          <motion.div
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: 0.3,
+                },
+              },
+            }}
+            className="relative overflow-hidden mt-12"
+          >
             <MarqueeRow logos={partnerLogos} direction="left" />
             <MarqueeRow logos={partnerLogos} direction="right" />
-          </div>
+          </motion.div>
         </div>
       </div>
 

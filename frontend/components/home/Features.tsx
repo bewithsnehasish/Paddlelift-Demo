@@ -5,7 +5,7 @@ import FeaturesImage from "@/public/images/USP.svg";
 
 export default function Features() {
   return (
-    <section className="relative bg-gradient-to-b from-black via-indigo-950 to-gray-950 pb-20">
+    <section className="relative bg-[#09090B] ">
       <div
         className="pointer-events-none absolute left-1/2 top-0 -z-10 -mt-20 -translate-x-1/2"
         aria-hidden="true"

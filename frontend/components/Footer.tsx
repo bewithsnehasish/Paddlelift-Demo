@@ -4,7 +4,7 @@ import { BackgroundBeams } from "./ui/background-beams";
 
 const Footer = () => {
   return (
-    <div className="bg-black py-10">
+    <div className="bg-[#09090B] py-10">
       <div
         className="max-w-7xl mx-auto flex flex-col justify-center antialiased relative border border-dark-300 rounded-xl mb-5 bg-gradient-to-br from-gray-800 via-gray-900 to-black shadow-xl p-5"
         id="contact"

@@ -28,14 +28,20 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
   const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
 
+  const animationVariants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { ease: "easeInOut", duration: 0.6, delay: 0.2 },
+    },
+  };
+
   return (
-    <div
-      className="w-full bg-gradient-to-b from-[#030712] via-[#0C0F1C] to-[#000] text-white font-sans"
-      ref={containerRef}
-    >
+    <div className="w-full text-white font-sans" ref={containerRef}>
       <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
         <h2 className="text-5xl md:text-6xl font-bold mb-4 text-white max-w-2xl leading-[110%]">
-          <span className="text-blue-500">Timeline</span> from Our Journey
+          <span className="text-teal-400">Timeline</span> from Our Journey
         </h2>
         <p className="text-white text-xl md:text-base max-w-lg">
           Paddlelift Pvt Ltd, established during a challenging global period,
@@ -52,7 +58,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         {data.map((item, index) => (
           <div
             key={index}
-            className="flex justify-start pt-10 md:pt-40 md:gap-10"
+            className="flex justify-start pt-10 md:pt-20 md:gap-10"
           >
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
               <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-[#1E2133] flex items-center justify-center">
@@ -67,10 +73,24 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
               <h3 className="md:hidden block text-2xl mb-4 text-left font-bold text-neutral-400">
                 {item.year}
               </h3>
-              <h3 className="block text-4xl mb-4 text-left font-bold text-neutral-400">
+              <motion.h3
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={animationVariants}
+                className="block text-4xl mb-4 text-left font-bold text-neutral-400"
+              >
                 {item.title}
-              </h3>
-              {item.content}{" "}
+              </motion.h3>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={animationVariants}
+                className="text-left"
+              >
+                {item.content}
+              </motion.div>
             </div>
           </div>
         ))}

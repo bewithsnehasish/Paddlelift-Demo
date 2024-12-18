@@ -7,7 +7,7 @@ import Spotlight from "../ui/spotlight";
 
 export default function Workflows() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-black via-indigo-950 to-gray-950 pb-10 md:pb-20">
+    <section className="relative overflow-hidden bg-[#09090B] pb-10 md:pb-20">
       <div className="relative z-10 px-4 sm:px-6 lg:mx-auto lg:max-w-full">
         <div className="pb-8 md:pb-16">
           {/* Section header */}
