@@ -1,190 +1,231 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronRight } from "lucide-react";
+import { useInView } from "react-intersection-observer";
 import Image from "next/image";
-import { motion, useAnimation } from "framer-motion";
-import { WordPullUp } from "../eldoraui/wordpullup";
 
-type Feature = {
-  icon: string;
+interface Service {
+  id: string;
   title: string;
-  desc: string;
-};
+  description: string;
+  image: string;
+  height: number;
+  width: number;
+}
 
-const FeaturesSection: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const controlsHeader = useAnimation();
-  const controlsFeatures = useAnimation();
-  const [isVisible, setIsVisible] = useState(false);
+const services: Service[] = [
+  {
+    id: "recruitment",
+    title: "Recruitment",
+    description:
+      "Delivering top talent across industries and skill sets, from tech to non-tech, with precision and expertise.",
+    image: "/features/Animation.gif",
+    height: 450,
+    width: 450,
+  },
+  {
+    id: "staffing",
+    title: "Staffing",
+    description:
+      "Deploying skilled talent globally with seamless payroll management for efficient and compliant staffing solutions.",
+    image: "/path-to-staffing.gif",
+    height: 300,
+    width: 300,
+  },
+  {
+    id: "funding-gateway",
+    title: "Funding Gateway",
+    description:
+      "Opening doors for startups by connecting them with global angel investors & VCs, guiding funding from pre-seed to Series B.",
+    image: "/path-to-funding-gateway.gif",
+    height: 300,
+    width: 300,
+  },
+  {
+    id: "hr-dynamics",
+    title: "HR Dynamics",
+    description:
+      "Comprehensive HR management service that streamlines policy, strategies, salary benchmarking, etc. different analytics support.",
+    image: "/path-to-hr-dynamics.gif",
+    height: 300,
+    width: 300,
+  },
+];
 
-  const features: Feature[] = [
-    {
-      icon: "/NewLogos/recruitment.png",
-      title: "Recruitment",
-      desc: "Delivering top talent across industries and skill sets, from tech to non-tech, with precision and expertise",
-    },
-    {
-      icon: "/NewLogos/staffing.png",
-      title: "Staffing",
-      desc: "Deploying skilled talent globally with seamless payroll management for efficient and compliant staffing solutions.",
-    },
-    {
-      icon: "/NewLogos/fgateway.png",
-      title: "Funding Gateway",
-      desc: "Opening doors for startups by connecting them with global angel investors & VCs, guiding funding from pre-seed to Series B.",
-    },
-    {
-      icon: "/NewLogos/hrdynamics.png",
-      title: "HR Dynamics",
-      desc: "Comprehensive HR management service that streamlines policy, strategies, salary benchmarking, etc. different analytics support.",
-    },
-  ];
+export default function ServicesSection() {
+  const [hoveredService, setHoveredService] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
+    setIsClient(true);
+  }, []);
 
-          // Animate header
-          controlsHeader.start({
-            opacity: 1,
-            x: 0,
-            transition: {
-              type: "spring",
-              stiffness: 50,
-              damping: 10,
-              delay: 0.2,
-            },
-          });
-
-          // Animate features
-          controlsFeatures.start({
-            opacity: 1,
-            transition: {
-              type: "spring",
-              stiffness: 60,
-              damping: 10,
-              delay: 0.4,
-              staggerChildren: 0.1,
-            },
-          });
-
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [controlsHeader, controlsFeatures]);
-
-  const headerVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        type: "spring",
-        stiffness: 50,
-        damping: 10,
-      },
-    },
-  };
-
-  const featureVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
+  const wordPullAnimation = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 60,
-        damping: 10,
-      },
-    },
+      transition: { delay: i * 0.2, duration: 0.8, ease: "easeInOut" },
+    }),
   };
 
   return (
-    <section ref={sectionRef} className="relative py-28 bg-[#09090B]">
-      <div className="relative z-10 max-w-screen-xl mx-auto px-4 text-gray-300 justify-between gap-24 lg:flex md:px-8">
-        {/* Header Section */}
-        <motion.div
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          variants={headerVariants}
-          className="max-w-xl"
-        >
-          <WordPullUp
-            text="Our Services"
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white max-w-2xl leading-[110%]"
-            wordClassName="first:text-teal-400"
-          />
-          <p className="mt-3 text-base md:text-lg">
-            Our squad of seasoned specialists. With different team setups for IT
-            and non-IT needs, we are equipped with street-smart knowledge and
-            the know-how to serve our customers with swift turnaround times.
-            This makes us your gateway to top-tier talent that aligns perfectly
-            with your unique requirements.
-          </p>
-        </motion.div>
-
-        {/* Features Grid */}
-        <motion.div
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.3,
-              },
-            },
-          }}
-          className="mt-12 lg:mt-0"
-        >
-          <ul className="grid gap-6 sm:grid-cols-2">
-            {features.map((item, idx) => (
-              <motion.li
-                key={idx}
-                variants={featureVariants}
-                whileHover={{
-                  scale: 1.03,
-                  transition: { duration: 0.2 },
-                }}
-                className="flex gap-x-4"
+    <section ref={ref} className=" bg-[#09090B] p-8 md:p-16">
+      <div className="max-w-6xl mx-auto">
+        <div className="my-12">
+          <div className="space-y-2">
+            <h1 className="text-4xl md:text-5xl font-bold text-white flex flex-wrap">
+              <motion.span
+                className="text-white relative mr-2"
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                variants={wordPullAnimation}
+                custom={0}
               >
-                <div className="flex-none w-12 h-12 text-cyan-400 flex items-center justify-center">
-                  <Image
-                    src={item.icon}
-                    alt={`${item.title} icon`}
-                    className="w-12 h-12"
-                    width={64}
-                    height={64}
+                What
+              </motion.span>
+              <motion.span
+                className="text-emerald-400 relative mr-2"
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                variants={wordPullAnimation}
+                custom={1}
+              >
+                Services
+                <span className="absolute inset-0 blur-md bg-emerald-400/30 -z-10"></span>
+              </motion.span>
+              <motion.span
+                className="text-white mr-2"
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                variants={wordPullAnimation}
+                custom={2}
+              >
+                We&apos;re
+              </motion.span>
+              <motion.span
+                className="text-white"
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                variants={wordPullAnimation}
+                custom={3}
+              >
+                Offering
+              </motion.span>
+            </h1>
+          </div>
+          <p className="text-gray-400 mt-6 max-w-2xl">
+            We offer a range of features designed to streamline your business
+            operations and drive growth. From talent acquisition to funding
+            support, our comprehensive solutions cater to diverse needs.
+          </p>
+        </div>
+
+        <div className="space-y-1">
+          {services.map((service) => (
+            <motion.div
+              key={service.id}
+              className="border-b border-gray-800 overflow-hidden"
+              initial="collapsed"
+              animate={hoveredService === service.id ? "expanded" : "collapsed"}
+              onHoverStart={() => setHoveredService(service.id)}
+              onHoverEnd={() => setHoveredService(null)}
+            >
+              <motion.div
+                className="py-4 cursor-pointer flex items-center justify-between"
+                variants={{
+                  expanded: { paddingBottom: "1rem" },
+                  collapsed: { paddingBottom: "1rem" },
+                }}
+              >
+                <motion.h3
+                  className="text-xl font-medium transition-colors duration-300"
+                  variants={{
+                    expanded: {
+                      fontSize: "1.5rem",
+                      fontWeight: "bold",
+                      color: "rgb(255, 255, 255)",
+                      transition: { duration: 0.3, ease: "easeInOut" },
+                    },
+                    collapsed: {
+                      fontSize: "1.25rem",
+                      fontWeight: "normal",
+                      color: "rgb(156, 163, 175)",
+                      transition: { duration: 0.3, ease: "easeInOut" },
+                    },
+                  }}
+                >
+                  {service.title}
+                </motion.h3>
+                <motion.div
+                  variants={{
+                    expanded: { rotate: 90 },
+                    collapsed: { rotate: 0 },
+                  }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ChevronRight
+                    className={`w-6 h-6 transition-colors duration-300 ${
+                      hoveredService === service.id
+                        ? "text-emerald-400"
+                        : "text-gray-400"
+                    }`}
                   />
-                </div>
-                <div>
-                  <WordPullUp
-                    text={item.title}
-                    className="text-lg md:text-xl text-gray-100 font-semibold"
-                  />
-                  <p className="mt-2 text-base text-gray-300">{item.desc}</p>
-                </div>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
+                </motion.div>
+              </motion.div>
+
+              <AnimatePresence>
+                {hoveredService === service.id && isClient && (
+                  <motion.div
+                    initial="collapsed"
+                    animate="expanded"
+                    exit="collapsed"
+                    variants={{
+                      expanded: {
+                        height: "auto",
+                        opacity: 1,
+                        marginBottom: "1rem",
+                      },
+                      collapsed: { height: 0, opacity: 0, marginBottom: "0" },
+                    }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="flex flex-col md:flex-row gap-8 pb-4">
+                      <div className="md:w-1/2 flex items-center justify-center">
+                        <p className="text-gray-400 text-center">
+                          {service.description}
+                        </p>
+                      </div>
+                      <motion.div
+                        className="md:w-1/2 flex justify-center items-center"
+                        initial={{ x: 100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        exit={{ x: 100, opacity: 0 }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                      >
+                        <Image
+                          src={service.image}
+                          alt={service.title}
+                          width={service.width}
+                          height={service.height}
+                          className="object-contain"
+                        />
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
-};
-
-export default FeaturesSection;
+}
