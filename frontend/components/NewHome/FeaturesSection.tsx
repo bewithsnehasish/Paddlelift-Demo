@@ -91,14 +91,14 @@ export default function ServicesSection() {
                 What
               </motion.span>
               <motion.span
-                className="text-emerald-400 relative mr-2"
+                className="text-emerald-400 relative mr-2 "
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
                 variants={wordPullAnimation}
                 custom={1}
               >
                 Services
-                <span className="absolute inset-0 blur-md bg-emerald-400/30 -z-10"></span>
+                <span className="absolute inset-0 blur-md bg-emerald-400/30 z-10"></span>
               </motion.span>
               <motion.span
                 className="text-white mr-2"
