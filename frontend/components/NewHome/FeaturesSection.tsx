@@ -48,7 +48,7 @@ const services: Service[] = [
     title: "HR Dynamics",
     description:
       "Comprehensive HR management service that streamlines policy, strategies, salary benchmarking, etc. different analytics support.",
-    image: "/features/Hr.png",
+    image: "/features/hr.gif",
     height: 400,
     width: 400,
   },
