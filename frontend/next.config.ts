@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "picsum.photos",
+        pathname: "/**", // Allow all paths from this domain
+      },
+      {
+        protocol: "https",
         hostname: "drive.google.com",
         pathname: "/**", // Allow all paths from this domain
       },
@@ -24,6 +29,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "iili.io",
+        pathname: "/**", // Allow all paths from this domain
+      },
+      {
+        protocol: "https",
+        hostname: "lottie.host",
         pathname: "/**", // Allow all paths from this domain
       },
     ],

@@ -34,19 +34,41 @@ const testimonialsData = [
 const statsData = [
   {
     title: "Clients Served",
-    value: 42,
+    value: 150,
     suffix: "+",
     description: "Empowering Businesses",
   },
   {
     title: "Candidates Placed",
-    value: 1200,
+    value: 1250,
     suffix: "+",
     description: "Redefining Recruitment",
   },
   {
-    title: "Happy Customer",
-    value: 85,
+    title: "Client Retention Rate (CRR)",
+    prefix: ">",
+    value: 75,
+    suffix: "%",
+    description: "Connecting Top Talent",
+  },
+  {
+    title: "Turn Around Time (TAT)",
+    prefix: "<",
+    value: 45,
+    suffix: "%",
+    description: "Connecting Top Talent",
+  },
+  {
+    title: "Joining Ratio",
+    prefix: ">",
+    value: 80,
+    suffix: "%",
+    description: "Connecting Top Talent",
+  },
+  {
+    title: "Candidate Satisfaction Rate (CSR)",
+    prefix: ">",
+    value: 80,
     suffix: "%",
     description: "Connecting Top Talent",
   },
@@ -218,6 +240,7 @@ const Testimonials: React.FC = () => {
                 {data.title}
               </h4>
               <p className="text-4xl sm:text-5xl font-bold text-teal-400 mb-2">
+                {data.prefix}
                 {counters[index]}
                 {data.suffix}
               </p>

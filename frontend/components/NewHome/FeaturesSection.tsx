@@ -21,7 +21,7 @@ const services: Service[] = [
     title: "Recruitment",
     description:
       "Delivering top talent across industries and skill sets, from tech to non-tech, with precision and expertise.",
-    image: "/features/Animation.gif",
+    image: "/features/recruitment.gif",
     height: 450,
     width: 450,
   },
@@ -30,27 +30,27 @@ const services: Service[] = [
     title: "Staffing",
     description:
       "Deploying skilled talent globally with seamless payroll management for efficient and compliant staffing solutions.",
-    image: "/path-to-staffing.gif",
-    height: 300,
-    width: 300,
+    image: "/features/Staffing.gif",
+    height: 500,
+    width: 500,
   },
   {
     id: "funding-gateway",
     title: "Funding Gateway",
     description:
       "Opening doors for startups by connecting them with global angel investors & VCs, guiding funding from pre-seed to Series B.",
-    image: "/path-to-funding-gateway.gif",
-    height: 300,
-    width: 300,
+    image: "/features/funding.png",
+    height: 500,
+    width: 500,
   },
   {
     id: "hr-dynamics",
     title: "HR Dynamics",
     description:
       "Comprehensive HR management service that streamlines policy, strategies, salary benchmarking, etc. different analytics support.",
-    image: "/path-to-hr-dynamics.gif",
-    height: 300,
-    width: 300,
+    image: "/features/Hr.png",
+    height: 400,
+    width: 400,
   },
 ];
 
@@ -204,18 +204,22 @@ export default function ServicesSection() {
                         </p>
                       </div>
                       <motion.div
-                        className="md:w-1/2 flex justify-center items-center"
+                        className="md:w-1/2 flex justify-center items-center relative"
                         initial={{ x: 100, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: 100, opacity: 0 }}
                         transition={{ duration: 0.5, ease: "easeInOut" }}
                       >
+                        {/* Background Blur Effect */}
+                        <div className="absolute w-64 h-64 bg-white/40 blur-2xl rounded-full"></div>
+
+                        {/* Foreground Image */}
                         <Image
                           src={service.image}
                           alt={service.title}
                           width={service.width}
                           height={service.height}
-                          className="object-contain"
+                          className="relative z-10 object-contain"
                         />
                       </motion.div>
                     </div>
