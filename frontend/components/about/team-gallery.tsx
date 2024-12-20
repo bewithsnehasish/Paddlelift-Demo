@@ -1,61 +1,203 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 
-const photos = Array(8).fill("/placeholder.svg");
+// Sample images array - replace with your actual images
+const photos = Array(8).fill("/placeholder.svg?height=300&width=400");
 
 export function TeamGallery() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const photosPerPage = 4;
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 100 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
 
   return (
-    <div className="relative w-full">
-      <h2 className="text-3xl font-bold mb-8">Life at PaddleLift</h2>
-      <div className="relative overflow-hidden">
-        <motion.div
-          className="flex gap-4"
-          animate={{ x: -currentPage * 100 + "%" }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        >
-          {photos.map((photo, index) => (
-            <div key={index} className="min-w-[calc(25%-12px)] aspect-video">
-              <Image
-                src={photo}
-                alt={`Team photo ${index + 1}`}
-                width={300}
-                height={200}
-                className="rounded-lg object-cover w-full h-full"
-              />
-            </div>
-          ))}
-        </motion.div>
-        <button
-          onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
-          className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/20 p-2 rounded-full"
-          disabled={currentPage === 0}
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-        <button
-          onClick={() =>
-            setCurrentPage(
-              Math.min(
-                Math.floor(photos.length / photosPerPage) - 1,
-                currentPage + 1,
-              ),
-            )
-          }
-          className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/20 p-2 rounded-full"
-          disabled={
-            currentPage >= Math.floor(photos.length / photosPerPage) - 1
-          }
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-      </div>
-    </div>
+    <section
+      ref={containerRef}
+      className="relative w-full bg-[#09090B] py-20 overflow-hidden"
+    >
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        className="container mx-auto px-4"
+      >
+        <div className="mb-12">
+          <motion.h2
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: {
+                  delay: 0.2,
+                  duration: 0.8,
+                  ease: "easeInOut",
+                },
+              },
+            }}
+            className="text-5xl md:text-6xl font-bold text-white flex flex-wrap justify-center"
+          >
+            <motion.span
+              className="text-white relative mr-2"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: (i: number) => ({
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    delay: i * 0.2,
+                    duration: 0.8,
+                    ease: "easeInOut",
+                  },
+                }),
+              }}
+              custom={0}
+            >
+              Life
+            </motion.span>
+            <motion.span
+              className="text-emerald-400 relative mr-2"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: (i: number) => ({
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    delay: i * 0.2,
+                    duration: 0.8,
+                    ease: "easeInOut",
+                  },
+                }),
+              }}
+              custom={1}
+            >
+              at PaddleLift
+              <span className="absolute inset-0 blur-md bg-emerald-400/30 z-10"></span>
+            </motion.span>
+          </motion.h2>
+        </div>
+
+        <div className="flex flex-col gap-16">
+          {/* Left to Right Row */}
+          <div
+            className="relative overflow-hidden"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <motion.div
+              className="flex gap-6"
+              animate={{
+                x: ["0%", "-50%"],
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 20,
+                  ease: "linear",
+                },
+              }}
+              style={{
+                animationPlayState: isHovered ? "paused" : "running",
+              }}
+            >
+              {[...photos, ...photos].map((photo, index) => (
+                <motion.div
+                  key={`left-${index}`}
+                  variants={itemVariants}
+                  className="relative min-w-[300px] aspect-video"
+                >
+                  <Image
+                    src={photo}
+                    alt={`Team photo ${index + 1}`}
+                    fill
+                    className="rounded-xl object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right to Left Row */}
+          <div
+            className="relative overflow-hidden"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <motion.div
+              className="flex gap-6"
+              animate={{
+                x: ["-50%", "0%"],
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 20,
+                  ease: "linear",
+                },
+              }}
+              style={{
+                animationPlayState: isHovered ? "paused" : "running",
+              }}
+            >
+              {[...photos, ...photos].map((photo, index) => (
+                <motion.div
+                  key={`right-${index}`}
+                  variants={itemVariants}
+                  className="relative min-w-[300px] aspect-video"
+                >
+                  <Image
+                    src={photo}
+                    alt={`Team photo ${index + 1}`}
+                    fill
+                    className="rounded-xl object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Gradient Overlays */}
+      <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#09090B] to-transparent pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#09090B] to-transparent pointer-events-none" />
+    </section>
   );
 }

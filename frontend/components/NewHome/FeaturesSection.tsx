@@ -54,9 +54,18 @@ const services: Service[] = [
   },
 ];
 
-export default function ServicesSection() {
+function useHoverState() {
   const [hoveredService, setHoveredService] = useState<string | null>(null);
+
+  const handleHoverStart = (id: string) => setHoveredService(id);
+  const handleHoverEnd = () => setHoveredService(null);
+
+  return { hoveredService, handleHoverStart, handleHoverEnd };
+}
+const ServicesSection = () => {
+  const { hoveredService, handleHoverStart, handleHoverEnd } = useHoverState();
   const [isClient, setIsClient] = useState(false);
+  const [activeService, setActiveService] = useState<string | null>(null);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -65,6 +74,14 @@ export default function ServicesSection() {
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  const handleClick = (id: string) => {
+    if (activeService === id) {
+      setActiveService(null);
+    } else {
+      setActiveService(id);
+    }
+  };
 
   const wordPullAnimation = {
     hidden: { opacity: 0, y: 20 },
@@ -75,12 +92,14 @@ export default function ServicesSection() {
     }),
   };
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   return (
-    <section ref={ref} className=" bg-[#09090B] p-8 md:p-16">
-      <div className="max-w-6xl mx-auto">
-        <div className="my-12">
+    <section ref={ref} className="bg-[#09090B] py-20 px-4 sm:px-6 md:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-12">
           <div className="space-y-2">
-            <h1 className="text-4xl md:text-5xl font-bold text-white flex flex-wrap">
+            <h1 className="text-5xl md:text-6xl font-bold text-white flex flex-wrap">
               <motion.span
                 className="text-white relative mr-2"
                 initial="hidden"
@@ -91,7 +110,7 @@ export default function ServicesSection() {
                 What
               </motion.span>
               <motion.span
-                className="text-emerald-400 relative mr-2 "
+                className="text-emerald-400 relative mr-2"
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
                 variants={wordPullAnimation}
@@ -133,9 +152,17 @@ export default function ServicesSection() {
               key={service.id}
               className="border-b border-gray-800 overflow-hidden"
               initial="collapsed"
-              animate={hoveredService === service.id ? "expanded" : "collapsed"}
-              onHoverStart={() => setHoveredService(service.id)}
-              onHoverEnd={() => setHoveredService(null)}
+              animate={
+                (isMobile && activeService === service.id) ||
+                (!isMobile && hoveredService === service.id)
+                  ? "expanded"
+                  : "collapsed"
+              }
+              onClick={isMobile ? () => handleClick(service.id) : undefined}
+              onHoverStart={
+                !isMobile ? () => handleHoverStart(service.id) : undefined
+              }
+              onHoverEnd={!isMobile ? handleHoverEnd : undefined}
             >
               <motion.div
                 className="py-4 cursor-pointer flex items-center justify-between"
@@ -172,7 +199,8 @@ export default function ServicesSection() {
                 >
                   <ChevronRight
                     className={`w-6 h-6 transition-colors duration-300 ${
-                      hoveredService === service.id
+                      (isMobile && activeService === service.id) ||
+                      (!isMobile && hoveredService === service.id)
                         ? "text-emerald-400"
                         : "text-gray-400"
                     }`}
@@ -181,50 +209,49 @@ export default function ServicesSection() {
               </motion.div>
 
               <AnimatePresence>
-                {hoveredService === service.id && isClient && (
-                  <motion.div
-                    initial="collapsed"
-                    animate="expanded"
-                    exit="collapsed"
-                    variants={{
-                      expanded: {
-                        height: "auto",
-                        opacity: 1,
-                        marginBottom: "1rem",
-                      },
-                      collapsed: { height: 0, opacity: 0, marginBottom: "0" },
-                    }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="overflow-hidden"
-                  >
-                    <div className="flex flex-col md:flex-row gap-8 pb-4">
-                      <div className="md:w-1/2 flex items-center justify-center">
-                        <p className="text-gray-400 text-center">
-                          {service.description}
-                        </p>
+                {((isMobile && activeService === service.id) ||
+                  (!isMobile && hoveredService === service.id)) &&
+                  isClient && (
+                    <motion.div
+                      initial="collapsed"
+                      animate="expanded"
+                      exit="collapsed"
+                      variants={{
+                        expanded: {
+                          height: "auto",
+                          opacity: 1,
+                          marginBottom: "1rem",
+                        },
+                        collapsed: { height: 0, opacity: 0, marginBottom: "0" },
+                      }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="flex flex-col md:flex-row gap-8 pb-4">
+                        <div className="md:w-1/2 flex items-center justify-center">
+                          <p className="text-gray-400 text-center">
+                            {service.description}
+                          </p>
+                        </div>
+                        <motion.div
+                          className="md:w-1/2 flex justify-center items-center relative"
+                          initial={{ x: 100, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          exit={{ x: 100, opacity: 0 }}
+                          transition={{ duration: 0.5, ease: "easeInOut" }}
+                        >
+                          <div className="absolute w-64 h-64 bg-white/40 blur-2xl rounded-full"></div>
+                          <Image
+                            src={service.image}
+                            alt={service.title}
+                            width={service.width}
+                            height={service.height}
+                            className="relative z-10 object-contain"
+                          />
+                        </motion.div>
                       </div>
-                      <motion.div
-                        className="md:w-1/2 flex justify-center items-center relative"
-                        initial={{ x: 100, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        exit={{ x: 100, opacity: 0 }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
-                      >
-                        {/* Background Blur Effect */}
-                        <div className="absolute w-64 h-64 bg-white/40 blur-2xl rounded-full"></div>
-
-                        {/* Foreground Image */}
-                        <Image
-                          src={service.image}
-                          alt={service.title}
-                          width={service.width}
-                          height={service.height}
-                          className="relative z-10 object-contain"
-                        />
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                )}
+                    </motion.div>
+                  )}
               </AnimatePresence>
             </motion.div>
           ))}
@@ -232,4 +259,6 @@ export default function ServicesSection() {
       </div>
     </section>
   );
-}
+};
+
+export default ServicesSection;

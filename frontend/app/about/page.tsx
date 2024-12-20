@@ -10,6 +10,7 @@ import { GrowthChart } from "@/components/about/growth-chart";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Footer from "@/components/Footer";
+import ManagementSection from "@/components/about/management-section";
 
 const teamMembers = [
   {
@@ -70,6 +71,46 @@ export default function AboutPage() {
     restDelta: 0.001,
   });
 
+  const AnimatedHeading = ({
+    children,
+    className,
+  }: {
+    children: React.ReactNode;
+    className?: string;
+  }) => (
+    <motion.h2
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: {
+            delay: 0.2,
+            duration: 0.8,
+            ease: "easeInOut",
+          },
+        },
+      }}
+      className={`text-4xl md:text-5xl font-bold mb-8 ${className}`}
+    >
+      {children}
+    </motion.h2>
+  );
+
+  const AnimatedCard = ({ children }: { children: React.ReactNode }) => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <Card className="h-full">
+        <CardContent className="p-6">{children}</CardContent>
+      </Card>
+    </motion.div>
+  );
+
   return (
     <>
       <Navbar />
@@ -113,62 +154,12 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Management Section */}
-        <section className="min-h-screen snap-start py-20">
-          <div className="container mx-auto px-4">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-3xl font-bold text-center mb-12"
-            >
-              Key People / Meet the Management
-            </motion.h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {teamMembers.map((member) => (
-                <ManagementCard key={member.name} {...member} />
-              ))}
-            </div>
-          </div>
-        </section>
+        <ManagementSection />
 
         {/* Team Gallery Section */}
-        <section className="min-h-screen snap-start py-20 bg-gray-50">
+        <section className="min-h-screen snap-start py-20 bg-[#09090B]">
           <div className="container mx-auto px-4">
             <TeamGallery />
-          </div>
-        </section>
-
-        {/* Mission & Vision Section */}
-        <section className="min-h-screen snap-start py-20">
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-12 mb-12">
-              <Card>
-                <CardContent className="p-6">
-                  <h2 className="text-2xl font-bold mb-4">Mission</h2>
-                  <p className="text-gray-600">
-                    Our mission is to be the guiding light for start-ups,
-                    offering them not just advice, but tangible, hands-on
-                    support to propel their businesses to new heights...
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6">
-                  <h2 className="text-2xl font-bold mb-4">Vision</h2>
-                  <p className="text-gray-600">
-                    To establish our presence in the market as unrivaled
-                    leaders, offering the ultimate solution to overcome the
-                    hiring bottlenecks faced by start-ups...
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-            <div className="mt-20">
-              <h2 className="text-3xl font-bold text-center mb-12">
-                Core Values
-              </h2>
-              <CoreValues />
-            </div>
           </div>
         </section>
 

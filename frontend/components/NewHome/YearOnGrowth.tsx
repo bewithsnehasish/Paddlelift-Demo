@@ -40,6 +40,15 @@ const YearGrowthCard: React.FC = () => {
     }
   }, [controls, inView]);
 
+  const wordPullAnimation = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.2, duration: 0.8, ease: "easeInOut" },
+    }),
+  };
+
   return (
     <motion.div
       ref={ref}
@@ -61,15 +70,29 @@ const YearGrowthCard: React.FC = () => {
       className="max-w-7xl py-20 mx-auto px-4 sm:px-6 md:px-8 bg-[#09090B]"
     >
       {/* Header */}
-      <motion.h2
-        variants={{
-          hidden: { opacity: 0, x: -50 },
-          visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
-        }}
-        className="text-5xl md:text-6xl font-bold mb-4 text-white max-w-2xl leading-[110%]"
-      >
-        Year On Year <span className="text-teal-400">Growth</span>
-      </motion.h2>
+      <div className="space-y-2 mb-12">
+        <motion.h1 className="text-5xl md:text-6xl font-bold text-white flex flex-wrap">
+          <motion.span
+            className="text-white relative mr-2"
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={wordPullAnimation}
+            custom={0}
+          >
+            Year On Year
+          </motion.span>
+          <motion.span
+            className="text-teal-400 relative mr-2"
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={wordPullAnimation}
+            custom={1}
+          >
+            Growth
+            <span className="absolute inset-0 blur-md bg-teal-400/30 z-10"></span>
+          </motion.span>
+        </motion.h1>
+      </div>
 
       <motion.p
         variants={{
