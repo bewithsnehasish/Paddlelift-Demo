@@ -8,50 +8,57 @@ import Navbar from "../Navbar";
 
 const HeroSection = () => {
   return (
-    <div className="relative w-full h-screen">
-      {/* Background and Main Images Container */}
+    <div className="relative w-full min-h-screen bg-[#09090B]">
       <Navbar />
-      <div className="absolute inset-0">
+
+      {/* Background and Main Images Container */}
+      <div className="absolute inset-0 overflow-hidden">
         {/* Background Image */}
         <Image
           src="/services/herobg.svg"
           alt="Background"
-          className="w-full h-full object-cover"
-          height={1920}
-          width={1080}
+          className="w-full h-full object-cover opacity-90"
+          fill
           priority
+          sizes="100vw"
         />
-        {/* Main Image */}
-        <Image
-          src="/services/hero.svg"
-          alt="Services illustration"
-          className="absolute inset-0 w-full h-full object-cover"
-          width={1920}
-          height={1080}
-          priority
-        />
+
+        {/* Main Image - Floating */}
+        <div className="absolute inset-0 flex items-center justify-center animate-float">
+          <Image
+            src="/services/hero.svg"
+            alt="Services illustration"
+            className="w-full h-full object-cover"
+            fill
+            priority
+          />
+        </div>
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 container mx-auto px-4 h-full">
-        <div className="flex items-center h-full">
+      <div className="relative z-10 container mx-auto px-4 h-screen">
+        <div className="flex flex-col justify-center h-full pt-16 md:pt-0">
           <div className="max-w-2xl">
             <TextGenerateEffect
               words="Our Services"
-              className="text-4xl md:text-6xl font-bold text-purple-900 mb-6"
+              className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6 relative z-20"
             />
-            <p className="text-xl text-white mb-8">
+            <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 md:mb-8 relative z-20">
               Discover our comprehensive range of solutions designed to meet
               your needs. We provide cutting-edge services that help transform
               your ideas into reality.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" asChild>
+            <div className="flex flex-col sm:flex-row gap-4 relative z-20">
+              <Button
+                size="lg"
+                className="bg-purple-600 hover:bg-purple-700 transition-colors"
+                asChild
+              >
                 <Link
-                  className="text-xl text-white font-black [text-shadow:_0_0_2px_rgba(0,0,0,0.75)]"
+                  className="text-base sm:text-lg text-white font-black [text-shadow:_0_0_2px_rgba(0,0,0,0.75)] flex items-center"
                   href="/contact"
                 >
-                  Contact <ArrowRight className="ml-2" />
+                  Contact <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
             </div>
@@ -59,11 +66,11 @@ const HeroSection = () => {
         </div>
 
         {/* Decorative Elements */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          <div className="w-2 h-2 rounded-full bg-purple-500"></div>
-          <div className="w-2 h-2 rounded-full bg-purple-300"></div>
-          <div className="w-2 h-2 rounded-full bg-purple-300"></div>
-          <div className="w-2 h-2 rounded-full bg-purple-300"></div>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-purple-500"></div>
+          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-purple-300"></div>
+          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-purple-300"></div>
+          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-purple-300"></div>
         </div>
       </div>
     </div>

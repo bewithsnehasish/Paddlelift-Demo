@@ -188,12 +188,12 @@ export default function ManagementSection() {
               need to overcome challenges and achieve sustainable growth.
             </p>
           </AnimatedCard>
-          <ImageSection src="/mission-graphic.gif" alt="Mission Graphic" />
+          <ImageSection src="/about/mission.svg" alt="Mission Graphic" />
         </div>
 
         {/* Vision Section */}
         <div className="grid md:grid-cols-2 gap-16 mb-24">
-          <ImageSection src="/vision-graphic.gif" alt="Vision Graphic" />
+          <ImageSection src="/about/vision.svg" alt="Vision Graphic" />
           <AnimatedCard>
             <SubHeading>Vision</SubHeading>
             <p className="text-gray-300 text-lg leading-relaxed">

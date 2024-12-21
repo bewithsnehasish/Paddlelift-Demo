@@ -138,6 +138,7 @@ const Navbar = () => {
                 className="max-h-24 max-w-24 object-contain opacity-100 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
                 width={33}
                 height={33}
+                priority
               />
               <span className="text-white font-bold">PaddleLift</span>
             </Link>
