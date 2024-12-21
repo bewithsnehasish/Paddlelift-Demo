@@ -125,32 +125,32 @@ const YearGrowthCard: React.FC = () => {
           {
             year: "2020",
             label: "Inception Year",
-            bg: "bg-orange-300",
-            text: "text-[#09090B]",
+            bg: "bg-orange-600",
+            text: "text-white",
           },
           {
             year: "2021",
             label: "161% Growth",
-            bg: "bg-green-300",
-            text: "text-[#09090B]",
+            bg: "bg-green-600",
+            text: "text-white",
           },
           {
             year: "2022",
             label: "-18% Dip",
-            bg: "bg-red-300",
-            text: "text-[#09090B]",
+            bg: "bg-red-600",
+            text: "text-white",
           },
           {
             year: "2023",
             label: "8% Growth",
-            bg: "bg-blue-200",
-            text: "text-[#09090B]",
+            bg: "bg-blue-600",
+            text: "text-white",
           },
           {
             year: "2024",
             label: "42% Anticipated",
-            bg: "bg-teal-300",
-            text: "text-[#09090B]",
+            bg: "bg-teal-600",
+            text: "text-white",
           },
         ].map(({ year, label, bg, text }) => (
           <motion.div

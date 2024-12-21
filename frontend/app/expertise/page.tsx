@@ -1,16 +1,16 @@
 import React from "react";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/portfolio/herosection";
 import PortfolioSection from "@/components/portfolio/portfoliosection";
 import Testimonials from "@/components/portfolio/testimonial";
 import CompanyTestimonials from "@/components/portfolio/company-testimonials";
+import Expertisehero from "@/components/expertise/expertise-hero";
 
 const MaintenancePage: React.FC = () => {
   return (
     <>
       <Navbar />
-      <HeroSection />
+      <Expertisehero />
       <PortfolioSection />
       <Testimonials />
       <CompanyTestimonials />

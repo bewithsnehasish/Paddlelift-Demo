@@ -9,6 +9,7 @@ import WorldMapSection from "@/components/NewHome/maps";
 import Testimonials from "@/components/NewHome/Testimonials";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import YearGrowthCard from "@/components/NewHome/yearonyear";
 
 export default function Home() {
   return (
@@ -23,9 +24,7 @@ export default function Home() {
         */}
 
       <FeaturesSection />
-      <div className="min-h-screen p-6">
-        <VisitorsCard />
-      </div>
+      <YearGrowthCard />
       <ApproachSection />
       <OrganizationalStructure />
       <WorldMapSection />
