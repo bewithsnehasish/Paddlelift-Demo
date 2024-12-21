@@ -40,7 +40,7 @@ export function TeamGallery() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full bg-[#09090B] py-20 overflow-hidden"
+      className="relative w-full bg-[#09090B]  overflow-hidden"
     >
       <motion.div
         variants={containerVariants}
