@@ -66,6 +66,7 @@ export default function HeroSection() {
               width={1280}
               height={1280}
               className="rounded-xl object-cover w-full h-full"
+              unoptimized
               loading="lazy"
             />
           </motion.div>

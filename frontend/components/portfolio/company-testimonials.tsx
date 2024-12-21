@@ -97,11 +97,7 @@ export default function TestimonialsCarousel() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white max-w-2xl leading-[1.1]"
         >
-          Few Success{" "}
-          <span className="text-teal-400">
-            Stories
-            <span className="absolute inset-0 blur-md bg-teal-400/30 z-10"></span>
-          </span>
+          Few Success <span className="text-teal-400">Stories</span>
         </motion.h2>
 
         <div className="flex justify-center gap-2">
