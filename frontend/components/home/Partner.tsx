@@ -288,7 +288,7 @@ const PartnersSection: React.FC = () => {
             className="max-w-xl"
           >
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white max-w-2xl leading-[110%]">
-              <span className="text-teal-400">Our</span> Partners
+              <span className="text-teal-400">Our</span> Clients
             </h2>
             <p className="mt-3 text-base md:text-lg">
               Our squad of seasoned specialists. With different team setups for
