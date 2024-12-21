@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ManagementCard } from "@/components/about/management-card";
 import { TeamGallery } from "@/components/about/team-gallery";
@@ -8,7 +8,7 @@ import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Footer from "@/components/Footer";
 import ManagementSection from "@/components/about/management-section";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const teamMembers = [
   {
