@@ -201,23 +201,3 @@ export default function Features() {
     </section>
   );
 }
-
-{
-  /*          <div className="mx-auto grid max-w-sm gap-12 sm:max-w-none sm:grid-cols-2 md:gap-x-14 md:gap-y-16 lg:grid-cols-3">
-            {featuresData.map((feature, index) => (
-              <article
-                key={index}
-                className="feature-card p-6 bg-gray-800 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl"
-              >
-                <div className="mb-3">
-                  <feature.icon className="fill-purple-500" />
-                </div>
-                <h3 className="mb-1 font-nacelle text-xl font-semibold text-gray-200">
-                  {feature.title}
-                </h3>
-                <p className="text-purple-200/65">{feature.description}</p>
-              </article>
-            ))}
-          </div>
-*/
-}

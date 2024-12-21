@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import {
   Carousel,
   CarouselContent,
@@ -43,6 +44,34 @@ const testimonials: Testimonial[] = [
 export default function TestimonialsCarousel() {
   const [api, setApi] = useState<CarouselApi>();
   const [isPaused, setIsPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  const INTERSECTION_THRESHOLD = 0.1;
+
+  // Intersection Observer setup
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: INTERSECTION_THRESHOLD },
+    );
+
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!api) return;
@@ -57,11 +86,24 @@ export default function TestimonialsCarousel() {
   }, [api, isPaused]);
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-16 space-y-8">
+    <div
+      ref={sectionRef}
+      className="w-full max-w-7xl mx-auto px-4 py-16 space-y-8"
+    >
       <div className="text-center space-y-4">
-        <h2 className="text-4xl font-bold tracking-tight">
-          Few Success Stories
-        </h2>
+        <motion.h2
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white max-w-2xl leading-[1.1]"
+        >
+          Few Success{" "}
+          <span className="text-teal-400">
+            Stories
+            <span className="absolute inset-0 blur-md bg-teal-400/30 z-10"></span>
+          </span>
+        </motion.h2>
+
         <div className="flex justify-center gap-2">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="w-2 h-2 rounded-full bg-primary/20" />
