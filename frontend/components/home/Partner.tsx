@@ -1,4 +1,3 @@
-// components/PartnersSection.tsx
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
@@ -11,188 +10,42 @@ interface PartnerLogo {
   name: string;
 }
 
-const partnerLogos = [
-  {
-    id: 1,
-    src: "/Partner Logos/Royal_Enfield.png",
-    name: "Royal Enfield",
-  },
-  {
-    id: 2,
-    src: "/Partner Logos/Gruner.png",
-    name: "Gruner",
-  },
-  {
-    id: 3,
-    src: "/Partner Logos/ITC.png",
-    name: "ITC",
-  },
-  {
-    id: 4,
-    src: "/Partner Logos/Sanskriti.png",
-    name: "Sanskriti",
-  },
-  {
-    id: 5,
-    src: "/Partner Logos/ximkart.png",
-    name: "ximkart",
-  },
-  {
-    id: 6,
-    src: "/Partner Logos/Stancebeam.png",
-    name: "Stancebeam",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 7,
-    src: "/Partner Logos/WazirX.png",
-    name: "WazirX",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 9,
-    src: "/Partner Logos/liquiloans.png",
-    name: "liquiloans",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 10,
-    src: "/Partner Logos/park.png",
-    name: "park",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 11,
-    src: "/Partner Logos/werize_logo.png",
-    name: "werize_logo",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 12,
-    src: "/Partner Logos/Terra_Motors.png",
-    name: "Terra Motors",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 14,
-    src: "/Partner Logos/Otipy.png",
-    name: "Otipy",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 16,
-    src: "/Partner Logos/Healthkart.png",
-    name: "Healthkart",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 17,
-    src: "/Partner Logos/Farmley.png",
-    name: "Farmley",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 18,
-    src: "/Partner Logos/Field Assist.png",
-    name: "Field Assist",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 19,
-    src: "/Partner Logos/Draup.png",
-    name: "Draup",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 20,
-    src: "/Partner Logos/Locofast.png",
-    name: "Locofast",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 21,
-    src: "/Partner Logos/Eureka Forbes.png",
-    name: "Eureka Forbes",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 23,
-    src: "/Partner Logos/Fresh_to_home.png",
-    name: "Fresh_to_home",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 24,
-    src: "/Partner Logos/Getsupp.png",
-    name: "Getsupp",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 25,
-    src: "/Partner Logos/Aditya Birls.png",
-    name: "Aditya Birla",
-    originalColor: "rgb(255,0,0)",
-  },
-  {
-    id: 26,
-    src: "/Partner Logos/Lifelong.png",
-    name: "Lifelong",
-    originalColor: "rgb(255,0,0)",
-  },
-  {
-    id: 27,
-    src: "/Partner Logos/Lendingkart.png",
-    name: "Lendingkart",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 28,
-    src: "/Partner Logos/Mindtickle.png",
-    name: "Mindtickle",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 29,
-    src: "/Partner Logos/NoBroker.png",
-    name: "NoBroker",
-    originalColor: "rgb(0, 0, 255)",
-  },
+const partnerLogos: PartnerLogo[] = [
+  { id: 1, src: "/Partner Logos/Royal_Enfield.png", name: "Royal Enfield" },
+  { id: 2, src: "/Partner Logos/Gruner.png", name: "Gruner" },
+  { id: 3, src: "/Partner Logos/ITC.png", name: "ITC" },
+  { id: 4, src: "/Partner Logos/Sanskriti.png", name: "Sanskriti" },
+  { id: 5, src: "/Partner Logos/ximkart.png", name: "ximkart" },
+  { id: 6, src: "/Partner Logos/Stancebeam.png", name: "Stancebeam" },
+  { id: 7, src: "/Partner Logos/WazirX.png", name: "WazirX" },
+  { id: 9, src: "/Partner Logos/liquiloans.png", name: "liquiloans" },
+  { id: 10, src: "/Partner Logos/park.png", name: "park" },
+  { id: 11, src: "/Partner Logos/werize_logo.png", name: "werize_logo" },
+  { id: 12, src: "/Partner Logos/Terra_Motors.png", name: "Terra Motors" },
+  { id: 14, src: "/Partner Logos/Otipy.png", name: "Otipy" },
+  { id: 16, src: "/Partner Logos/Healthkart.png", name: "Healthkart" },
+  { id: 17, src: "/Partner Logos/Farmley.png", name: "Farmley" },
+  { id: 18, src: "/Partner Logos/Field Assist.png", name: "Field Assist" },
+  { id: 19, src: "/Partner Logos/Draup.png", name: "Draup" },
+  { id: 20, src: "/Partner Logos/Locofast.png", name: "Locofast" },
+  { id: 21, src: "/Partner Logos/Eureka Forbes.png", name: "Eureka Forbes" },
+  { id: 23, src: "/Partner Logos/Fresh_to_home.png", name: "Fresh_to_home" },
+  { id: 24, src: "/Partner Logos/Getsupp.png", name: "Getsupp" },
+  { id: 25, src: "/Partner Logos/Aditya Birls.png", name: "Aditya Birla" },
+  { id: 26, src: "/Partner Logos/Lifelong.png", name: "Lifelong" },
+  { id: 27, src: "/Partner Logos/Lendingkart.png", name: "Lendingkart" },
+  { id: 28, src: "/Partner Logos/Mindtickle.png", name: "Mindtickle" },
+  { id: 29, src: "/Partner Logos/NoBroker.png", name: "NoBroker" },
   {
     id: 30,
     src: "/Partner Logos/Battery_Smart_Logo.png",
     name: "Battery Smart",
-    originalColor: "rgb(0, 0, 255)",
   },
-  {
-    id: 31,
-    src: "/Partner Logos/Blinkit_Logo.png",
-    name: "Blinkit",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 32,
-    src: "/Partner Logos/Joveo.png",
-    name: "Joveo",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 33,
-    src: "/Partner Logos/Coverfox.png",
-    name: "Coverfox",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 34,
-    src: "/Partner Logos/DG Liger.png",
-    name: "DG Liger",
-    originalColor: "rgb(0, 0, 255)",
-  },
-  {
-    id: 35,
-    src: "/Partner Logos/Bharat agri.png",
-    name: "Bharat agri",
-    originalColor: "rgb(0, 0, 255)",
-  },
+  { id: 31, src: "/Partner Logos/Blinkit_Logo.png", name: "Blinkit" },
+  { id: 32, src: "/Partner Logos/Joveo.png", name: "Joveo" },
+  { id: 33, src: "/Partner Logos/Coverfox.png", name: "Coverfox" },
+  { id: 34, src: "/Partner Logos/DG Liger.png", name: "DG Liger" },
+  { id: 35, src: "/Partner Logos/Bharat agri.png", name: "Bharat agri" },
 ];
 
 const PartnersSection: React.FC = () => {
@@ -260,18 +113,9 @@ const PartnersSection: React.FC = () => {
     },
   };
 
-  const partnerVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 60,
-        damping: 10,
-      },
-    },
-  };
+  // Divide the partnerLogos array into two parts
+  const firstRowLogos = partnerLogos.slice(0, 17);
+  const secondRowLogos = partnerLogos.slice(17);
 
   return (
     <section
@@ -299,7 +143,7 @@ const PartnersSection: React.FC = () => {
             </p>
           </motion.div>
 
-          {/* Marquee effect with three rows */}
+          {/* Marquee effect with two rows */}
           <motion.div
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
@@ -315,8 +159,8 @@ const PartnersSection: React.FC = () => {
             }}
             className="relative overflow-hidden mt-12"
           >
-            <MarqueeRow logos={partnerLogos} direction="left" />
-            <MarqueeRow logos={partnerLogos} direction="right" />
+            <MarqueeRow logos={firstRowLogos} direction="left" />
+            <MarqueeRow logos={secondRowLogos} direction="right" />
           </motion.div>
         </div>
       </div>
