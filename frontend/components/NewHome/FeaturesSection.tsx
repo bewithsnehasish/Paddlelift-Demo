@@ -246,6 +246,7 @@ const ServicesSection = () => {
                             alt={service.title}
                             width={service.width}
                             height={service.height}
+                            unoptimized
                             className="relative z-10 object-contain"
                           />
                         </motion.div>

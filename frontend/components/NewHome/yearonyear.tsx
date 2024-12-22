@@ -94,6 +94,7 @@ const YearGrowthCard: React.FC = () => {
           height={1080}
           layout="responsive"
           objectFit="cover"
+          unoptimized
         />
       </div>
 
@@ -106,6 +107,7 @@ const YearGrowthCard: React.FC = () => {
           width={1920}
           layout="responsive"
           objectFit="cover"
+          unoptimized
         />
       </div>
     </motion.div>

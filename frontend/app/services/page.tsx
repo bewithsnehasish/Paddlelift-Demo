@@ -5,6 +5,7 @@ import "./services.css";
 import React from "react";
 import PartnersSection from "@/components/home/Partner";
 import Footer from "@/components/Footer";
+import IndustriesServed from "@/components/services/Industries-Served";
 
 const MaintenancePage: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const MaintenancePage: React.FC = () => {
       <ServicesHero />
       <FeaturesSection />
       <PartnersSection />
+      <IndustriesServed />
       <Footer />
     </>
   );
