@@ -30,7 +30,7 @@ const data = {
   datasets: [
     {
       label: "Growth Rate",
-      data: [0, 161, -18, 8, 42],
+      data: [0, 161, 143, 151, 193],
       borderColor: "rgba(75, 192, 192, 1)",
       backgroundColor: "rgba(75, 192, 192, 0.2)",
       tension: 0.4,
