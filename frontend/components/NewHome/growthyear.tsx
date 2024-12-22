@@ -54,7 +54,7 @@ const options = {
   },
   plugins: {
     legend: {
-      position: "top",
+      position: "top" as const, // Ensure the type is correct
     },
     title: {
       display: true,
