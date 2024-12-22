@@ -10,6 +10,7 @@ import Testimonials from "@/components/NewHome/Testimonials";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import YearGrowthCard from "@/components/NewHome/yearonyear";
+import GrowthTimeline from "@/components/NewHome/growthyear";
 
 export default function Home() {
   return (
@@ -21,10 +22,11 @@ export default function Home() {
       <PartnersSection />
         <Features />
         <CompanyTimeline />
+        <YearGrowthCard />
         */}
 
+      <GrowthTimeline />
       <FeaturesSection />
-      <YearGrowthCard />
       <ApproachSection />
       <OrganizationalStructure />
       <WorldMapSection />
