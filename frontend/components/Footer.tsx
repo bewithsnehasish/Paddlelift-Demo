@@ -12,24 +12,27 @@ const Footer = () => {
         <div>
           <div className="space-y-8 p-10">
             <h1 className="text-5xl font-bold max-w-2xl leading-[110%] relative z-10">
-              Like what you see? Reach out{" "}
+              Contact us{" "}
+              {/*
               <Link
                 href="mailto:mandalsneh97@gmail.com"
                 className="text-primary hover:text-primary/80 border-b-2 border-primary hover:border-primary/80 transition-colors duration-200"
               >
                 via email
               </Link>{" "}
-              to collaborate!
+              */}
             </h1>
 
             <ShinyButton>
-              <Link href="mailto:mandalsneh97@gmail.com">Schedule call</Link>
+              <Link href="mailto:mandalsneh97@gmail.com">Mail Us</Link>
             </ShinyButton>
           </div>
 
           <div className="mt-16 p-10 border-t border-dark-200 dark:border-white/10 flex flex-col md:flex-row justify-between gap-10 md:gap-0">
             <div className="space-y-2.5">
-              <h3 className="text-xl font-bold relative z-10">Paddlift Year</h3>
+              <h3 className="text-xl font-bold relative z-10">
+                Paddlift Pvt. Ltd
+              </h3>
               <p className="text-dark-200/70 dark:text-stone-200/70 relative z-10">
                 &copy; 2024 | All rights reserved.
               </p>
@@ -42,13 +45,16 @@ const Footer = () => {
                   <Link href="/">Home</Link>
                 </li>
                 <li className="text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
-                  <Link href="#work">Work</Link>
+                  <Link href="/about">About</Link>
                 </li>
                 <li className="text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
-                  <Link href="#about">About</Link>
+                  <Link href="/services">Our Services</Link>
                 </li>
                 <li className="text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
-                  <Link href="#contact">Contact</Link>
+                  <Link href="/portfolio">Portfolio</Link>
+                </li>
+                <li className="text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
+                  <Link href="/contact">Contact</Link>
                 </li>
               </ul>
 
@@ -56,7 +62,7 @@ const Footer = () => {
                 <li className="text-lg font-semibold">Socials</li>
                 <li className="text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
                   <Link
-                    href="https://www.linkedin.com/in/snehasish-mandal-/"
+                    href="https://www.linkedin.com/company/paddlelift/"
                     target="_blank"
                   >
                     LinkedIn
@@ -64,14 +70,11 @@ const Footer = () => {
                 </li>
                 <li className="text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
                   <Link
-                    href="https://github.com/bewithsnehasish"
+                    href="https://www.instagram.com/paddlelift/"
                     target="_blank"
                   >
-                    Github
+                    Instagram
                   </Link>
-                </li>
-                <li className="text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
-                  <Link href="/">Instagram</Link>
                 </li>
               </ul>
             </div>
