@@ -48,7 +48,7 @@ export default function HeroSection() {
             <div className="max-w-2xl">
               <TextGenerateEffect
                 words="From Seed to Scale, We Fuel Your Journey"
-                className="text-4xl md:text-6xl font-bold mb-6"
+                className="text-3xl md:text-5xl font-bold mb-6"
               />
               <p className="text-xl text-muted-foreground mb-8">
                 Tailor made solutions for Startups to Enterprises....

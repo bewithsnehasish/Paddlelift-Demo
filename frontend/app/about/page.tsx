@@ -137,6 +137,9 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Mission & Vision Section */}
+        <ManagementSection />
+
         {/* Management Section */}
         <section className="snap-start py-20 bg-[#09090B]">
           <div className="container mx-auto px-4">
@@ -255,9 +258,6 @@ export default function AboutPage() {
             <TeamGallery />
           </div>
         </section>
-
-        {/* Mission & Vision Section */}
-        <ManagementSection />
       </div>
       <Footer />
     </>

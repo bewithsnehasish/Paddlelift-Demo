@@ -76,7 +76,7 @@ const Navbar = () => {
       {/* Navbar */}
       <nav
         className={`max-w-7xl fixed top-4 mx-auto inset-x-0 z-40 transition-all duration-300 ${
-          isScrolled ? "w-[90%] bg-black/50 border" : "w-[95%] bg-transparent"
+          isScrolled ? "w-[90%] bg-black border" : "w-[95%] bg-transparent"
         } rounded-md lg:w-full ${
           isVisible
             ? "translate-y-0 opacity-100"
@@ -132,14 +132,13 @@ const Navbar = () => {
               className="font-normal flex space-x-2 items-center text-sm mr-4 text-black px-2 py-1 relative z-20"
             >
               <Image
-                src="/Paddlelite Logo.png"
+                src="/Plogo.png"
                 alt="Paddlelite Logo"
                 className="max-h-24 max-w-24 object-contain opacity-100 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
-                width={33}
-                height={33}
+                width={54}
+                height={54}
                 priority
               />
-              <span className="text-white font-bold">PaddleLift</span>
             </Link>
 
             <button onClick={toggleMobileMenu} className="text-white h-6 w-6">

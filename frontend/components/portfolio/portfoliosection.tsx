@@ -58,6 +58,15 @@ const ANIMATION_DURATION = 1000;
 const FRAME_RATE = 16;
 const INTERSECTION_THRESHOLD = 0.1;
 
+const CARD_COLORS = [
+  "bg-teal-600",
+  "bg-sky-600",
+  "bg-orange-600",
+  "bg-green-600",
+  "bg-yellow-500",
+  "bg-red-500",
+];
+
 const wordPullAnimation: Variants = {
   hidden: {
     opacity: 0,
@@ -137,24 +146,27 @@ export default function PortfolioSection() {
     };
   }, [isVisible]);
 
-  const renderStatCard = (data: StatItem, index: number) => (
-    <motion.div
-      key={index}
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
-      transition={{ duration: 0.4, delay: index * 0.2 }}
-      className="bg-white bg-opacity-10 rounded-lg p-6 text-center transform 
-                 transition-all hover:scale-105 hover:bg-opacity-20"
-    >
-      <h4 className="text-xl font-semibold text-white mb-2">{data.title}</h4>
-      <p className="text-4xl sm:text-5xl font-bold text-teal-400 mb-2">
-        {data.prefix}
-        {counters[index]}
-        {data.suffix}
-      </p>
-      <p className="text-sm text-gray-300">{data.description}</p>
-    </motion.div>
-  );
+  const renderStatCard = (data: StatItem, index: number) => {
+    const cardColor = CARD_COLORS[index % CARD_COLORS.length]; // Cycle through colors
+
+    return (
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
+        transition={{ duration: 0.4, delay: index * 0.2 }}
+        className={`rounded-lg p-6 text-center transform transition-all hover:scale-105 hover:brightness-110 ${cardColor}`}
+      >
+        <h4 className="text-xl font-semibold text-white mb-2">{data.title}</h4>
+        <p className="text-4xl sm:text-5xl font-bold text-white mb-2">
+          {data.prefix}
+          {counters[index]}
+          {data.suffix}
+        </p>
+        <p className="text-sm text-gray-200">{data.description}</p>
+      </motion.div>
+    );
+  };
 
   return (
     <div className="overflow-hidden bg-[#09090B]" ref={sectionRef}>
@@ -177,7 +189,6 @@ export default function PortfolioSection() {
             custom={1}
           >
             Portfolio
-            <span className="absolute inset-0 blur-md bg-teal-400/30 z-10"></span>
           </motion.span>
         </h1>
 
@@ -185,7 +196,7 @@ export default function PortfolioSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-white text-2xl font-semibold md:text-base my-4 pb-5 max-w-lg"
+          className="text-white text-2xl font-semibold md:text-2xl max-w-lg"
         >
           Numbers that define our portfolio
         </motion.p>

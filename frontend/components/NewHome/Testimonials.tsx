@@ -31,98 +31,10 @@ const testimonialsData = [
   },
 ];
 
-const statsData = [
-  {
-    title: "Clients Served",
-    value: 150,
-    suffix: "+",
-    description: "Empowering Businesses",
-  },
-  {
-    title: "Candidates Placed",
-    value: 1250,
-    suffix: "+",
-    description: "Redefining Recruitment",
-  },
-  {
-    title: "Client Retention Rate (CRR)",
-    prefix: ">",
-    value: 75,
-    suffix: "%",
-    description: "Connecting Top Talent",
-  },
-  {
-    title: "Turn Around Time (TAT)",
-    prefix: "<",
-    value: 45,
-    suffix: "%",
-    description: "Connecting Top Talent",
-  },
-  {
-    title: "Joining Ratio",
-    prefix: ">",
-    value: 80,
-    suffix: "%",
-    description: "Connecting Top Talent",
-  },
-  {
-    title: "Candidate Satisfaction Rate (CSR)",
-    prefix: ">",
-    value: 80,
-    suffix: "%",
-    description: "Connecting Top Talent",
-  },
-];
-
 const Testimonials: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [counters, setCounters] = useState<number[]>(statsData.map(() => 0));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 },
-    );
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isVisible) {
-      statsData.forEach((data, index) => {
-        let start = 0;
-        const end = data.value;
-        const duration = 1000; // 1 second
-        const increment = end / (duration / 16); // Smooth step per frame (assuming 60fps)
-        const counterInterval = setInterval(() => {
-          start += increment;
-          if (start >= end) {
-            start = end;
-            clearInterval(counterInterval);
-          }
-          setCounters((prev) => {
-            const newCounters = [...prev];
-            newCounters[index] = Math.round(start);
-            return newCounters;
-          });
-        }, 16);
-      });
-    }
-  }, [isVisible]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -153,7 +65,7 @@ const Testimonials: React.FC = () => {
         {/* Header */}
         <motion.h2
           initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-5xl md:text-6xl font-bold mb-4 text-white max-w-2xl leading-[110%]"
         >
@@ -162,7 +74,7 @@ const Testimonials: React.FC = () => {
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white text-2xl font-semibold md:text-base my-4 pb-5 max-w-lg"
         >
@@ -224,29 +136,6 @@ const Testimonials: React.FC = () => {
           >
             <ChevronRight className="w-6 h-6" />
           </button>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="mt-20 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {statsData.map((data, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
-              transition={{ duration: 0.4, delay: index * 0.2 }}
-              className="bg-white bg-opacity-10 rounded-lg p-6 text-center transform transition-all hover:scale-105 hover:bg-opacity-20"
-            >
-              <h4 className="text-xl font-semibold text-white mb-2">
-                {data.title}
-              </h4>
-              <p className="text-4xl sm:text-5xl font-bold text-teal-400 mb-2">
-                {data.prefix}
-                {counters[index]}
-                {data.suffix}
-              </p>
-              <p className="text-sm text-gray-300">{data.description}</p>
-            </motion.div>
-          ))}
         </div>
       </div>
     </div>

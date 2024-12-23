@@ -22,8 +22,8 @@ const services: Service[] = [
     description:
       "Delivering top talent across industries and skill sets, from tech to non-tech, with precision and expertise.",
     image: "/features/recruitment.gif",
-    height: 450,
-    width: 450,
+    height: 250,
+    width: 250,
   },
   {
     id: "staffing",
@@ -31,8 +31,8 @@ const services: Service[] = [
     description:
       "Deploying skilled talent globally with seamless payroll management for efficient and compliant staffing solutions.",
     image: "/features/Staffing.gif",
-    height: 500,
-    width: 500,
+    height: 350,
+    width: 350,
   },
   {
     id: "funding-gateway",
@@ -40,8 +40,8 @@ const services: Service[] = [
     description:
       "Opening doors for startups by connecting them with global angel investors & VCs, guiding funding from pre-seed to Series B.",
     image: "/features/funding.png",
-    height: 500,
-    width: 500,
+    height: 250,
+    width: 250,
   },
   {
     id: "hr-dynamics",
@@ -49,8 +49,8 @@ const services: Service[] = [
     description:
       "Comprehensive HR management service that streamlines policy, strategies, salary benchmarking, etc. different analytics support.",
     image: "/features/hr.gif",
-    height: 400,
-    width: 400,
+    height: 250,
+    width: 250,
   },
 ];
 
@@ -110,14 +110,13 @@ const ServicesSection = () => {
                 What
               </motion.span>
               <motion.span
-                className="text-emerald-400 relative mr-2"
+                className="text-teal-500 relative mr-2"
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
                 variants={wordPullAnimation}
                 custom={1}
               >
                 Services
-                <span className="absolute inset-0 blur-md bg-emerald-400/30 z-10"></span>
               </motion.span>
               <motion.span
                 className="text-white mr-2"
@@ -229,7 +228,7 @@ const ServicesSection = () => {
                     >
                       <div className="flex flex-col md:flex-row gap-8 pb-4">
                         <div className="md:w-1/2 flex items-center justify-center">
-                          <p className="text-gray-400 text-center">
+                          <p className="text-white text-xl text-left">
                             {service.description}
                           </p>
                         </div>
