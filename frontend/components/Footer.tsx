@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ShinyButton from "./ui/shiny-button";
 import { BackgroundBeams } from "./ui/background-beams";
+import { FaLinkedin, FaInstagram } from "react-icons/fa"; // Import icons from React Icons
 
 const Footer = () => {
   return (
@@ -12,15 +13,12 @@ const Footer = () => {
         <div>
           <div className="space-y-8 p-10">
             <h1 className="text-5xl font-bold max-w-2xl leading-[110%] relative z-10">
-              Contact us{" "}
-              {/*
               <Link
                 href="mailto:mandalsneh97@gmail.com"
                 className="text-primary hover:text-primary/80 border-b-2 border-primary hover:border-primary/80 transition-colors duration-200"
               >
-                via email
+                Contact us{" "}
               </Link>{" "}
-              */}
             </h1>
 
             <ShinyButton>
@@ -31,7 +29,7 @@ const Footer = () => {
           <div className="mt-16 p-10 border-t border-dark-200 dark:border-white/10 flex flex-col md:flex-row justify-between gap-10 md:gap-0">
             <div className="space-y-2.5">
               <h3 className="text-xl font-bold relative z-10">
-                Paddlift Pvt. Ltd
+                Paddlift Pvt. Ltd.
               </h3>
               <p className="text-dark-200/70 dark:text-stone-200/70 relative z-10">
                 &copy; 2024 | All rights reserved.
@@ -60,7 +58,8 @@ const Footer = () => {
 
               <ul className="space-y-2.5 relative z-10 text-sm sm:text-base">
                 <li className="text-lg font-semibold">Socials</li>
-                <li className="text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
+                <li className="flex items-center gap-2 text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
+                  <FaLinkedin className="text-xl" />
                   <Link
                     href="https://www.linkedin.com/company/paddlelift/"
                     target="_blank"
@@ -68,7 +67,8 @@ const Footer = () => {
                     LinkedIn
                   </Link>
                 </li>
-                <li className="text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
+                <li className="flex items-center gap-2 text-dark-200/60 hover:text-dark-200 dark:text-white/50 dark:hover:text-white">
+                  <FaInstagram className="text-xl" />
                   <Link
                     href="https://www.instagram.com/paddlelift/"
                     target="_blank"
@@ -85,7 +85,7 @@ const Footer = () => {
         <div className="py-4 text-center text-sm text-gray-500">
           The Paddlelift India. Developed & Managed by{" "}
           <a
-            href="https://www.linkedin.com/in/snehasish-mandal-" // Replace with Snehasish's LinkedIn profile
+            href="https://www.linkedin.com/in/snehasish-mandal-"
             target="_blank"
             className="text-blue-500 hover:underline relative inline-block"
           >
@@ -94,7 +94,7 @@ const Footer = () => {
           </a>{" "}
           {"| "}
           <a
-            href="https://www.linkedin.com/in/mayankkumargupta1" // Replace with Mayank's LinkedIn profile
+            href="https://www.linkedin.com/in/mayankkumargupta1"
             target="_blank"
             className="text-blue-500 hover:underline relative inline-block"
           >
