@@ -38,7 +38,7 @@ export default function WorldMapSection() {
   return (
     <div
       ref={sectionRef}
-      className="max-w-7xl py-20 mx-auto px-4 sm:px-6 md:px-8 lg:px-10 bg-[#09090B]"
+      className="max-w-7xl snap-start py-20 mx-auto px-4 sm:px-6 md:px-8 lg:px-10 bg-[#09090B]"
     >
       {/* Header */}
       <motion.h2

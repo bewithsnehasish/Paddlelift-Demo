@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
+import "./newhome.css";
 
 interface PartnerLogo {
   id: number;
@@ -60,7 +61,6 @@ const PartnersSection: React.FC = () => {
         if (entry.isIntersecting) {
           setIsVisible(true);
 
-          // Animate header
           controlsHeader.start({
             opacity: 1,
             x: 0,
@@ -72,7 +72,6 @@ const PartnersSection: React.FC = () => {
             },
           });
 
-          // Animate partners
           controlsPartners.start({
             opacity: 1,
             transition: {
@@ -113,18 +112,16 @@ const PartnersSection: React.FC = () => {
     },
   };
 
-  // Divide the partnerLogos array into two parts
   const firstRowLogos = partnerLogos.slice(0, 17);
   const secondRowLogos = partnerLogos.slice(17);
 
   return (
     <section
       ref={sectionRef}
-      className="relative py-16 bg-[#09090B] overflow-hidden"
+      className="snap-start relative py-16 bg-[#09090B] overflow-hidden"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
         <div className="pb-4 md:pb-20">
-          {/* Header Section */}
           <motion.div
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
@@ -134,7 +131,7 @@ const PartnersSection: React.FC = () => {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white max-w-2xl leading-[110%]">
               <span className="text-teal-400">Our</span> Clients
             </h2>
-            <p className="mt-3 text-base md:text-lg">
+            <p className="m-4 pb-10 text-base md:text-lg">
               Our squad of seasoned specialists. With different team setups for
               IT and non-IT needs, we are equipped with street-smart knowledge
               and the know-how to serve our customers with swift turnaround
@@ -143,7 +140,6 @@ const PartnersSection: React.FC = () => {
             </p>
           </motion.div>
 
-          {/* Marquee effect with two rows */}
           <motion.div
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
@@ -157,19 +153,22 @@ const PartnersSection: React.FC = () => {
                 },
               },
             }}
-            className="relative overflow-hidden mt-12"
+            className="relative mt-12"
           >
-            <MarqueeRow logos={firstRowLogos} direction="left" />
-            <MarqueeRow logos={secondRowLogos} direction="right" />
+            {/* Glow effect container */}
+            <div className="relative">
+              {/* Glow effect */}
+              <div className="absolute -inset-8 bg-white blur-[32px] rounded-3xl"></div>
+              <div className="absolute -inset-8 bg-white blur-[48px] rounded-3xl"></div>
+
+              {/* Content */}
+              <div className="relative bg-transparent p-4 rounded-lg z-20">
+                <MarqueeRow logos={firstRowLogos} direction="left" />
+                <MarqueeRow logos={secondRowLogos} direction="right" />
+              </div>
+            </div>
           </motion.div>
         </div>
-      </div>
-
-      {/* Gradient Overlay and Background Effects */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        {/* Top and Bottom gradient overlays */}
-        <div className="absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-gray-950 to-transparent"></div>
-        <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-gray-950 to-transparent"></div>
       </div>
     </section>
   );
@@ -184,7 +183,7 @@ const MarqueeRow: React.FC<MarqueeRowProps> = ({ logos, direction }) => {
   return (
     <div className="flex overflow-hidden py-8">
       <div
-        className={`flex animate-marquee${direction === "right" ? "-reverse" : ""} gap-12`}
+        className={`flex animate-marquee${direction === "right" ? "-reverse" : ""} gap-8`}
       >
         {[...logos, ...logos].map((logo, index) => (
           <LogoCard key={`${logo.id}-${index}`} logo={logo} />
@@ -201,14 +200,13 @@ interface LogoCardProps {
 const LogoCard: React.FC<LogoCardProps> = ({ logo }) => {
   return (
     <div className="group relative flex-shrink-0 w-40 h-40">
-      <div className="absolute inset-0 bg-white rounded-full"></div>
       <div className="relative z-10 h-full w-full flex items-center justify-center p-6">
         <Image
           src={logo.src}
           alt={logo.name}
-          className="max-h-28 max-w-28 m-8 object-contain group-hover:scale-110 transition-transform duration-300"
-          width={196}
-          height={196}
+          className="max-h-36 max-w-36 object-contain group-hover:scale-110 transition-transform duration-300"
+          width={169}
+          height={169}
         />
       </div>
     </div>

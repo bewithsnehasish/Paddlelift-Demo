@@ -95,7 +95,10 @@ const ServicesSection = () => {
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (
-    <section ref={ref} className="bg-[#09090B] py-20 px-4 sm:px-6 md:px-8">
+    <section
+      ref={ref}
+      className="bg-[#09090B] snap-start py-20 px-4 sm:px-6 md:px-8"
+    >
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <div className="space-y-2">

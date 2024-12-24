@@ -12,39 +12,33 @@ import { useEffect, useState } from "react";
 
 const teamMembers = [
   {
-    name: "Sarah Johnson",
-    title: "CEO & Co-founder",
+    name: "Utkarsh Rastogi",
+    title: "Co-Founder & Director Head of Growth & Ops",
     photo: "https://picsum.photos/600/400",
     description:
-      " Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur voluptas consectetur officia quas, deserunt corrupti voluptatum laudantium veritatis quae aut quam at? ",
+      "Utkarsh Rastogi, a BITS Pilani alumnus with 15+ years of experience and leadership in top recruitment firms, drives Paddlelift’s growth. His strategic expertise ensures Paddlelift stays at the forefront of the recruitment industry.",
     socials: {
-      linkedin: "https://linkedin.com/in/sarahjohnson",
-      twitter: "https://twitter.com/sarahjohnson",
-      github: "https://github.com/sarahjohnson",
+      linkedin: "https://www.linkedin.com/in/utkarsh-rastogi-02801024/",
     },
   },
   {
-    name: "Michael Chen",
-    title: "CTO & Co-founder",
+    name: "Kanika Mahajan",
+    title: "Co-Founder & Director Head of Non-Tech Recruitment",
     photo: "https://picsum.photos/600/400",
     description:
-      " Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur voluptas consectetur officia quas, deserunt corrupti voluptatum laudantium veritatis quae aut quam at? ",
+      "Kanika Mahajan, an MBA-HR with 16+ years in business administration and NonIT hiring, excels in understanding diverse business talent needs. Her strategic vision and market insights have significantly elevated Paddlelift, showcasing her pivotal role in the company's success.",
     socials: {
-      linkedin: "https://linkedin.com/in/michaelchen",
-      twitter: "https://twitter.com/michaelchen",
-      github: "https://github.com/michaelchen",
+      linkedin: "https://www.linkedin.com/in/kanika-mahajan-67978a1aa/",
     },
   },
   {
-    name: "Emily Rodriguez",
-    title: "COO & Co-founder",
+    name: "Rohit Dutt",
+    title: "Co-Founder & Director Head of Tech Recruitment",
     photo: "https://picsum.photos/600/400",
     description:
-      " Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur voluptas consectetur officia quas, deserunt corrupti voluptatum laudantium veritatis quae aut quam at? ",
+      "Rohit Dutt, with 14+ years in software development and tech recruitment, leads Paddlelift’s tech hiring. His industry experience and strategic foresight deliver top tech talent, ensuring Paddlelift connects cutting-edge companies with exceptional professionals.",
     socials: {
-      linkedin: "https://linkedin.com/in/emilyrodriguez",
-      twitter: "https://twitter.com/emilyrodriguez",
-      github: "https://github.com/emilyrodriguez",
+      linkedin: "https://www.linkedin.com/in/rodutt/",
     },
   },
   {
@@ -52,11 +46,9 @@ const teamMembers = [
     title: "COO & Co-founder",
     photo: "https://picsum.photos/600/400",
     description:
-      " Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur voluptas consectetur officia quas, deserunt corrupti voluptatum laudantium veritatis quae aut quam at? ",
+      "Sanjay Amar, with 37+ years experience, based in Dubai for 26 years, has played roles as Board Advisor, Corporate Advisor, M&A and Fund Raise Specialist, Business Leader, Group - CEO/ COO/ CFO, Commodity Broker, & Talent Acquisition Specialist, spearheading large diversified family owned conglomerates in the Middle East, Africa & Asia in multi-country, multi-business environments. Awarded an Honorary Doctorate in Organizational Leadership, he is a Chartered Accountant, Fellow Member of the Institute of Directors, & an active member of the World Human Rights Protection Commission (WHRPC).",
     socials: {
-      linkedin: "https://linkedin.com/in/",
-      twitter: "https://twitter.com/",
-      github: "https://github.com/",
+      linkedin: "https://www.linkedin.com/in/sanjayamar/",
     },
   },
 ];
@@ -105,9 +97,12 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-xl text-gray-600 mb-8"
+                className="text-xl text-gray-400 mb-8"
               >
-                Text about what we do and our mission to help businesses grow.
+                Paddlelift, founded in 2020, is a global recruitment and HR firm
+                committed to providing streamlined, personalized talent
+                solutions. Our focus is on helping companies grow by
+                transforming recruitment challenges into opportunities.
               </motion.p>
               <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
                 Connect With Us
@@ -162,7 +157,7 @@ export default function AboutPage() {
                 className="text-5xl md:text-6xl font-bold text-white flex flex-wrap justify-center"
               >
                 <motion.span
-                  className="text-white relative mr-2"
+                  className="text-white mr-2"
                   initial="hidden"
                   animate="visible"
                   variants={{
@@ -177,9 +172,9 @@ export default function AboutPage() {
                       },
                     }),
                   }}
-                  custom={0}
+                  custom={2}
                 >
-                  Key
+                  Meet the
                 </motion.span>
                 <motion.span
                   className="text-emerald-400 relative mr-2"
@@ -198,47 +193,6 @@ export default function AboutPage() {
                     }),
                   }}
                   custom={1}
-                >
-                  People
-                  <span className="absolute inset-0 blur-md bg-emerald-400/30 z-10"></span>
-                </motion.span>
-                <motion.span
-                  className="text-white mr-2"
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: (i: number) => ({
-                      opacity: 1,
-                      y: 0,
-                      transition: {
-                        delay: i * 0.2,
-                        duration: 0.8,
-                        ease: "easeInOut",
-                      },
-                    }),
-                  }}
-                  custom={2}
-                >
-                  / Meet the
-                </motion.span>
-                <motion.span
-                  className="text-white"
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: (i: number) => ({
-                      opacity: 1,
-                      y: 0,
-                      transition: {
-                        delay: i * 0.2,
-                        duration: 0.8,
-                        ease: "easeInOut",
-                      },
-                    }),
-                  }}
-                  custom={3}
                 >
                   Management
                 </motion.span>

@@ -68,12 +68,6 @@ const MainHeading = memo(({ words, highlight = -1 }: MainHeadingProps) => {
             custom={index}
           >
             {word}
-            {index === highlight && (
-              <span
-                className="absolute inset-0 blur-md bg-emerald-400/30 z-10"
-                aria-hidden="true"
-              ></span>
-            )}
           </motion.span>
         ))}
       </h1>
@@ -135,14 +129,14 @@ const ImageSection = memo(({ src, alt }: { src: string; alt: string }) => {
       animate={inView ? "visible" : "hidden"}
       variants={animations.scaleUp}
       transition={{ duration: 1, ease: "easeOut" }}
-      className="relative"
+      className="relative max-w-md mx-auto"
     >
       <Image
         src={src}
         alt={alt}
-        width={600}
-        height={400}
-        className="rounded-xl object-cover w-full h-full"
+        width={400}
+        height={300}
+        className="rounded-xl object-cover w-full h-auto"
         loading="lazy"
       />
       <div
@@ -165,7 +159,7 @@ export default function ManagementSection() {
 
   return (
     <section
-      className="py-20 bg-[#09090B]"
+      className="py-20 bg-[#09090B] snap-start"
       ref={sectionRef}
       role="region"
       aria-label="Management Section"
@@ -177,10 +171,10 @@ export default function ManagementSection() {
         />
 
         {/* Mission Section */}
-        <div className="grid md:grid-cols-2 gap-16 mb-24 mt-16">
+        <div className="grid md:grid-cols-2 gap-8 mb-16 mt-12">
           <AnimatedCard>
             <SubHeading>Mission</SubHeading>
-            <p className="text-gray-300 text-lg leading-relaxed">
+            <p className="text-gray-300 text-base leading-relaxed">
               Our mission is to be the guiding light for start-ups, offering
               them not just advice, but tangible, hands-on support to propel
               their businesses to new heights. We strive to empower
@@ -192,11 +186,11 @@ export default function ManagementSection() {
         </div>
 
         {/* Vision Section */}
-        <div className="grid md:grid-cols-2 gap-16 mb-24">
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
           <ImageSection src="/about/vision.svg" alt="Vision Graphic" />
           <AnimatedCard>
             <SubHeading>Vision</SubHeading>
-            <p className="text-gray-300 text-lg leading-relaxed">
+            <p className="text-gray-300 text-base leading-relaxed">
               To establish our presence in the market as unrivaled leaders,
               offering the ultimate solution to overcome the hiring bottlenecks
               faced by start-ups. We envision a future where every innovative
@@ -204,31 +198,6 @@ export default function ManagementSection() {
               ecosystem of talent and resources that we facilitate.
             </p>
           </AnimatedCard>
-        </div>
-
-        {/* Core Values Section */}
-        <div className="mt-32">
-          <MainHeading words={["Core", "Values"]} highlight={1} />
-          <motion.div
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            variants={animations.fadeUp}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-            className="relative mt-12"
-          >
-            <Image
-              src="/about/order.gif"
-              alt="Core Values"
-              width={1920}
-              height={1080}
-              className="rounded-xl object-cover mx-auto"
-              loading="lazy"
-            />
-            <div
-              className="absolute inset-0 blur-3xl bg-emerald-500/5 -z-10"
-              aria-hidden="true"
-            ></div>
-          </motion.div>
         </div>
 
         {/* Timeline Section */}

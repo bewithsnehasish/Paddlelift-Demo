@@ -84,7 +84,7 @@ export function TeamGallery() {
               }}
               custom={0}
             >
-              Life
+              Life at{"  "}
             </motion.span>
             <motion.span
               className="text-emerald-400 relative mr-2"
@@ -104,8 +104,7 @@ export function TeamGallery() {
               }}
               custom={1}
             >
-              at PaddleLift
-              <span className="absolute inset-0 blur-md bg-emerald-400/30 z-10"></span>
+              PaddleLift
             </motion.span>
           </motion.h2>
         </div>

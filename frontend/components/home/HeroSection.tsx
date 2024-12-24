@@ -9,7 +9,7 @@ import AnimatedGridPattern from "../ui/animated-grid-pattern";
 
 export default function HeroSection() {
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section className="min-h-screen snap-start flex items-center justify-center relative overflow-hidden">
       {/* Animated Grid Pattern */}
       <AnimatedGridPattern
         className="absolute inset-0 z-0 bg-gray-900"
