@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     MAINTENANCE_MODE: process.env.MAINTENANCE_MODE,
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
