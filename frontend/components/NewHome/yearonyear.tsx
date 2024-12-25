@@ -66,7 +66,6 @@ const YearGrowthCard: React.FC = () => {
             custom={1}
           >
             Growth
-            <span className="absolute inset-0 blur-md bg-teal-400/30 z-10"></span>
           </motion.span>
         </motion.h1>
       </div>

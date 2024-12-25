@@ -8,7 +8,7 @@ import WorldMapSection from "@/components/NewHome/maps";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PortfolioSection from "@/components/portfolio/portfoliosection";
-import PartnersSection from "@/components/NewHome/partner-new";
+import PartnersSection from "@/components/NewHome/new-partner";
 
 export default function Home() {
   const [showScrollUp, setShowScrollUp] = useState(false);

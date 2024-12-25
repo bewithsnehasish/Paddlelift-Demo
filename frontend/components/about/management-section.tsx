@@ -155,7 +155,6 @@ ImageSection.displayName = "ImageSection";
 
 export default function ManagementSection() {
   const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true });
 
   return (
     <section
@@ -199,23 +198,6 @@ export default function ManagementSection() {
             </p>
           </AnimatedCard>
         </div>
-
-        {/* Timeline Section */}
-        <section className="snap-start py-20">
-          <div className="container mx-auto px-4">
-            <MainHeading words={["Our", "Working", "History"]} highlight={1} />
-            <div className="relative">
-              <Image
-                src="/about/timeline.svg"
-                alt="Company Timeline"
-                width={1920}
-                height={1080}
-                className="rounded-lg object-cover w-full shadow-2xl"
-                loading="lazy"
-              />
-            </div>
-          </div>
-        </section>
       </div>
     </section>
   );

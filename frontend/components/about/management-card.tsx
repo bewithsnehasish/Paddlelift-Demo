@@ -29,7 +29,7 @@ export function ManagementCard({
 
   return (
     <Card
-      className="relative overflow-hidden group cursor-pointer"
+      className="relative overflow-hidden group cursor-pointer bg-[#09090B]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

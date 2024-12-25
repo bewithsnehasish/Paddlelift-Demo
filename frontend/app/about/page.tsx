@@ -9,12 +9,14 @@ import Image from "next/image";
 import Footer from "@/components/Footer";
 import ManagementSection from "@/components/about/management-section";
 import { useEffect, useState } from "react";
+import NewTimeline from "@/components/about/new-timeline";
+import YearGrowthCard from "@/components/NewHome/yearonyear";
 
 const teamMembers = [
   {
     name: "Utkarsh Rastogi",
     title: "Co-Founder & Director Head of Growth & Ops",
-    photo: "https://picsum.photos/600/400",
+    photo: "/founder-images/Utkarsh.png",
     description:
       "Utkarsh Rastogi, a BITS Pilani alumnus with 15+ years of experience and leadership in top recruitment firms, drives Paddlelift’s growth. His strategic expertise ensures Paddlelift stays at the forefront of the recruitment industry.",
     socials: {
@@ -24,7 +26,7 @@ const teamMembers = [
   {
     name: "Kanika Mahajan",
     title: "Co-Founder & Director Head of Non-Tech Recruitment",
-    photo: "https://picsum.photos/600/400",
+    photo: "/founder-images/Kanika.png",
     description:
       "Kanika Mahajan, an MBA-HR with 16+ years in business administration and NonIT hiring, excels in understanding diverse business talent needs. Her strategic vision and market insights have significantly elevated Paddlelift, showcasing her pivotal role in the company's success.",
     socials: {
@@ -34,7 +36,7 @@ const teamMembers = [
   {
     name: "Rohit Dutt",
     title: "Co-Founder & Director Head of Tech Recruitment",
-    photo: "https://picsum.photos/600/400",
+    photo: "/founder-images/Rohit.png",
     description:
       "Rohit Dutt, with 14+ years in software development and tech recruitment, leads Paddlelift’s tech hiring. His industry experience and strategic foresight deliver top tech talent, ensuring Paddlelift connects cutting-edge companies with exceptional professionals.",
     socials: {
@@ -42,9 +44,9 @@ const teamMembers = [
     },
   },
   {
-    name: "Sneha Singh",
-    title: "COO & Co-founder",
-    photo: "https://picsum.photos/600/400",
+    name: "Sanjay Amar",
+    title: "Co-Founder & Director Head of Global Partnerships",
+    photo: "/founder-images/Sanjay.png",
     description:
       "Sanjay Amar, with 37+ years experience, based in Dubai for 26 years, has played roles as Board Advisor, Corporate Advisor, M&A and Fund Raise Specialist, Business Leader, Group - CEO/ COO/ CFO, Commodity Broker, & Talent Acquisition Specialist, spearheading large diversified family owned conglomerates in the Middle East, Africa & Asia in multi-country, multi-business environments. Awarded an Honorary Doctorate in Organizational Leadership, he is a Chartered Accountant, Fellow Member of the Institute of Directors, & an active member of the World Human Rights Protection Commission (WHRPC).",
     socials: {
@@ -54,6 +56,9 @@ const teamMembers = [
 ];
 
 export default function AboutPage() {
+  const [showScrollUp, setShowScrollUp] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -72,6 +77,29 @@ export default function AboutPage() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY < lastScrollY && currentScrollY > 200) {
+        setShowScrollUp(true);
+      } else {
+        setShowScrollUp(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -198,7 +226,7 @@ export default function AboutPage() {
                 </motion.span>
               </motion.h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 bg-[#09090B]">
               {teamMembers.map((member) => (
                 <ManagementCard key={member.name} {...member} />
               ))}
@@ -206,14 +234,32 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Timeline Section */}
+        <section className="snap-start py-20">
+          <div className="container mx-auto px-4">
+            <NewTimeline />
+          </div>
+        </section>
+
         {/* Team Gallery Section */}
-        <section className=" snap-start  bg-[#09090B]">
+        <section className="snap-start bg-[#09090B]">
           <div className="container mx-auto px-4">
             <TeamGallery />
           </div>
         </section>
       </div>
       <Footer />
+
+      {/* Scroll-Up Button */}
+      {showScrollUp && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-8 w-12 h-12 bg-blue-500 text-white text-6xl rounded-full shadow-md flex items-center justify-center hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all ease-in-out"
+          aria-label="Scroll to top"
+        >
+          ↑
+        </button>
+      )}
     </>
   );
 }

@@ -13,16 +13,6 @@ const HeroSection = () => {
 
       {/* Background and Main Images Container */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Background Image */}
-        <Image
-          src="/services/herobg.svg"
-          alt="Background"
-          className="w-full h-full object-cover opacity-90"
-          fill
-          priority
-          sizes="100vw"
-        />
-
         {/* Main Image - Floating */}
         <div className="absolute inset-0 flex items-center justify-center animate-float">
           <Image
@@ -63,14 +53,6 @@ const HeroSection = () => {
               </Button>
             </div>
           </div>
-        </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-purple-500"></div>
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-purple-300"></div>
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-purple-300"></div>
-          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-purple-300"></div>
         </div>
       </div>
     </div>
