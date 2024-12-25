@@ -10,7 +10,6 @@ import Footer from "@/components/Footer";
 import ManagementSection from "@/components/about/management-section";
 import { useEffect, useState } from "react";
 import NewTimeline from "@/components/about/new-timeline";
-import YearGrowthCard from "@/components/NewHome/yearonyear";
 
 const teamMembers = [
   {
@@ -111,7 +110,6 @@ export default function AboutPage() {
         />
 
         {/* Hero Section */}
-        {/* Hero Section */}
         <section className="h-screen snap-start flex items-center relative">
           <div className="container mx-auto px-4 md:px-8 lg:px-16 grid md:grid-cols-2 gap-3 items-center">
             <div className="text-left md:text-left pt-28">
@@ -140,7 +138,7 @@ export default function AboutPage() {
                 Contact Us
               </Button>
             </div>
-            <div className="relative mt-8 md:mt-0">
+            <div className="relative mt-16 md:mt-0">
               {!isGifComplete && (
                 <Image
                   src="/about/Aboutus.gif"
