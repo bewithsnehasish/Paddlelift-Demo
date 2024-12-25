@@ -55,8 +55,8 @@ export default function Home() {
         */}
       <FeaturesSection />
       <WorldMapSection />
-      <PartnersSection />
       <PortfolioSection />
+      <PartnersSection />
       <Footer />
 
       {/* Scroll-Up Button */}

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import ShinyButton from "./ui/shiny-button";
 import { BackgroundBeams } from "./ui/background-beams";
 import { FaLinkedin, FaInstagram } from "react-icons/fa"; // Import icons from React Icons
 
@@ -20,10 +19,6 @@ const Footer = () => {
                 Contact us{" "}
               </Link>{" "}
             </h1>
-
-            <ShinyButton>
-              <Link href="mailto:mandalsneh97@gmail.com">Mail Us</Link>
-            </ShinyButton>
           </div>
 
           <div className="mt-16 p-10 border-t border-dark-200 dark:border-white/10 flex flex-col md:flex-row justify-between gap-10 md:gap-0">
