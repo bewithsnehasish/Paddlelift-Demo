@@ -25,7 +25,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full h-full min-h-[400px] lg:min-h-[600px] relative lg:order-2 order-1"
+            className="w-full h-full min-h-[400px] lg:min-h-[600px] relative lg:order-2 order-1 mt-12"
           >
             <Image
               src="/images/hero.gif"
