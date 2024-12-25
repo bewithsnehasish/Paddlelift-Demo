@@ -111,13 +111,14 @@ export default function AboutPage() {
         />
 
         {/* Hero Section */}
+        {/* Hero Section */}
         <section className="h-screen snap-start flex items-center relative">
-          <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-            <div>
+          <div className="container mx-auto px-4 md:px-8 lg:px-16 grid md:grid-cols-2 gap-3 items-center">
+            <div className="text-left md:text-left pt-28">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                className="text-5xl font-bold mb-6"
+                className="text-4xl md:text-5xl font-bold mb-6"
               >
                 About <span className="text-red-600">PaddleLift</span>
               </motion.h1>
@@ -125,25 +126,28 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-xl text-gray-400 mb-8"
+                className="text-lg md:text-xl text-gray-400 mb-8"
               >
                 Paddlelift, founded in 2020, is a global recruitment and HR firm
                 committed to providing streamlined, personalized talent
                 solutions. Our focus is on helping companies grow by
                 transforming recruitment challenges into opportunities.
               </motion.p>
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Connect With Us
+              <Button
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 px-6 py-3 text-white rounded-md"
+              >
+                Contact Us
               </Button>
             </div>
-            <div className="relative">
+            <div className="relative mt-8 md:mt-0">
               {!isGifComplete && (
                 <Image
                   src="/about/Aboutus.gif"
                   alt="About Section Animation"
                   width={1000}
                   height={500}
-                  className="rounded-lg object-cover absolute top-0 left-0 z-10"
+                  className="rounded-lg object-cover absolute top-0 left-0 z-10 w-full h-auto md:w-auto md:h-auto"
                   priority
                 />
               )}
@@ -152,7 +156,7 @@ export default function AboutPage() {
                 alt="About Section"
                 width={1000}
                 height={500}
-                className={`rounded-lg object-cover transition-opacity duration-300 ${
+                className={`rounded-lg object-cover transition-opacity duration-300 w-full h-auto md:w-auto md:h-auto ${
                   isGifComplete ? "opacity-100" : "opacity-0"
                 }`}
               />

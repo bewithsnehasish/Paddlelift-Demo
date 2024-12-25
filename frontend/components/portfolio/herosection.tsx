@@ -9,7 +9,8 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <section className="min-h-screen flex flex-col text-left relative overflow-hidden">
+      {/* Background Image */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
           src="/portfolio/bgportfolio.svg"
@@ -21,35 +22,35 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Background gradient */}
-      <div className="absolute inset-0 z-0" />
+      {/* Background Gradient */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent to-black opacity-50" />
 
+      {/* Content Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start p-12 mt-16">
           {/* Left Column - Text Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="max-w-2xl"
           >
-            <div className="max-w-2xl">
-              <TextGenerateEffect
-                words="Our Portfolio "
-                className="text-4xl md:text-6xl font-bold mb-6"
-              />
-              <p className="text-xl text-muted-foreground mb-8">
-                Tailor made solutions for Startups to Enterprises....
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" asChild>
-                  <Link
-                    className="text-xl text-white font-black [text-shadow:_0_0_2px_rgba(0,0,0,0.75)]"
-                    href="/contact"
-                  >
-                    Connect Us <ArrowRight className="ml-2" />
-                  </Link>
-                </Button>
-              </div>
+            <TextGenerateEffect
+              words="Our Portfolio"
+              className="text-4xl md:text-6xl font-bold mb-6"
+            />
+            <p className="text-xl text-muted-foreground mb-8">
+              Tailor-made solutions for Startups to Enterprises....
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" asChild>
+                <Link
+                  className="text-xl text-white font-black [text-shadow:_0_0_2px_rgba(0,0,0,0.75)]"
+                  href="/contact"
+                >
+                  Connect Us <ArrowRight className="ml-2" />
+                </Link>
+              </Button>
             </div>
           </motion.div>
 

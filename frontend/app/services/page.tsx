@@ -11,12 +11,14 @@ import ElfsightReviews from "@/components/services/elfsight";
 const MaintenancePage: React.FC = () => {
   return (
     <>
-      <ServicesHero />
-      <FeaturesSection />
-      <PartnersSection />
-      <IndustriesServed />
-      <ElfsightReviews />
-      <Footer />
+      <div className="overflow-hidden">
+        <ServicesHero />
+        <FeaturesSection />
+        <PartnersSection />
+        <IndustriesServed />
+        <ElfsightReviews />
+        <Footer />
+      </div>
     </>
   );
 };

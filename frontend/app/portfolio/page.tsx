@@ -9,12 +9,14 @@ import CompanyTestimonials from "@/components/portfolio/company-testimonials";
 const MaintenancePage: React.FC = () => {
   return (
     <>
-      <Navbar />
-      <HeroSection />
-      <PortfolioSection />
-      <Testimonials />
-      <CompanyTestimonials />
-      <Footer />
+      <div className="overflow-hidden">
+        <Navbar />
+        <HeroSection />
+        <PortfolioSection />
+        <Testimonials />
+        <CompanyTestimonials />
+        <Footer />
+      </div>
     </>
   );
 };
