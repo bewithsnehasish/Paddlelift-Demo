@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 
@@ -40,15 +40,15 @@ export function TeamGallery() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full bg-[#09090B]  overflow-hidden"
+      className="relative w-full bg-[#09090B] py-20 px-4 sm:px-6 md:px-8 overflow-hidden"
     >
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="container mx-auto px-4"
+        className="container mx-auto"
       >
-        <div className="mb-12">
+        <div className="mb-12 text-left">
           <motion.h2
             initial="hidden"
             animate="visible"
@@ -64,7 +64,7 @@ export function TeamGallery() {
                 },
               },
             }}
-            className="text-5xl md:text-6xl font-bold text-white flex flex-wrap justify-center"
+            className="text-3xl md:text-5xl font-bold text-white flex flex-wrap gap-4"
           >
             <motion.span
               className="text-white relative mr-2"

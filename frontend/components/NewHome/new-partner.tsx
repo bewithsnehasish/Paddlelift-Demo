@@ -120,9 +120,9 @@ const PartnersSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-16 bg-[#09090B] overflow-hidden"
+      className="bg-[#09090B] snap-start py-20 px-4 sm:px-6 md:px-8"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
+      <div className="max-w-7xl mx-auto">
         <div className="pb-4 md:pb-20">
           {/* Header Section */}
           <motion.div
@@ -131,16 +131,13 @@ const PartnersSection: React.FC = () => {
             variants={headerVariants}
             className="max-w-xl"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white max-w-2xl leading-[110%]">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white max-w-2xl leading-[110%]">
               <span className="text-teal-400">Our</span> Clients
             </h2>
             <p className="mt-3 text-base md:text-lg">
-              Paddlelift has proudly partnered with a diverse range of
-              innovative companies across various industries. Our client
-              portfolio reflects our commitment to delivering exceptional talent
-              solutions and supporting business success stories. From startups
-              to established organizations, we have collaborated with businesses
-              globally to meet their unique hiring needs.
+              Paddlelift partners with innovative companies worldwide,
+              delivering exceptional talent solutions to support business
+              success from startups to established organizations.
             </p>
           </motion.div>
 

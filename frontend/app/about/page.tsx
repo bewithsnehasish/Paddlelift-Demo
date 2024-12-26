@@ -110,13 +110,13 @@ export default function AboutPage() {
         />
 
         {/* Hero Section */}
-        <section className="h-screen snap-start flex items-center relative">
+        <section className="h-screen snap-start flex items-center relative bg-[#09090B] py-20 px-4 sm:px-6 md:px-8">
           <div className="container mx-auto px-4 md:px-8 lg:px-16 grid md:grid-cols-2 gap-3 items-center">
             <div className="text-left md:text-left pt-28">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-5xl font-bold mb-6"
+                className="text-3xl md:text-5xl font-bold mb-6 text-white"
               >
                 About <span className="text-red-600">PaddleLift</span>
               </motion.h1>
@@ -168,7 +168,7 @@ export default function AboutPage() {
         {/* Management Section */}
         <section className="snap-start py-20 bg-[#09090B]">
           <div className="container mx-auto px-4">
-            <div className="mb-12 text-center">
+            <div className="mb-12 text-left">
               <motion.h2
                 initial="hidden"
                 animate="visible"
@@ -184,7 +184,7 @@ export default function AboutPage() {
                     },
                   },
                 }}
-                className="text-5xl md:text-6xl font-bold text-white flex flex-wrap justify-center"
+                className="text-3xl md:text-5xl font-bold text-white flex flex-wrap"
               >
                 <motion.span
                   className="text-white mr-2"
@@ -237,7 +237,7 @@ export default function AboutPage() {
         </section>
 
         {/* Timeline Section */}
-        <section className="snap-start py-20">
+        <section className="snap-start py-20 bg-[#09090B]">
           <div className="container mx-auto px-4">
             <NewTimeline />
           </div>

@@ -1,5 +1,6 @@
+"use client";
+
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
 import { motion, useInView } from "framer-motion";
 import { useRef, memo } from "react";
 
@@ -13,7 +14,7 @@ interface SubHeadingProps {
   children: React.ReactNode;
 }
 
-interface AnimatedCardProps {
+interface AnimatedTextProps {
   children: React.ReactNode;
 }
 
@@ -54,7 +55,7 @@ const MainHeading = memo(({ words, highlight = -1 }: MainHeadingProps) => {
   return (
     <div className="space-y-2 py-8" ref={headingRef}>
       <h1
-        className="text-5xl md:text-6xl font-bold text-white flex flex-wrap justify-center gap-4"
+        className="text-3xl md:text-5xl font-bold text-white flex flex-wrap gap-4"
         role="heading"
         aria-level={1}
       >
@@ -86,7 +87,7 @@ const SubHeading = memo(({ children }: SubHeadingProps) => {
       animate={inView ? "visible" : "hidden"}
       variants={animations.fadeUp}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="text-3xl md:text-4xl font-bold mb-6 text-emerald-400 relative"
+      className="text-2xl md:text-3xl font-bold mb-6 text-emerald-400 relative"
       role="heading"
       aria-level={3}
     >
@@ -99,21 +100,19 @@ const SubHeading = memo(({ children }: SubHeadingProps) => {
   );
 });
 
-const AnimatedCard = memo(({ children }: AnimatedCardProps) => {
-  const cardRef = useRef(null);
-  const inView = useInView(cardRef, { once: true });
+const AnimatedText = memo(({ children }: AnimatedTextProps) => {
+  const textRef = useRef(null);
+  const inView = useInView(textRef, { once: true });
 
   return (
     <motion.div
-      ref={cardRef}
+      ref={textRef}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       variants={animations.fadeUp}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <Card className="h-full bg-gray-900/50 backdrop-blur-sm border-gray-800">
-        <CardContent className="p-8">{children}</CardContent>
-      </Card>
+      {children}
     </motion.div>
   );
 });
@@ -150,7 +149,7 @@ const ImageSection = memo(({ src, alt }: { src: string; alt: string }) => {
 // Set display names for memo components
 MainHeading.displayName = "MainHeading";
 SubHeading.displayName = "SubHeading";
-AnimatedCard.displayName = "AnimatedCard";
+AnimatedText.displayName = "AnimatedText";
 ImageSection.displayName = "ImageSection";
 
 export default function ManagementSection() {
@@ -163,7 +162,7 @@ export default function ManagementSection() {
       role="region"
       aria-label="Management Section"
     >
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8">
         <MainHeading
           words={["Our", "Mission,", "Vision", "&", "Values"]}
           highlight={1}
@@ -171,7 +170,7 @@ export default function ManagementSection() {
 
         {/* Mission Section */}
         <div className="grid md:grid-cols-2 gap-8 mb-16 mt-12">
-          <AnimatedCard>
+          <AnimatedText>
             <SubHeading>Mission</SubHeading>
             <p className="text-gray-300 text-base leading-relaxed">
               Our mission is to be the guiding light for start-ups, offering
@@ -180,14 +179,14 @@ export default function ManagementSection() {
               entrepreneurs with the resources, knowledge, and connections they
               need to overcome challenges and achieve sustainable growth.
             </p>
-          </AnimatedCard>
+          </AnimatedText>
           <ImageSection src="/about/mission.svg" alt="Mission Graphic" />
         </div>
 
         {/* Vision Section */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <ImageSection src="/about/vision.svg" alt="Vision Graphic" />
-          <AnimatedCard>
+          <AnimatedText>
             <SubHeading>Vision</SubHeading>
             <p className="text-gray-300 text-base leading-relaxed">
               To establish our presence in the market as unrivaled leaders,
@@ -196,7 +195,7 @@ export default function ManagementSection() {
               idea has the opportunity to flourish, supported by a robust
               ecosystem of talent and resources that we facilitate.
             </p>
-          </AnimatedCard>
+          </AnimatedText>
         </div>
       </div>
     </section>

@@ -102,7 +102,7 @@ const ServicesSection = () => {
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <div className="space-y-2">
-            <h1 className="text-5xl md:text-6xl font-bold text-white flex flex-wrap">
+            <h1 className="text-3xl md:text-5xl font-bold text-white flex flex-wrap">
               <motion.span
                 className="text-white relative mr-2"
                 initial="hidden"
@@ -110,34 +110,16 @@ const ServicesSection = () => {
                 variants={wordPullAnimation}
                 custom={0}
               >
-                What
+                Our
               </motion.span>
               <motion.span
-                className="text-teal-500 relative mr-2"
+                className="text-teal-500 relative"
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
                 variants={wordPullAnimation}
                 custom={1}
               >
                 Services
-              </motion.span>
-              <motion.span
-                className="text-white mr-2"
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                variants={wordPullAnimation}
-                custom={2}
-              >
-                We&apos;re
-              </motion.span>
-              <motion.span
-                className="text-white"
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                variants={wordPullAnimation}
-                custom={3}
-              >
-                Offering
               </motion.span>
             </h1>
           </div>

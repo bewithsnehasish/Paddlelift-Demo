@@ -169,9 +169,12 @@ export default function PortfolioSection() {
   };
 
   return (
-    <div className="overflow-hidden bg-[#09090B]" ref={sectionRef}>
-      <div className="relative max-w-[85rem] px-4 py-16 sm:px-6 lg:px-8 lg:py-20 mx-auto">
-        <h1 className="text-5xl md:text-6xl font-bold text-white flex flex-wrap mb-4">
+    <div
+      className="bg-[#09090B] snap-start py-20 px-4 sm:px-6 md:px-8"
+      ref={sectionRef}
+    >
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl md:text-5xl font-bold text-white flex flex-wrap mb-4">
           <motion.span
             className="text-white relative mr-2"
             initial="hidden"
@@ -196,12 +199,12 @@ export default function PortfolioSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-white text-2xl font-semibold md:text-2xl max-w-lg"
+          className="text-white text-xl font-semibold md:text-base my-4 max-w-lg"
         >
           Numbers that define our portfolio
         </motion.p>
 
-        <div className="mt-20 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {STATS_DATA.map((data, index) => renderStatCard(data, index))}
         </div>
       </div>
