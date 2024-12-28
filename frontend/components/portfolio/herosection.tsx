@@ -9,13 +9,13 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <section className="min-h-screen flex flex-col text-left relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-center text-left relative overflow-hidden bg-black">
       {/* Background Image */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0">
         <Image
           src="/portfolio/bgportfolio.svg"
           alt="Background"
-          className="w-full h-full object-cover opacity-90"
+          className="w-full h-full object-cover opacity-80"
           fill
           priority
           sizes="100vw"
@@ -23,11 +23,11 @@ export default function HeroSection() {
       </div>
 
       {/* Background Gradient */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent to-black opacity-50" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-black to-transparent opacity-70" />
 
       {/* Content Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start p-12 mt-16">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -37,15 +37,16 @@ export default function HeroSection() {
           >
             <TextGenerateEffect
               words="Our Portfolio"
-              className="text-4xl md:text-6xl font-bold mb-6"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
             />
-            <p className="text-xl text-muted-foreground mb-8">
-              Tailor-made solutions for Startups to Enterprises....
+            <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
+              Tailor-made solutions for Startups to Enterprises. Let us help you
+              bring your vision to life with our expertise and dedication.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-wrap gap-4">
               <Button size="lg" asChild>
                 <Link
-                  className="text-xl text-white font-black [text-shadow:_0_0_2px_rgba(0,0,0,0.75)]"
+                  className="text-lg md:text-xl text-white font-semibold px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md flex items-center"
                   href="/contact"
                 >
                   Connect Us <ArrowRight className="ml-2" />
@@ -59,14 +60,14 @@ export default function HeroSection() {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full h-full min-h-[400px] lg:min-h-[600px] relative"
+            className="relative w-full h-auto max-h-[500px] lg:max-h-[600px] flex justify-center"
           >
             <Image
               src="/portfolio/Portfolio.gif"
               alt="Portfolio"
-              width={1280}
-              height={1280}
-              className="rounded-xl object-cover w-full h-full"
+              width={720}
+              height={720}
+              className="rounded-lg object-cover w-full h-auto shadow-lg"
               unoptimized
               loading="lazy"
             />

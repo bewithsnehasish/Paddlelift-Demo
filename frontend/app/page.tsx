@@ -43,11 +43,6 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       {/*
-      <Workflows />
-      <PartnersSection />
-        <Features />
-        <CompanyTimeline />
-        <YearGrowthCard />
         <GrowthTimeline />
         <ApproachSection />
         <OrganizationalStructure />
