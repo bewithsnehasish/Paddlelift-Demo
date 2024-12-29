@@ -37,8 +37,8 @@ export function ManagementCard({
         <Image
           src={photo}
           alt={name}
-          width={300}
-          height={400}
+          width={200}
+          height={300}
           className="w-full aspect-[3/4] object-cover"
         />
         <AnimatePresence>

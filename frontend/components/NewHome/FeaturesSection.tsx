@@ -21,36 +21,36 @@ const services: Service[] = [
     title: "Recruitment",
     description:
       "Delivering top talent across industries and skill sets, from tech to non-tech, with precision and expertise.",
-    image: "/features/recruitment.jpg",
-    height: 350,
-    width: 350,
+    image: "/features/Recruitment/2.png",
+    height: 300,
+    width: 300,
   },
   {
     id: "staffing",
     title: "Staffing",
     description:
       "Deploying skilled talent globally with seamless payroll management for efficient and compliant staffing solutions.",
-    image: "/features/staffing.jpg",
-    height: 350,
-    width: 350,
+    image: "/features/Staffing/5.png",
+    height: 300,
+    width: 300,
   },
   {
     id: "funding-gateway",
     title: "Funding Gateway",
     description:
       "Opening doors for startups by connecting them with global angel investors & VCs, guiding funding from pre-seed to Series B.",
-    image: "/features/funding.jpg",
-    height: 450,
-    width: 450,
+    image: "/features/funding/4.png",
+    height: 300,
+    width: 300,
   },
   {
     id: "hr-dynamics",
     title: "HR Dynamics",
     description:
       "Comprehensive HR management service that streamlines policy, strategies, salary benchmarking, etc. different analytics support.",
-    image: "/features/hresource.jpg",
-    height: 250,
-    width: 250,
+    image: "/features/HR/5.png",
+    height: 300,
+    width: 300,
   },
 ];
 
