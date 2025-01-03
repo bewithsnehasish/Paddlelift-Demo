@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
@@ -15,27 +15,27 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const router = useRouter();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+  const handleScroll = useCallback(() => {
+    const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY) {
-        if (currentScrollY > 100) {
-          setIsVisible(false);
-        }
-      } else {
-        setIsVisible(true);
+    if (currentScrollY > lastScrollY) {
+      if (currentScrollY > 100) {
+        setIsVisible(false);
       }
+    } else {
+      setIsVisible(true);
+    }
 
-      setIsScrolled(currentScrollY > 0);
-      setLastScrollY(currentScrollY);
-    };
+    setIsScrolled(currentScrollY > 0);
+    setLastScrollY(currentScrollY);
+  }, [lastScrollY]);
 
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY]);
+  }, [handleScroll]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -46,22 +46,25 @@ const Navbar = () => {
     router.push(path);
   };
 
-  const menuVariants = {
-    hidden: {
-      x: "-100%",
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut",
+  const menuVariants = useMemo(
+    () => ({
+      hidden: {
+        x: "-100%",
+        transition: {
+          duration: 0.4,
+          ease: "easeInOut",
+        },
       },
-    },
-    visible: {
-      x: 0,
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut",
+      visible: {
+        x: 0,
+        transition: {
+          duration: 0.4,
+          ease: "easeInOut",
+        },
       },
-    },
-  };
+    }),
+    [],
+  );
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -113,12 +116,16 @@ const Navbar = () => {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="m-auto" asChild>
+              <Button
+                size="sm" // Adjust the size here
+                className="m-auto bg-white text-black hover:bg-blue-500 hover:text-white transition duration-200"
+                asChild
+              >
                 <Link
-                  className="text-xl text-white font-black [text-shadow:_0_0_2px_rgba(0,0,0,0.75)]"
+                  className="text-xl font-black [text-shadow:_0_0_2px_rgba(0,0,0,0.75)]"
                   href="/jobs"
                 >
-                  Job Board <ArrowRight className="ml-2" />
+                  Job Board
                 </Link>
               </Button>
             </div>
@@ -142,7 +149,11 @@ const Navbar = () => {
               />
             </Link>
 
-            <button onClick={toggleMobileMenu} className="text-white h-6 w-6">
+            <button
+              onClick={toggleMobileMenu}
+              className="text-white h-6 w-6"
+              aria-label="Toggle menu"
+            >
               <svg
                 stroke="currentColor"
                 fill="currentColor"
@@ -151,7 +162,7 @@ const Navbar = () => {
                 className="text-white h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M432 176H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16zM432 272H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16zM432 368H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16-7.2 16 16s-7.2 16-16 16z" />
+                <path d="M432 176H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16zM432 272H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16zM432 368H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16z" />
               </svg>
             </button>
           </div>
@@ -171,6 +182,7 @@ const Navbar = () => {
             <button
               onClick={toggleMobileMenu}
               className="absolute top-8 right-8 text-white"
+              aria-label="Close menu"
             >
               <svg
                 stroke="currentColor"

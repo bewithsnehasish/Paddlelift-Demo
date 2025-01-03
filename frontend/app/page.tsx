@@ -9,6 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PortfolioSection from "@/components/portfolio/portfoliosection";
 import PartnersSection from "@/components/NewHome/new-partner";
+import NewHeroSection from "@/components/NewHome/new-herosection";
 
 export default function Home() {
   const [showScrollUp, setShowScrollUp] = useState(false);
@@ -41,8 +42,9 @@ export default function Home() {
   return (
     <div className="overflow-hidden">
       <Navbar />
-      <HeroSection />
+      <NewHeroSection />
       {/*
+      <HeroSection />
         <GrowthTimeline />
         <ApproachSection />
         <OrganizationalStructure />

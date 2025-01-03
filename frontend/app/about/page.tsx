@@ -47,7 +47,7 @@ const teamMembers = [
     title: "Co-Founder & Director Head of Global Partnerships",
     photo: "/founder-images/Sanjay.png",
     description:
-      "Sanjay Amar, with 37+ years experience, based in Dubai for 26 years, has played roles as Board Advisor, Corporate Advisor, M&A and Fund Raise Specialist, Business Leader, Group - CEO/ COO/ CFO, Commodity Broker, & Talent Acquisition Specialist, spearheading large diversified family owned conglomerates in the Middle East, Africa & Asia in multi-country, multi-business environments. Awarded an Honorary Doctorate in Organizational Leadership, he is a Chartered Accountant, Fellow Member of the Institute of Directors, & an active member of the World Human Rights Protection Commission (WHRPC).",
+      "Sanjay Amar, with 37+ years of experience and 26 years in Dubai, has held leadership roles including CEO, CFO, and Board Advisor, driving diversified conglomerates across the Middle East, Africa, and Asia. A Chartered Accountant with an Honorary Doctorate in Organizational Leadership, he is a Fellow of the Institute of Directors and a member of WHRPC.",
     socials: {
       linkedin: "https://www.linkedin.com/in/sanjayamar/",
     },
@@ -166,8 +166,8 @@ export default function AboutPage() {
         <ManagementSection />
 
         {/* Management Section */}
-        <section className="snap-start py-20 bg-[#09090B]">
-          <div className="container mx-auto px-4">
+        <section className="snap-start py-20 bg-[#09090B] px-4 sm:px-6 md:px-8">
+          <div className="max-w-7xl mx-auto">
             <div className="mb-12 text-left">
               <motion.h2
                 initial="hidden"
@@ -228,11 +228,25 @@ export default function AboutPage() {
                 </motion.span>
               </motion.h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 bg-[#09090B]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {teamMembers.map((member) => (
                 <ManagementCard key={member.name} {...member} />
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Core Values */}
+        <section className="snap-start py-20 bg-[#09090B]">
+          <div className="container mx-auto px-4 flex items-center justify-center">
+            <Image
+              src="/about/order.gif"
+              alt="World Map"
+              unoptimized
+              className="object-contain"
+              width={1200} // Adjust the width here
+              height={400} // Adjust the height here
+            />
           </div>
         </section>
 

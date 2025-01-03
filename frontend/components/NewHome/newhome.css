@@ -3,3 +3,12 @@
   border-radius: 10px;
 }
 
+.glowing-text {
+  background: bg-yellow-800;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 5px bg-yellow-300, 0 0 10px bg-yellow-300, 0 0 15px bg-yellow-300, 0 0 20px bg-yellow-300, 0 0 30px bg-yellow-300, 0 0 40px bg-yellow-300, 0 0 50px bg-yellow-300, 0 0 75px bg-yellow-300;
+}
+
+

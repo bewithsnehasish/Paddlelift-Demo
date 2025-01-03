@@ -46,7 +46,7 @@ export default function WorldMapSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-3xl md:text-5xl font-bold mb-4 text-white max-w-2xl leading-[110%]"
+          className="text-3xl md:text-5xl font-bold mb-4 text-white max-w-3xl leading-[110%]"
         >
           Operations Around the <span className="text-teal-400">World</span>
         </motion.h2>
@@ -57,9 +57,8 @@ export default function WorldMapSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white text-xl font-semibold md:text-base my-4 max-w-lg"
         >
-          We&apos;ve successfully worked with clients across various regions,
-          expanding our global footprint and delivering exceptional services
-          worldwide.
+          We work successfully with clients across various regions, expanding
+          our global footprint and delivering exceptional services worldwide.
         </motion.p>
 
         {/* World Map */}

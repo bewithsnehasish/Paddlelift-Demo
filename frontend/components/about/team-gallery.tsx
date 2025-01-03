@@ -46,7 +46,7 @@ export function TeamGallery() {
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="container mx-auto"
+        className="max-w-7xl mx-auto"
       >
         <div className="mb-12 text-left">
           <motion.h2

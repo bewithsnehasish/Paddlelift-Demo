@@ -154,8 +154,8 @@ ImageSection.displayName = "ImageSection";
 
 export default function NewTimeline() {
   return (
-    <section className="snap-start py-20 bg-[#09090B]">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 text-left">
+    <section className="snap-start py-20 bg-[#09090B] px-4 sm:px-6 md:px-8">
+      <div className="max-w-7xl mx-auto text-left">
         <MainHeading words={["Our", "Journey"]} highlight={1} />
         <div className="relative mt-8">
           <Image

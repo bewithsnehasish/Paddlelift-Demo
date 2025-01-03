@@ -157,14 +157,14 @@ export default function ManagementSection() {
 
   return (
     <section
-      className="py-20 bg-[#09090B] snap-start"
+      className="bg-[#09090B] snap-start py-20 px-4 sm:px-6 md:px-8"
       ref={sectionRef}
       role="region"
       aria-label="Management Section"
     >
-      <div className="container mx-auto px-4 sm:px-6 md:px-8">
+      <div className="max-w-7xl mx-auto">
         <MainHeading
-          words={["Our", "Mission,", "Vision", "&", "Values"]}
+          words={["Our", "Mission,", "Vision", "& Core Values"]}
           highlight={1}
         />
 

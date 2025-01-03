@@ -20,9 +20,9 @@ const services: Service[] = [
     id: "recruitment",
     title: "Recruitment",
     description:
-      "Delivering top talent across industries and skill sets, from tech to non-tech, with precision and expertise.",
+      "Delivering top talent across industries and verticals, from tech to non-tech, with precision and expertise.",
     image: "/features/Recruitment/2.png",
-    height: 300,
+    height: 150,
     width: 300,
   },
   {
@@ -124,9 +124,9 @@ const ServicesSection = () => {
             </h1>
           </div>
           <p className="text-gray-400 mt-6 max-w-2xl">
-            We offer a range of features designed to streamline your business
-            operations and drive growth. From talent acquisition to funding
-            support, our comprehensive solutions cater to diverse needs.
+            We offer a range of Services designed to streamline your business
+            operations and drive growth. From Talent Acquisition to Funding
+            Support, our comprehensive solutions cater to diverse needs.
           </p>
         </div>
 

@@ -21,6 +21,7 @@
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.7.1",
     "@types/react-simple-maps": "^3.0.6",
+    "animations": "^0.0.0",
     "apexcharts": "^4.2.0",
     "chart.js": "^4.4.7",
     "class-variance-authority": "^0.7.1",

@@ -34,8 +34,8 @@ const STATS_DATA: StatItem[] = [
   {
     title: "Turn Around Time (TAT)",
     prefix: "<",
-    value: 45,
-    suffix: "%",
+    value: 48,
+    suffix: "Hrs",
     description: "Connecting Top Talent",
   },
   {
@@ -201,7 +201,7 @@ export default function PortfolioSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white text-xl font-semibold md:text-base my-4 max-w-lg"
         >
-          Numbers that define our portfolio
+          Our Stats speak it all
         </motion.p>
 
         <div className="mt-12 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { MessageSquare, Mail, Twitter } from "lucide-react";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import { SparklesCore } from "@/components/ui/sparkles";
 import Navbar from "@/components/Navbar";
@@ -18,14 +16,6 @@ export default function ContactPage() {
     lastName: "",
     email: "",
     phone: "",
-    services: {
-      webDesign: false,
-      uxDesign: false,
-      userResearch: false,
-      contentCreation: false,
-      strategyConsulting: false,
-      other: false,
-    },
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,36 +26,17 @@ export default function ContactPage() {
     }));
   };
 
-  const handleServiceChange = (
-    serviceId: keyof (typeof formData)["services"],
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      services: {
-        ...prev.services,
-        [serviceId]: !prev.services[serviceId],
-      },
-    }));
-  };
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validate form data
-    const selectedServices = Object.entries(formData.services)
-      .filter((entry) => entry[1]) // Use the second element of the entry directly
-      .map(([service]) => service);
-
     if (!formData.firstName || !formData.lastName || !formData.email) {
       alert("Please fill in required fields");
       return;
     }
 
     // Here you would typically send the data to a backend
-    console.log("Form submitted:", {
-      ...formData,
-      selectedServices,
-    });
+    console.log("Form submitted:", formData);
   };
 
   return (
@@ -113,6 +84,7 @@ export default function ContactPage() {
             </div>
 
             {/* Quick contact options */}
+            {/*
             <div className="grid gap-4 mb-12">
               <motion.button
                 initial={{ opacity: 0, y: 20 }}
@@ -161,6 +133,7 @@ export default function ContactPage() {
                 </div>
               </motion.button>
             </div>
+              */}
 
             {/* Contact Form */}
             <motion.div
@@ -225,45 +198,6 @@ export default function ContactPage() {
                     placeholder="+91 (555) 000-0000"
                     className="bg-neutral-950 border-neutral-800 text-neutral-200 placeholder:text-neutral-500"
                   />
-                </div>
-
-                <div className="space-y-4">
-                  <Label className="text-neutral-200">Services</Label>
-                  <div className="grid grid-cols-2 gap-4">
-                    {(
-                      [
-                        { id: "webDesign", label: "Website design" },
-                        { id: "uxDesign", label: "UX design" },
-                        { id: "userResearch", label: "User research" },
-                        { id: "contentCreation", label: "Content creation" },
-                        {
-                          id: "strategyConsulting",
-                          label: "Strategy & consulting",
-                        },
-                        { id: "other", label: "Other" },
-                      ] as const
-                    ).map((service) => (
-                      <div
-                        key={service.id}
-                        className="flex items-center space-x-2"
-                      >
-                        <Checkbox
-                          id={service.id}
-                          checked={formData.services[service.id]}
-                          onCheckedChange={() =>
-                            handleServiceChange(service.id)
-                          }
-                          className="border-neutral-700 data-[state=checked]:bg-primary"
-                        />
-                        <label
-                          htmlFor={service.id}
-                          className="text-sm font-medium leading-none text-neutral-300 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                          {service.label}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
                 </div>
 
                 <Button
