@@ -2,8 +2,14 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import React from "react";
 
-const AnimatedButton = ({ children, href }) => {
+interface AnimatedButtonProps {
+  href: string;
+  children: React.ReactNode;
+}
+
+const AnimatedButton = ({ children, href }: AnimatedButtonProps) => {
   return (
     <Link href={href} className="inline-block">
       <button className="font-bold text-white bg-[#171717] px-6 py-3 rounded-lg relative cursor-pointer overflow-hidden group">
