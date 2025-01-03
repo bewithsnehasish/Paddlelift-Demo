@@ -18,7 +18,7 @@ export function StepCard({
   onClick,
   total,
 }: StepCardProps) {
-  const Icon = Icons[icon as keyof typeof Icons];
+  const Icon = Icons[icon as keyof typeof Icons] as React.ElementType;
 
   return (
     <motion.div
