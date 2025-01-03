@@ -1,0 +1,67 @@
+export const processSteps = [
+  {
+    id: 5,
+    title: "Consult",
+    subtitle: "Strategic Planning & Analysis",
+    description: [
+      "Industry Benchmarking",
+      "Market Mapping & Analysis",
+      "Budget Planning & Optimization",
+    ],
+    color: "from-violet-500 to-violet-700",
+    gradient: "bg-gradient-to-r from-violet-500/10 to-violet-700/10",
+    icon: "LineChart",
+  },
+  {
+    id: 4,
+    title: "Access",
+    subtitle: "Strategic Recruitment",
+    description: [
+      "Comprehensive Recruitment Planning",
+      "Advanced Search Strategies",
+      "Targeted Sourcing & Head-Hunting",
+    ],
+    color: "from-blue-500 to-blue-700",
+    gradient: "bg-gradient-to-r from-blue-500/10 to-blue-700/10",
+    icon: "Search",
+  },
+  {
+    id: 3,
+    title: "Assess",
+    subtitle: "Evaluation & Interview",
+    description: [
+      "Custom Assessment Development",
+      "Structured Interview Process",
+      "Skills Validation Framework",
+    ],
+    color: "from-emerald-500 to-emerald-700",
+    gradient: "bg-gradient-to-r from-emerald-500/10 to-emerald-700/10",
+    icon: "ClipboardCheck",
+  },
+  {
+    id: 2,
+    title: "Select",
+    subtitle: "Decision Making",
+    description: [
+      "Stakeholder Management",
+      "Decision Framework",
+      "Offer Negotiation",
+    ],
+    color: "from-amber-500 to-amber-700",
+    gradient: "bg-gradient-to-r from-amber-500/10 to-amber-700/10",
+    icon: "Users",
+  },
+  {
+    id: 1,
+    title: "Onboard",
+    subtitle: "Integration & Feedback",
+    description: [
+      "Candidate Integration",
+      "Client Feedback Loop",
+      "Success Tracking",
+    ],
+    color: "from-rose-500 to-rose-700",
+    gradient: "bg-gradient-to-r from-rose-500/10 to-rose-700/10",
+    icon: "Rocket",
+  },
+];
