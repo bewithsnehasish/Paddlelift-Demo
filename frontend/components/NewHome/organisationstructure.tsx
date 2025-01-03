@@ -71,14 +71,15 @@ export default function OrganizationalStructure() {
         <motion.div
           initial={{ opacity: 0, x: -80 }}
           animate={controlsImage}
-          className="w-full h-auto"
+          className="w-full h-auto flex justify-center items-center"
         >
           <Image
-            src="/images/organisationstructure.svg"
+            // src="/images/organisationstructure.svg"
+            src="/Plogo.png"
             alt="Organizational Structure"
-            className="w-full h-auto object-contain"
-            width={1920}
-            height={1080}
+            className="w-3/4 h-auto object-contain" // Adjust the size here
+            width={800} // Adjust the width here
+            height={450} // Adjust the height here
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
           />
