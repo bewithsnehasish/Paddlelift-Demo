@@ -9,6 +9,7 @@ import { BackgroundBeams } from "@/components/ui/background-beams";
 import { SparklesCore } from "@/components/ui/sparkles";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import axios from "axios";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -16,9 +17,15 @@ export default function ContactPage() {
     lastName: "",
     email: "",
     phone: "",
+    message: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { id, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -26,17 +33,108 @@ export default function ContactPage() {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError(null);
 
     // Validate form data
-    if (!formData.firstName || !formData.lastName || !formData.email) {
-      alert("Please fill in required fields");
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.message
+    ) {
+      setError("Please fill in all required fields.");
+      setIsLoading(false);
       return;
     }
 
-    // Here you would typically send the data to a backend
-    console.log("Form submitted:", formData);
+    const emailData = {
+      id: process.env.NEXT_PUBLIC_EMAIL_ID,
+      subject: `New Message from ${formData.email}`,
+      body: `
+<div style="max-width: 600px; margin: 0 auto; font-family: 'Arial', sans-serif; background-color: #ffffff; color: #333333; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); overflow: hidden;">
+  <!-- Header with Name Initial Circle -->
+  <div style="background: linear-gradient(135deg, #6366f1, #8b5cf6); padding: 40px 20px; text-align: center; border-radius: 12px 12px 0 0;">
+    <div style="width: 100px; height: 100px; background-color: white; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 48px; color: #6366f1; font-weight: bold; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      ${formData.firstName.charAt(0).toUpperCase()}
+    </div>
+    <h1 style="color: #ffffff; margin: 0; font-size: 48px; font-weight: 700; letter-spacing: 1px;">${formData.firstName} ${formData.lastName}</h1>
+    <p style="color: #e2e8f0; margin-top: 12px; font-size: 16px;">${new Date().toLocaleDateString()}</p>
+  </div>
+
+  <!-- Main Content -->
+  <div style="background-color: #f9fafb; padding: 40px; border-radius: 0 0 12px 12px;">
+    <!-- Contact Details -->
+    <div style="margin-bottom: 32px;">
+      <h2 style="color: #1f2937; font-size: 24px; margin: 0 0 16px 0; font-weight: 700;">Contact Details</h2>
+      <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; border-left: 6px solid #6366f1; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+        <p style="color: #4b5563; margin: 8px 0; font-size: 16px;">
+          <strong style="color: #6366f1;">Email:</strong> ${formData.email}
+        </p>
+        <p style="color: #4b5563; margin: 8px 0; font-size: 16px;">
+          <strong style="color: #6366f1;">Phone:</strong> ${formData.phone}
+        </p>
+      </div>
+    </div>
+
+    <!-- Message -->
+    <div style="background-color: #ffffff; padding: 24px; border-radius: 8px; margin-top: 24px; border-left: 6px solid #6366f1; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+      <h2 style="color: #1f2937; font-size: 24px; margin: 0 0 16px 0; font-weight: 700;">Message</h2>
+      <p style="color: #4b5563; line-height: 1.7; white-space: pre-wrap; font-size: 16px;">${formData.message}</p>
+    </div>
+
+    <!-- Footer -->
+    <div style="margin-top: 32px; padding-top: 24px; border-top: 2px solid #e5e7eb; text-align: center;">
+      <p style="color: #9ca3af; font-size: 14px;">
+        Sent via <span style="color: #6366f1; font-weight: 700;">GetSetDeployed</span> Contact Form
+      </p>
+    </div>
+  </div>
+</div>
+      `,
+      recipient_list: JSON.parse(
+        process.env.NEXT_PUBLIC_RECIPIENT_LIST || "[]",
+      ),
+      smtp_host: "smtp.gmail.com",
+      smtp_port: 465,
+      use_tls: false,
+      use_ssl: true,
+      email_host_user: process.env.NEXT_PUBLIC_EMAIL_HOST_USER,
+      email_host_password: process.env.NEXT_PUBLIC_EMAIL_HOST_PASSWORD,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://email-client-paddlelift.onrender.com/send/",
+        emailData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      console.log("Email sent successfully:", response.data);
+      alert("Message sent successfully!");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error:", error.response?.data || error.message);
+        setError("Failed to send message. Please try again.");
+      } else {
+        console.error("Unexpected error:", error);
+        setError("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -83,58 +181,6 @@ export default function ContactPage() {
               </motion.p>
             </div>
 
-            {/* Quick contact options */}
-            {/*
-            <div className="grid gap-4 mb-12">
-              <motion.button
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="flex items-center gap-4 p-4 bg-black/40 border border-neutral-800 rounded-lg backdrop-blur-sm hover:bg-black/60 transition-colors"
-              >
-                <MessageSquare className="h-6 w-6 text-primary" />
-                <div className="text-left">
-                  <h3 className="font-semibold text-neutral-200">
-                    Start a live chat
-                  </h3>
-                  <p className="text-sm text-neutral-400">Available 24/7</p>
-                </div>
-              </motion.button>
-
-              <motion.button
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="flex items-center gap-4 p-4 bg-black/40 border border-neutral-800 rounded-lg backdrop-blur-sm hover:bg-black/60 transition-colors"
-              >
-                <Mail className="h-6 w-6 text-primary" />
-                <div className="text-left">
-                  <h3 className="font-semibold text-neutral-200">
-                    Shoot us an email
-                  </h3>
-                  <p className="text-sm text-neutral-400">
-                    Get response within 24h
-                  </p>
-                </div>
-              </motion.button>
-
-              <motion.button
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="flex items-center gap-4 p-4 bg-black/40 border border-neutral-800 rounded-lg backdrop-blur-sm hover:bg-black/60 transition-colors"
-              >
-                <Twitter className="h-6 w-6 text-primary" />
-                <div className="text-left">
-                  <h3 className="font-semibold text-neutral-200">
-                    Message us on Twitter
-                  </h3>
-                  <p className="text-sm text-neutral-400">Quick responses</p>
-                </div>
-              </motion.button>
-            </div>
-              */}
-
             {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -156,6 +202,7 @@ export default function ContactPage() {
                       onChange={handleInputChange}
                       placeholder="Enter your first name"
                       className="bg-neutral-950 border-neutral-800 text-neutral-200 placeholder:text-neutral-500"
+                      disabled={isLoading}
                     />
                   </div>
                   <div className="space-y-2">
@@ -168,6 +215,7 @@ export default function ContactPage() {
                       onChange={handleInputChange}
                       placeholder="Enter your last name"
                       className="bg-neutral-950 border-neutral-800 text-neutral-200 placeholder:text-neutral-500"
+                      disabled={isLoading}
                     />
                   </div>
                 </div>
@@ -183,6 +231,7 @@ export default function ContactPage() {
                     onChange={handleInputChange}
                     placeholder="you@company.com"
                     className="bg-neutral-950 border-neutral-800 text-neutral-200 placeholder:text-neutral-500"
+                    disabled={isLoading}
                   />
                 </div>
 
@@ -197,14 +246,33 @@ export default function ContactPage() {
                     onChange={handleInputChange}
                     placeholder="+91 (555) 000-0000"
                     className="bg-neutral-950 border-neutral-800 text-neutral-200 placeholder:text-neutral-500"
+                    disabled={isLoading}
                   />
                 </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="text-neutral-200">
+                    Message
+                  </Label>
+                  <textarea
+                    id="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Your message"
+                    rows={5}
+                    className="w-full px-3 py-2 bg-neutral-950 border border-neutral-800 rounded-md text-neutral-200 placeholder:text-neutral-500 resize-none"
+                    disabled={isLoading}
+                  />
+                </div>
+
+                {error && <p className="text-red-500 text-sm">{error}</p>}
 
                 <Button
                   type="submit"
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                  disabled={isLoading}
                 >
-                  Send message
+                  {isLoading ? "Sending..." : "Send message"}
                 </Button>
               </form>
             </motion.div>
