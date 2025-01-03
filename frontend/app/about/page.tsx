@@ -165,6 +165,20 @@ export default function AboutPage() {
         {/* Mission & Vision Section */}
         <ManagementSection />
 
+        {/* Core Values */}
+        <section className="snap-start py-20 bg-[#09090B]">
+          <div className="container mx-auto px-4 flex items-center justify-center">
+            <Image
+              src="/about/order.gif"
+              alt="World Map"
+              unoptimized
+              className="object-contain"
+              width={1200} // Adjust the width here
+              height={400} // Adjust the height here
+            />
+          </div>
+        </section>
+
         {/* Management Section */}
         <section className="snap-start py-20 bg-[#09090B] px-4 sm:px-6 md:px-8">
           <div className="max-w-7xl mx-auto">
@@ -233,20 +247,6 @@ export default function AboutPage() {
                 <ManagementCard key={member.name} {...member} />
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Core Values */}
-        <section className="snap-start py-20 bg-[#09090B]">
-          <div className="container mx-auto px-4 flex items-center justify-center">
-            <Image
-              src="/about/order.gif"
-              alt="World Map"
-              unoptimized
-              className="object-contain"
-              width={1200} // Adjust the width here
-              height={400} // Adjust the height here
-            />
           </div>
         </section>
 
