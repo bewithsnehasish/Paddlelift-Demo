@@ -57,7 +57,7 @@ export default function OrganizationalStructure() {
     >
       {/* Header */}
       <div className="mb-12 md:mb-16 lg:mb-20">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white max-w-2xl leading-[110%]">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white max-w-4xl leading-[110%]">
           Organizational <span className="text-teal-400">Structure</span>
         </h2>
         <p className="text-white text-lg md:text-xl font-semibold mt-4 max-w-lg">

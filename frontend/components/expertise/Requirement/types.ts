@@ -4,6 +4,7 @@ export interface ProcessStep {
   subtitle: string;
   description: string[];
   color: string;
+  iconColor: string;
   gradient: string;
   icon: string;
 }

@@ -1,82 +1,76 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { processSteps } from "./data";
 import { StepCard } from "./StepCard";
-import { ProcessTimeline } from "./ProcessTimeline";
-import { containerVariants } from "./animations";
+import { useScrollProgress } from "@/lib/hooks/useScrollProgress";
+import { staggerContainer } from "./animations/variants";
 
 export default function RecruitmentProcess() {
-  const [activeStep, setActiveStep] = useState(1);
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 0.2], [100, 0]);
+  const { progress, activeStep } = useScrollProgress();
+  const containerRef = useRef(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight =
-        document.documentElement.scrollHeight - windowHeight;
-      const progress = (scrollPosition / documentHeight) * 100;
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
 
-      // Smoother step calculation
-      const step = Math.min(Math.max(Math.round((progress / 100) * 5), 1), 5);
-
-      if (step !== activeStep) {
-        setActiveStep(step);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [activeStep]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.8, 1],
+    [0.8, 1, 1, 0.8],
+  );
 
   return (
-    <section className="relative min-h-screen py-20">
-      <ProcessTimeline
-        activeStep={activeStep}
-        progress={(activeStep / 5) * 100}
-      />
+    <section
+      ref={containerRef}
+      className="relative w-full max-w-7xl py-20 mx-auto px-4 md:px-8 lg:px-10 bg-[#09090B] overflow-hidden"
+    >
+      <motion.div className="container mx-auto" style={{ opacity, scale }}>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-12 md:mb-16 lg:mb-20"
+        >
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white max-w-4xl leading-[110%]">
+            Our Recruitment <span className="text-teal-400">Process</span>
+          </h2>
+          <p className="text-white text-lg md:text-xl font-semibold mt-4 max-w-lg">
+            A comprehensive approach to finding and nurturing top talent
+          </p>
+        </motion.div>
 
-      <motion.div style={{ opacity, y }} className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.8,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Our Recruitment Process
-            </h2>
-            <p className="text-xl text-gray-600">
-              A comprehensive approach to finding and nurturing top talent
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="relative space-y-6"
-          >
-            {processSteps.map((step, index) => (
+        {/* Steps */}
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="relative space-y-6 ml-16 lg:ml-24"
+        >
+          {processSteps.map((step, index) => (
+            <div key={step.id} id={`step-${step.id}`}>
               <StepCard
-                key={step.id}
                 {...step}
                 index={index}
                 isActive={activeStep === step.id}
-                onClick={() => setActiveStep(step.id)}
+                onClick={() => {
+                  const element = document.getElementById(`step-${step.id}`);
+                  element?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                  });
+                }}
                 total={processSteps.length}
               />
-            ))}
-          </motion.div>
-        </div>
+            </div>
+          ))}
+        </motion.div>
       </motion.div>
     </section>
   );

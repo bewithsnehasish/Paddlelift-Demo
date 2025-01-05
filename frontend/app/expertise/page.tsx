@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ExpertisePage from "@/components/expertise/herosection";
 import OrganizationalStructure from "@/components/NewHome/organisationstructure";
+import RecruitmentProcess from "@/components/expertise/Requirement/RequirementProcess";
 
 export default function Home() {
   const [showScrollUp, setShowScrollUp] = useState(false);
@@ -39,6 +40,7 @@ export default function Home() {
       <Navbar />
       <ExpertisePage />
       <OrganizationalStructure />
+      <RecruitmentProcess />
       <Footer />
       {/* Scroll-Up Button */}
       {showScrollUp && (
