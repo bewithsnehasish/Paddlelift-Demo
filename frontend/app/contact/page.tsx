@@ -112,7 +112,7 @@ export default function ContactPage() {
                 </h2>
                 <div style="background-color: #f9fafb; padding: 15px; border-radius: 8px; color: #4b5563;">
                     <p style="margin: 0;">
-                        <span style="color: #6366f1; font-weight: bold;">File attached:</span> 
+                        <span style="color: #6366f1; font-weight: bold;">File attached:</span>
                         ${file.name} (${(file.size / 1024).toFixed(2)} KB)
                     </p>
                 </div>
@@ -130,31 +130,36 @@ export default function ContactPage() {
         </div>
     </div>`;
 
-    const formDataToSend = new FormData();
-    const emailData = {
-      id: process.env.NEXT_PUBLIC_EMAIL_ID,
-      subject: `New Contact: ${formData.firstName} ${formData.lastName}`,
-      body: emailTemplate,
-      recipient_list: JSON.parse(
-        process.env.NEXT_PUBLIC_RECIPIENT_LIST || "[]",
-      ),
-      smtp_host: "smtp.gmail.com",
-      smtp_port: 465,
-      use_tls: false,
-      use_ssl: true,
-      email_host_user: process.env.NEXT_PUBLIC_EMAIL_HOST_USER,
-      email_host_password: process.env.NEXT_PUBLIC_EMAIL_HOST_PASSWORD,
-    };
-
-    formDataToSend.append("emailData", JSON.stringify(emailData));
-
-    if (file) {
-      formDataToSend.append("attachment", file);
-    }
-
     try {
+      // Create form data
+      const formDataToSend = new FormData();
+
+      // Add file if it exists
+      if (file) {
+        formDataToSend.append("file", file);
+      }
+
+      // Add email data
+      const emailData = {
+        email_id: process.env.NEXT_PUBLIC_EMAIL_ID,
+        subject: `New Contact: ${formData.firstName} ${formData.lastName}`,
+        body: emailTemplate,
+        to_email: JSON.parse(process.env.NEXT_PUBLIC_RECIPIENT_LIST || "[]"),
+        smtp_settings: {
+          host: "smtp.gmail.com",
+          port: 465,
+          use_tls: false,
+          use_ssl: true,
+          username: process.env.NEXT_PUBLIC_EMAIL_HOST_USER,
+          password: process.env.NEXT_PUBLIC_EMAIL_HOST_PASSWORD,
+        },
+      };
+
+      formDataToSend.append("email_data", JSON.stringify(emailData));
+
+      // Make the API call
       const response = await axios.post(
-        "https://email-client-paddlelift.onrender.com/send/",
+        "https://api.paddlelift.com/email/send", // Update this with your actual API endpoint
         formDataToSend,
         {
           headers: {
@@ -163,7 +168,10 @@ export default function ContactPage() {
         },
       );
 
+      console.log("Email sent successfully:", response.data);
       alert("Message sent successfully!");
+
+      // Reset form
       setFormData({
         firstName: "",
         lastName: "",
@@ -297,7 +305,7 @@ export default function ContactPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="attachment" className="text-neutral-200">
-                        Attachment
+                        Attachment (optional)
                       </Label>
                       <div className="flex items-center gap-2">
                         <Input

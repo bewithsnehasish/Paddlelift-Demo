@@ -20,7 +20,7 @@ export default function OrganizationalStructure() {
             // Animate image and cards
             controlsImage.start({
               opacity: 1,
-              x: 0,
+              scale: 1,
               transition: {
                 duration: 0.8,
                 ease: "easeOut",
@@ -29,7 +29,7 @@ export default function OrganizationalStructure() {
             });
             controlsCards.start({
               opacity: 1,
-              x: 0,
+              scale: 1,
               transition: {
                 duration: 0.8,
                 ease: "easeOut",
@@ -41,7 +41,6 @@ export default function OrganizationalStructure() {
       },
       { threshold: 0.1 },
     );
-
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
@@ -66,42 +65,67 @@ export default function OrganizationalStructure() {
       </div>
 
       {/* Main Container */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        {/* Left: Image Placeholder */}
+      <div className="relative w-full h-[60vh] flex justify-center items-center">
+        {/* Centered Image */}
         <motion.div
-          initial={{ opacity: 0, x: -80 }}
+          initial={{ opacity: 0, scale: 0.5 }}
           animate={controlsImage}
-          className="w-full h-auto flex justify-center items-center"
+          className="absolute w-full h-auto flex justify-center items-center"
         >
           <Image
-            src="/images/organisationstructure.svg"
+            src="/Plogo.png"
             alt="Organizational Structure"
-            className="w-full h-auto object-contain" // Adjusted to take full width
-            width={1600} // Increased width
-            height={1200} // Increased height
+            className="w-1/3 h-auto object-contain"
+            width={400}
+            height={300}
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
           />
         </motion.div>
 
-        {/* Right: Cards */}
+        {/* Corner Cards */}
         <motion.div
-          initial={{ opacity: 0, x: 80 }}
+          initial={{ opacity: 0, scale: 0.5 }}
           animate={controlsCards}
-          className="flex flex-col space-y-6"
+          className="absolute top-4 left-4"
+          style={{ width: "300px" }}
         >
           <MainMenusGradientCard
             title="Technology / IT Recruitment Vertical"
             description="Where team is dedicatedly focusing to cater Tech Hiring for Clients."
           />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={controlsCards}
+          className="absolute top-4 right-4"
+          style={{ width: "300px" }}
+        >
           <MainMenusGradientCard
             title="Non-Tech / Functional Recruitment Vertical"
             description="Where team is dedicatedly focusing to cater Non-Tech / Functional Hiring for Clients."
           />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={controlsCards}
+          className="absolute bottom-4 left-4"
+          style={{ width: "300px" }}
+        >
           <MainMenusGradientCard
             title="Staffing / Payroll / HR Management Vertical"
             description="Dedicated team for managing Payroll & Ops for domestic & international clients."
           />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={controlsCards}
+          className="absolute bottom-4 right-4"
+          style={{ width: "300px" }}
+        >
           <MainMenusGradientCard
             title="Customer Success / Growth Management Vertical"
             description="Dedicated vertical to ensure smooth & productive business engagement with clients."

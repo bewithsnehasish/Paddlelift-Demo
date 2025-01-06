@@ -12,9 +12,9 @@ const Expertise: React.FC = () => {
         <Navbar />
         <ExpertisePage />
         <OrganizationalStructure />
-        <RecruitmentProcess />
         <Footer />
         {/* 
+        <RecruitmentProcess />
       Scroll-Up Button */}
       </div>
     </>

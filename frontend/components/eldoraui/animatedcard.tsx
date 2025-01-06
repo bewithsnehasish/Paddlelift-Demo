@@ -13,7 +13,7 @@ export const MainMenusGradientCard = ({
   children,
 }: {
   title: string;
-  description: string;
+  description?: string;
   withArrow?: boolean;
   circleSize?: number;
   children?: ReactNode;
