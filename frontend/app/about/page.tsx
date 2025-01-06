@@ -63,7 +63,6 @@ const teamMembers = [
 export default function AboutPage() {
   const [showScrollUp, setShowScrollUp] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [isGifComplete, setIsGifComplete] = useState(false);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -71,12 +70,6 @@ export default function AboutPage() {
     damping: 30,
     restDelta: 0.001,
   });
-
-  useEffect(() => {
-    const gifDuration = 3000; // Adjust this to match your GIF length
-    const timer = setTimeout(() => setIsGifComplete(true), gifDuration);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -142,24 +135,13 @@ export default function AboutPage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative w-full h-auto flex justify-center p-6"
               >
-                {!isGifComplete && (
-                  <Image
-                    src="/about/Aboutus.gif"
-                    alt="About Section Animation"
-                    width={1000}
-                    height={500}
-                    className="rounded-lg object-cover absolute top-0 left-0 z-10 w-full h-auto md:w-auto md:h-auto"
-                    priority
-                  />
-                )}
                 <Image
-                  src="/about/Aboutus.png"
+                  src="/about/about.svg"
                   alt="About Section"
-                  width={1000}
-                  height={500}
-                  className={`rounded-lg object-cover transition-opacity duration-300 w-full h-auto md:w-auto md:h-auto ${
-                    isGifComplete ? "opacity-100" : "opacity-0"
-                  }`}
+                  width={1200} // Increased size
+                  height={600} // Increased size
+                  className="rounded-lg object-cover w-full h-auto md:w-auto md:h-auto"
+                  priority
                 />
               </motion.div>
             </div>

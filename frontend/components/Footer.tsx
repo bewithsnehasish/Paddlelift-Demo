@@ -16,7 +16,7 @@ const Footer = () => {
                 href="mailto:mandalsneh97@gmail.com"
                 className="text-primary hover:text-primary/80 border-b-2 border-primary hover:border-primary/80 transition-colors duration-200"
               >
-                Let&apos;s Connect{" "}
+                Contact Us
               </Link>{" "}
             </h1>
           </div>
@@ -80,36 +80,18 @@ const Footer = () => {
         </div>
         <BackgroundBeams className="hidden sm:flex" />
         {/* Footer attribution */}
-        {/* <div className="py-4 text-center text-sm text-gray-500">
-          The Paddlelift India. Developed & Managed by{" "}
+        <div className="py-4 text-center text-sm text-gray-500">
+          The Paddlelift India. Developed by{" "}
           <a
-            href="https://www.linkedin.com/in/snehasish-mandal-"
+            href="https://www.getsetdeployed.com/"
             target="_blank"
             className="text-blue-500 hover:underline relative inline-block"
           >
-            Snehasish
-            <span className="absolute bottom-0 left-0 w-full h-[2px] bg-blue-500 transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
-          </a>{" "}
-          {"| "}
-          <a
-            href="https://www.linkedin.com/in/mayankkumargupta1"
-            target="_blank"
-            className="text-blue-500 hover:underline relative inline-block"
-          >
-            Mayank
-            <span className="absolute bottom-0 left-0 w-full h-[2px] bg-blue-500 transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
-          </a>{" "}
-          {"| "}
-          <a
-            href="https://www.linkedin.com/in/rajat-singh-tomar-65727a185"
-            target="_blank"
-            className="text-blue-500 hover:underline relative inline-block"
-          >
-            Rajat
+            GetSetDeployed
             <span className="absolute bottom-0 left-0 w-full h-[2px] bg-blue-500 transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
           </a>{" "}
           . All rights reserved.
-        </div> */}
+        </div>
       </div>
     </div>
   );

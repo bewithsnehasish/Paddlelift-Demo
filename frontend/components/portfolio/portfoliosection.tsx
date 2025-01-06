@@ -54,7 +54,7 @@ const STATS_DATA: StatItem[] = [
   },
 ];
 
-const ANIMATION_DURATION = 2000; // Increased duration for slower animation
+const ANIMATION_DURATION = 3000; // Increased duration for slower animation
 const FRAME_RATE = 30; // Adjusted frame rate for smoother animation
 const INTERSECTION_THRESHOLD = 0.1;
 

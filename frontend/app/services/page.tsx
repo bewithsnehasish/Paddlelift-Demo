@@ -42,7 +42,6 @@ const ServicesPage: React.FC = () => {
     <>
       <div className="overflow-hidden bg-[#09090B]">
         <Navbar />
-        <Navbar />
         <ServicesHero />
         <FeaturesSection />
         <PartnersSection />

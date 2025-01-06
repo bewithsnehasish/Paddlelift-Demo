@@ -21,7 +21,8 @@ const items = [
   "HRTech",
   "SportsTech",
   "Manufacturing",
-  "Media & Entertainment",
+  "Media ",
+  "Entertainment",
   "InsurTech",
   "Energy & Utilities",
 ];
@@ -90,11 +91,9 @@ const MainSection: React.FC = () => {
           </motion.p>
         </div>
 
-        {/* Industries Grid */}
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-          {items.map((item, index) => (
-            <Carousel key={index} items={[item]} />
-          ))}
+        {/* Industries Carousel */}
+        <div className="overflow-hidden">
+          <Carousel items={items} />
         </div>
       </div>
     </section>
