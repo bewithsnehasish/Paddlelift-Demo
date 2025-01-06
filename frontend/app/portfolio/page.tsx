@@ -45,10 +45,11 @@ const PortfolioPage: React.FC = () => {
         <PortfolioSection />
         <Testimonials />
         <CompanyTestimonials />
-        <ElfsightReviews />
         <Footer />
       </div>
-      {/* Scroll-Up Button */}
+      {/*
+      <ElfsightReviews />
+      Scroll-Up Button */}
       {showScrollUp && (
         <button
           onClick={scrollToTop}

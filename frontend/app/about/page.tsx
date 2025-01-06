@@ -8,9 +8,9 @@ import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Footer from "@/components/Footer";
 import ManagementSection from "@/components/about/management-section";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import NewTimeline from "@/components/about/new-timeline";
-import SubHeading from "@/components/about/SubHeading"; // Import the new SubHeading component
+import SubHeading from "@/components/about/SubHeading";
 import Link from "next/link";
 
 const teamMembers = [
@@ -55,6 +55,7 @@ const teamMembers = [
     },
   },
 ];
+
 export default function AboutPage() {
   const [showScrollUp, setShowScrollUp] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -98,55 +99,65 @@ export default function AboutPage() {
         />
 
         {/* Hero Section */}
-        <section className="h-screen snap-start flex items-center relative bg-[#09090B] py-20 px-4 sm:px-6 md:px-8">
-          <div className="container mx-auto px-4 md:px-8 lg:px-16 grid md:grid-cols-2 gap-3 items-center">
-            <div className="text-left md:text-left pt-28">
-              <motion.h1
+        <section className="min-h-screen flex flex-col justify-center text-left relative overflow-hidden bg-black">
+          {/* Background Gradient */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-b from-black to-transparent opacity-70" />
+
+          {/* Content Container */}
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left Column - Text Content */}
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                className="text-3xl md:text-5xl font-bold mb-6 text-white"
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="max-w-2xl"
               >
-                About <span className="text-red-600">PaddleLift</span>
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-lg md:text-xl text-gray-400 mb-8"
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+                  About <span className="text-red-600">PaddleLift</span>
+                </h1>
+                <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
+                  Paddlelift, founded in 2020, is a global recruitment and HR
+                  firm committed to providing streamlined, personalized talent
+                  solutions.
+                </p>
+                <Link href="/contact">
+                  <Button
+                    size="lg"
+                    className="bg-blue-600 hover:bg-blue-700 px-6 py-3 text-white rounded-md"
+                  >
+                    Let&apos;s Connect
+                  </Button>
+                </Link>
+              </motion.div>
+
+              {/* Right Column - Image */}
+              <motion.div
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="relative w-full h-auto flex justify-center p-6"
               >
-                Paddlelift, founded in 2020, is a global recruitment and HR firm
-                committed to providing streamlined, personalized talent
-                solutions.
-              </motion.p>
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 px-6 py-3 text-white rounded-md"
-                >
-                  Let&apos;s Connect
-                </Button>
-              </Link>
-            </div>
-            <div className="relative mt-16 md:mt-0">
-              {!isGifComplete && (
+                {!isGifComplete && (
+                  <Image
+                    src="/about/Aboutus.gif"
+                    alt="About Section Animation"
+                    width={1000}
+                    height={500}
+                    className="rounded-lg object-cover absolute top-0 left-0 z-10 w-full h-auto md:w-auto md:h-auto"
+                    priority
+                  />
+                )}
                 <Image
-                  src="/about/Aboutus.gif"
-                  alt="About Section Animation"
+                  src="/about/Aboutus.png"
+                  alt="About Section"
                   width={1000}
                   height={500}
-                  className="rounded-lg object-cover absolute top-0 left-0 z-10 w-full h-auto md:w-auto md:h-auto"
-                  priority
+                  className={`rounded-lg object-cover transition-opacity duration-300 w-full h-auto md:w-auto md:h-auto ${
+                    isGifComplete ? "opacity-100" : "opacity-0"
+                  }`}
                 />
-              )}
-              <Image
-                src="/about/Aboutus.png"
-                alt="About Section"
-                width={1000}
-                height={500}
-                className={`rounded-lg object-cover transition-opacity duration-300 w-full h-auto md:w-auto md:h-auto ${
-                  isGifComplete ? "opacity-100" : "opacity-0"
-                }`}
-              />
+              </motion.div>
             </div>
           </div>
         </section>
@@ -156,14 +167,11 @@ export default function AboutPage() {
 
         {/* Core Values */}
         <section className="snap-start py-20 bg-[#09090B] sm:px-6 md:px-8">
-          <div className="max-w-7xl mx-auto ">
+          <div className="max-w-7xl mx-auto">
             <div className="text-left">
-              {" "}
               <SubHeading>Core Values</SubHeading>
             </div>
             <div className="flex items-center justify-center mt-8">
-              {" "}
-              {/* Center the image */}
               <Image
                 src="/about/order.gif"
                 alt="Core Values"

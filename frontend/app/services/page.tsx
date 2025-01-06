@@ -47,10 +47,11 @@ const ServicesPage: React.FC = () => {
         <FeaturesSection />
         <PartnersSection />
         <IndustriesServed />
-        <ElfsightReviews />
         <Footer />
       </div>
-      {/* Scroll-Up Button */}
+      {/* 
+      <ElfsightReviews />
+      Scroll-Up Button */}
       {showScrollUp && (
         <button
           onClick={scrollToTop}

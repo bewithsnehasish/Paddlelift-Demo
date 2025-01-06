@@ -54,8 +54,8 @@ const STATS_DATA: StatItem[] = [
   },
 ];
 
-const ANIMATION_DURATION = 1000;
-const FRAME_RATE = 16;
+const ANIMATION_DURATION = 2000; // Increased duration for slower animation
+const FRAME_RATE = 30; // Adjusted frame rate for smoother animation
 const INTERSECTION_THRESHOLD = 0.1;
 
 const CARD_COLORS = [
@@ -191,7 +191,7 @@ export default function PortfolioSection() {
             variants={wordPullAnimation}
             custom={1}
           >
-            Portfolio
+            Stats
           </motion.span>
         </h1>
 
@@ -201,7 +201,7 @@ export default function PortfolioSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white text-xl font-semibold md:text-base my-4 max-w-lg"
         >
-          Our Stats speak it all
+          Our Numbers Speak&apos;s it all
         </motion.p>
 
         <div className="mt-12 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
