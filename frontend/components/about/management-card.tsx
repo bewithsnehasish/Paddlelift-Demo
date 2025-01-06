@@ -8,6 +8,7 @@ import { Github, Linkedin, Twitter } from "lucide-react";
 interface ManagementCardProps {
   name: string;
   title: string;
+  position: string;
   photo: string;
   description: string;
   socials: {
@@ -20,6 +21,7 @@ interface ManagementCardProps {
 export function ManagementCard({
   name,
   title,
+  position,
   photo,
   description,
   socials,
@@ -49,6 +51,7 @@ export function ManagementCard({
             {name}
           </h3>
           <p className="text-sm text-gray-300 font-medium">{title}</p>
+          <p className="text-sm text-gray-300 font-medium">{position}</p>
           <div className="flex justify-end gap-4 mt-2">
             {socials.linkedin && (
               <a

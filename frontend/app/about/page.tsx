@@ -16,7 +16,8 @@ import Link from "next/link";
 const teamMembers = [
   {
     name: "Utkarsh Rastogi",
-    title: "Co-Founder & Director Head of Growth & Ops",
+    title: "Co-Founder ",
+    position: "Director Head of Growth & Ops",
     photo: "/founder-images/Utkarsh.png",
     description:
       "Utkarsh Rastogi, a BITS Pilani alumnus with 15+ years of experience and leadership in top recruitment firms, drives Paddlelift’s growth. His strategic expertise ensures Paddlelift stays at the forefront of the recruitment industry.",
@@ -26,7 +27,8 @@ const teamMembers = [
   },
   {
     name: "Kanika Mahajan",
-    title: "Co-Founder & Director Head of Non-Tech Recruitment",
+    title: "Co-Founder",
+    position: "Director Head of Non-Tech Recruitment",
     photo: "/founder-images/Kanika.png",
     description:
       "Kanika Mahajan, an MBA-HR with 16+ years in business administration and NonIT hiring, excels in understanding diverse business talent needs. Her strategic vision and market insights have significantly elevated Paddlelift, showcasing her pivotal role in the company's success.",
@@ -36,7 +38,8 @@ const teamMembers = [
   },
   {
     name: "Rohit Dutt",
-    title: "Co-Founder & Director Head of Tech Recruitment",
+    title: "Co-Founder",
+    position: "Director Head of Tech Recruitment",
     photo: "/founder-images/Rohit.png",
     description:
       "Rohit Dutt, with 14+ years in software development and tech recruitment, leads Paddlelift’s tech hiring. His industry experience and strategic foresight deliver top tech talent, ensuring Paddlelift connects cutting-edge companies with exceptional professionals.",
@@ -46,7 +49,8 @@ const teamMembers = [
   },
   {
     name: "Sanjay Amar",
-    title: "Co-Founder & Director Head of Global Partnerships",
+    title: "Co-Founder",
+    position: "Director Head of Global Partnerships",
     photo: "/founder-images/Sanjay.png",
     description:
       "Sanjay Amar, with 37+ years of experience and 26 years in Dubai, has held leadership roles including CEO, CFO, and Board Advisor, driving diversified conglomerates across the Middle East, Africa, and Asia. A Chartered Accountant with an Honorary Doctorate in Organizational Leadership, he is a Fellow of the Institute of Directors and a member of WHRPC.",
