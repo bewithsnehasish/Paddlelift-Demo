@@ -4,13 +4,12 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import { useInView } from "react-intersection-observer";
-import Image from "next/image";
 
 interface Service {
   id: string;
   title: string;
   description: string;
-  image: string;
+  video: string;
   height: number;
   width: number;
 }
@@ -21,36 +20,36 @@ const services: Service[] = [
     title: "Recruitment",
     description:
       "Delivering top talent across industries and verticals, from tech to non-tech, with precision and expertise.",
-    image: "/features/Recruitment/2.png",
-    height: 150,
-    width: 300,
+    video: "/services/recruitment.mp4",
+    height: 400,
+    width: 400,
   },
   {
     id: "staffing",
     title: "Staffing",
     description:
       "Deploying skilled talent globally with seamless payroll management for efficient and compliant staffing solutions.",
-    image: "/features/Staffing/5.png",
-    height: 300,
-    width: 300,
+    video: "/services/staffing.mp4",
+    height: 400,
+    width: 400,
   },
   {
     id: "funding-gateway",
     title: "Funding Gateway",
     description:
       "Opening doors for startups by connecting them with global angel investors & VCs, guiding funding from pre-seed to Series B.",
-    image: "/features/funding/4.png",
-    height: 300,
-    width: 300,
+    video: "/services/funding.mp4",
+    height: 400,
+    width: 400,
   },
   {
     id: "hr-dynamics",
     title: "HR Dynamics",
     description:
       "Comprehensive HR management service that streamlines policy, strategies, salary benchmarking, etc. different analytics support.",
-    image: "/features/HR/5.png",
-    height: 300,
-    width: 300,
+    video: "/services/hrdynamics.mp4",
+    height: 400,
+    width: 400,
   },
 ];
 
@@ -62,10 +61,14 @@ function useHoverState() {
 
   return { hoveredService, handleHoverStart, handleHoverEnd };
 }
+
 const ServicesSection = () => {
   const { hoveredService, handleHoverStart, handleHoverEnd } = useHoverState();
   const [isClient, setIsClient] = useState(false);
   const [activeService, setActiveService] = useState<string | null>(null);
+  const [contentHeights, setContentHeights] = useState<{
+    [key: string]: number;
+  }>({});
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -131,78 +134,73 @@ const ServicesSection = () => {
         </div>
 
         <div className="space-y-1">
-          {services.map((service) => (
-            <motion.div
-              key={service.id}
-              className="border-b border-gray-800 overflow-hidden"
-              initial="collapsed"
-              animate={
-                (isMobile && activeService === service.id) ||
-                (!isMobile && hoveredService === service.id)
-                  ? "expanded"
-                  : "collapsed"
-              }
-              onClick={isMobile ? () => handleClick(service.id) : undefined}
-              onHoverStart={
-                !isMobile ? () => handleHoverStart(service.id) : undefined
-              }
-              onHoverEnd={!isMobile ? handleHoverEnd : undefined}
-            >
-              <motion.div
-                className="py-4 cursor-pointer flex items-center justify-between"
-                variants={{
-                  expanded: { paddingBottom: "1rem" },
-                  collapsed: { paddingBottom: "1rem" },
-                }}
-              >
-                <motion.h3
-                  className="text-xl font-medium transition-colors duration-300"
-                  variants={{
-                    expanded: {
-                      fontSize: "1.5rem",
-                      fontWeight: "bold",
-                      color: "rgb(255, 255, 255)",
-                      transition: { duration: 0.3, ease: "easeInOut" },
-                    },
-                    collapsed: {
-                      fontSize: "1.25rem",
-                      fontWeight: "normal",
-                      color: "rgb(156, 163, 175)",
-                      transition: { duration: 0.3, ease: "easeInOut" },
-                    },
-                  }}
-                >
-                  {service.title}
-                </motion.h3>
-                <motion.div
-                  variants={{
-                    expanded: { rotate: 90 },
-                    collapsed: { rotate: 0 },
-                  }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ChevronRight
-                    className={`w-6 h-6 transition-colors duration-300 ${
-                      (isMobile && activeService === service.id) ||
-                      (!isMobile && hoveredService === service.id)
-                        ? "text-emerald-400"
-                        : "text-gray-400"
-                    }`}
-                  />
-                </motion.div>
-              </motion.div>
+          {services.map((service) => {
+            const isExpanded =
+              (isMobile && activeService === service.id) ||
+              (!isMobile && hoveredService === service.id);
 
-              <AnimatePresence>
-                {((isMobile && activeService === service.id) ||
-                  (!isMobile && hoveredService === service.id)) &&
-                  isClient && (
+            return (
+              <motion.div
+                key={service.id}
+                className="border-b border-gray-800 overflow-hidden"
+                initial="collapsed"
+                animate={isExpanded ? "expanded" : "collapsed"}
+                onClick={isMobile ? () => handleClick(service.id) : undefined}
+                onHoverStart={
+                  !isMobile ? () => handleHoverStart(service.id) : undefined
+                }
+                onHoverEnd={!isMobile ? handleHoverEnd : undefined}
+              >
+                <motion.div
+                  className="py-4 cursor-pointer flex items-center justify-between"
+                  variants={{
+                    expanded: { paddingBottom: "1rem" },
+                    collapsed: { paddingBottom: "1rem" },
+                  }}
+                >
+                  <motion.h3
+                    className="text-xl font-medium transition-colors duration-300"
+                    variants={{
+                      expanded: {
+                        fontSize: "1.5rem",
+                        fontWeight: "bold",
+                        color: "rgb(255, 255, 255)",
+                        transition: { duration: 0.3, ease: "easeInOut" },
+                      },
+                      collapsed: {
+                        fontSize: "1.25rem",
+                        fontWeight: "normal",
+                        color: "rgb(156, 163, 175)",
+                        transition: { duration: 0.3, ease: "easeInOut" },
+                      },
+                    }}
+                  >
+                    {service.title}
+                  </motion.h3>
+                  <motion.div
+                    variants={{
+                      expanded: { rotate: 90 },
+                      collapsed: { rotate: 0 },
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronRight
+                      className={`w-6 h-6 transition-colors duration-300 ${
+                        isExpanded ? "text-emerald-400" : "text-gray-400"
+                      }`}
+                    />
+                  </motion.div>
+                </motion.div>
+
+                <AnimatePresence>
+                  {isExpanded && isClient && (
                     <motion.div
                       initial="collapsed"
                       animate="expanded"
                       exit="collapsed"
                       variants={{
                         expanded: {
-                          height: "auto",
+                          height: service.height,
                           opacity: 1,
                           marginBottom: "1rem",
                         },
@@ -211,8 +209,8 @@ const ServicesSection = () => {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="flex flex-col md:flex-row gap-8 pb-4">
-                        <div className="md:w-1/2 flex items-center justify-center">
+                      <div className="flex flex-col md:flex-row gap-8 h-full">
+                        <div className="md:w-1/2 flex items-center">
                           <p className="text-white text-xl text-left">
                             {service.description}
                           </p>
@@ -225,21 +223,25 @@ const ServicesSection = () => {
                           transition={{ duration: 0.5, ease: "easeInOut" }}
                         >
                           <div className="absolute w-64 h-64 bg-white/40 blur-2xl rounded-full"></div>
-                          <Image
-                            src={service.image}
-                            alt={service.title}
-                            width={service.width}
-                            height={service.height}
-                            unoptimized
+                          <video
+                            src={service.video}
+                            muted
+                            loop
+                            autoPlay
                             className="relative z-10 object-contain"
+                            style={{
+                              width: service.width,
+                              height: service.height,
+                            }}
                           />
                         </motion.div>
                       </div>
                     </motion.div>
                   )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
