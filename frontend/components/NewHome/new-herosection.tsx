@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 interface AnimatedButtonProps {
   href: string;
@@ -61,10 +61,50 @@ const AnimatedButton = ({ children, href }: AnimatedButtonProps) => {
 };
 
 export default function NewHeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Function to handle video playback
+    const handlePlayback = async () => {
+      try {
+        if (videoRef.current) {
+          videoRef.current.defaultMuted = true;
+          videoRef.current.muted = true;
+          await videoRef.current.play();
+        }
+      } catch (err) {
+        console.log("Video autoplay failed:", err);
+      }
+    };
+
+    // Call handlePlayback when component mounts
+    handlePlayback();
+
+    // Handle visibility change events
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        videoRef.current?.pause();
+      } else {
+        videoRef.current
+          ?.play()
+          .catch((err) => console.log("Error resuming video playback:", err));
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
   return (
     <section className="min-h-screen snap-start relative overflow-hidden flex flex-col justify-between">
       <video
+        ref={videoRef}
         autoPlay
+        playsInline
         loop
         muted
         className="absolute inset-0 object-cover w-full h-full opacity-100 z-0"
