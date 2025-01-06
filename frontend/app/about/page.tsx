@@ -11,6 +11,7 @@ import ManagementSection from "@/components/about/management-section";
 import { useEffect, useRef, useState } from "react";
 import NewTimeline from "@/components/about/new-timeline";
 import SubHeading from "@/components/about/SubHeading"; // Import the new SubHeading component
+import Link from "next/link";
 
 const teamMembers = [
   {
@@ -117,12 +118,14 @@ export default function AboutPage() {
                 committed to providing streamlined, personalized talent
                 solutions.
               </motion.p>
-              <Button
-                size="lg"
-                className="bg-blue-600 hover:bg-blue-700 px-6 py-3 text-white rounded-md"
-              >
-                Contact Us
-              </Button>
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  className="bg-blue-600 hover:bg-blue-700 px-6 py-3 text-white rounded-md"
+                >
+                  Let&apos;s Connect
+                </Button>
+              </Link>
             </div>
             <div className="relative mt-16 md:mt-0">
               {!isGifComplete && (

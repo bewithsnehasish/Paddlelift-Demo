@@ -188,7 +188,7 @@ const ApproachSection: React.FC = () => {
               <Link href="/contact" className="block">
                 <button className="group flex items-center gap-3 bg-yellow-400 text-neutral-900 px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition-all">
                   <PhoneCall className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                  Contact Us
+                  Let&apos;s Connect
                 </button>
               </Link>
             </motion.div>

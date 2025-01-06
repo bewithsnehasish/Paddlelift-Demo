@@ -16,7 +16,7 @@ const Footer = () => {
                 href="mailto:mandalsneh97@gmail.com"
                 className="text-primary hover:text-primary/80 border-b-2 border-primary hover:border-primary/80 transition-colors duration-200"
               >
-                Contact us{" "}
+                Let&apos;s Connect{" "}
               </Link>{" "}
             </h1>
           </div>
