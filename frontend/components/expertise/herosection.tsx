@@ -1,7 +1,18 @@
 import React from "react";
 import { Users, TrendingUp, FileCheck, UserCheck } from "lucide-react";
 
-const ExpertiseCard = ({ title, description, icon: Icon }) => (
+// Define the interface for the props
+interface ExpertiseCardProps {
+  title: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+const ExpertiseCard: React.FC<ExpertiseCardProps> = ({
+  title,
+  description,
+  icon: Icon,
+}) => (
   <div className="group relative transition-all duration-300 hover:-translate-y-2">
     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 blur-xl transition-all duration-300 group-hover:from-blue-500/30 group-hover:to-purple-500/30" />
     <div className="relative h-full rounded-2xl border border-white/10 bg-gray-900/40 p-8 backdrop-blur-xl">

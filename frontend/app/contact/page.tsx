@@ -57,23 +57,96 @@ export default function ContactPage() {
       return;
     }
 
+    const emailTemplate = `
+    <div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; background-color: #f8f9fa; padding: 20px;">
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #6366f1, #8b5cf6); padding: 40px 20px; text-align: center; border-radius: 12px 12px 0 0;">
+            <div style="width: 80px; height: 80px; background-color: white; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 36px; color: #6366f1; font-weight: bold;">
+                ${formData.firstName.charAt(0)}${formData.lastName.charAt(0)}
+            </div>
+            <h1 style="color: white; margin: 0; font-size: 24px; font-weight: bold;">New Contact Form Submission</h1>
+            <p style="color: #e2e8f0; margin-top: 10px; font-size: 14px;">
+                Submitted on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
+            </p>
+        </div>
+
+        <!-- Contact Information -->
+        <div style="background-color: white; padding: 30px; border-radius: 0 0 12px 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <div style="margin-bottom: 25px;">
+                <h2 style="color: #1f2937; font-size: 20px; margin: 0 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb;">
+                    Contact Details
+                </h2>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 10px 0; color: #6366f1; font-weight: bold; width: 120px;">Name:</td>
+                        <td style="padding: 10px 0; color: #4b5563;">${formData.firstName} ${formData.lastName}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0; color: #6366f1; font-weight: bold;">Email:</td>
+                        <td style="padding: 10px 0; color: #4b5563;">${formData.email}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0; color: #6366f1; font-weight: bold;">Phone:</td>
+                        <td style="padding: 10px 0; color: #4b5563;">${formData.phone || "Not provided"}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Message -->
+            <div style="margin-bottom: 25px;">
+                <h2 style="color: #1f2937; font-size: 20px; margin: 0 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb;">
+                    Message
+                </h2>
+                <div style="background-color: #f9fafb; padding: 15px; border-radius: 8px; color: #4b5563; line-height: 1.6;">
+                    ${formData.message.replace(/\n/g, "<br>")}
+                </div>
+            </div>
+
+            ${
+              file
+                ? `
+            <!-- Attachment Information -->
+            <div style="margin-bottom: 25px;">
+                <h2 style="color: #1f2937; font-size: 20px; margin: 0 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb;">
+                    Attachment
+                </h2>
+                <div style="background-color: #f9fafb; padding: 15px; border-radius: 8px; color: #4b5563;">
+                    <p style="margin: 0;">
+                        <span style="color: #6366f1; font-weight: bold;">File attached:</span> 
+                        ${file.name} (${(file.size / 1024).toFixed(2)} KB)
+                    </p>
+                </div>
+            </div>
+            `
+                : ""
+            }
+
+            <!-- Footer -->
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e5e7eb; text-align: center;">
+                <p style="color: #9ca3af; font-size: 14px; margin: 0;">
+                    This message was sent via <span style="color: #6366f1; font-weight: bold;">GetSetDeployed</span> Contact Form
+                </p>
+            </div>
+        </div>
+    </div>`;
+
     const formDataToSend = new FormData();
-    formDataToSend.append(
-      "emailData",
-      JSON.stringify({
-        id: process.env.NEXT_PUBLIC_EMAIL_ID,
-        subject: `New Message from ${formData.email}`,
-        recipient_list: JSON.parse(
-          process.env.NEXT_PUBLIC_RECIPIENT_LIST || "[]",
-        ),
-        smtp_host: "smtp.gmail.com",
-        smtp_port: 465,
-        use_tls: false,
-        use_ssl: true,
-        email_host_user: process.env.NEXT_PUBLIC_EMAIL_HOST_USER,
-        email_host_password: process.env.NEXT_PUBLIC_EMAIL_HOST_PASSWORD,
-      }),
-    );
+    const emailData = {
+      id: process.env.NEXT_PUBLIC_EMAIL_ID,
+      subject: `New Contact: ${formData.firstName} ${formData.lastName}`,
+      body: emailTemplate,
+      recipient_list: JSON.parse(
+        process.env.NEXT_PUBLIC_RECIPIENT_LIST || "[]",
+      ),
+      smtp_host: "smtp.gmail.com",
+      smtp_port: 465,
+      use_tls: false,
+      use_ssl: true,
+      email_host_user: process.env.NEXT_PUBLIC_EMAIL_HOST_USER,
+      email_host_password: process.env.NEXT_PUBLIC_EMAIL_HOST_PASSWORD,
+    };
+
+    formDataToSend.append("emailData", JSON.stringify(emailData));
 
     if (file) {
       formDataToSend.append("attachment", file);
@@ -89,6 +162,7 @@ export default function ContactPage() {
           },
         },
       );
+
       alert("Message sent successfully!");
       setFormData({
         firstName: "",
