@@ -40,7 +40,7 @@ export default function Home() {
   };
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden bg-[#09090B]">
       <Navbar />
       <NewHeroSection />
       {/*
