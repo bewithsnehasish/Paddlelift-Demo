@@ -63,7 +63,7 @@ export default function HeroSection() {
             className="relative w-full h-auto max-h-[500px] lg:max-h-[600px] flex justify-center"
           >
             <Image
-              src="/portfolio/Portfolio.gif"
+              src="/portfolio/portfolio.svg"
               alt="Portfolio"
               width={720}
               height={720}
