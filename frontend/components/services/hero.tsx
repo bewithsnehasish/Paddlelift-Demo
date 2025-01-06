@@ -1,62 +1,70 @@
-import Image from "next/image";
-import React from "react";
-import Link from "next/link";
+// components/about/HeroSection.js
+"use client";
+
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
-import Navbar from "../Navbar";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
-const HeroSection = () => {
+export const ServicesHero = () => {
+  const [isGifComplete, setIsGifComplete] = useState(false);
+
+  useEffect(() => {
+    const gifDuration = 3000; // Adjust this to match your GIF length
+    const timer = setTimeout(() => setIsGifComplete(true), gifDuration);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="relative w-full min-h-screen bg-[#09090B]">
-      <Navbar />
-
-      {/* Background and Main Images Container */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Main Image - Floating */}
-        <div className="absolute inset-0 flex items-center justify-center animate-float">
+    <section className="h-screen snap-start flex items-center relative bg-[#09090B] py-20 px-4 sm:px-6 md:px-8">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16 grid md:grid-cols-2 gap-3 items-center">
+        <div className="text-left md:text-left pt-28">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-3xl md:text-5xl font-bold mb-6 text-white"
+          >
+            Our <span className="">Services</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-lg md:text-xl text-gray-400 mb-8"
+          >
+            Discover our comprehensive range of solutions designed to meet your
+            needs. We provide cutting-edge services that help transform your
+            ideas into reality.
+          </motion.p>
+          <Button
+            size="lg"
+            className="bg-blue-600 hover:bg-blue-700 px-6 py-3 text-white rounded-md"
+          >
+            Let&apos;s Connnect
+          </Button>
+        </div>
+        <div className="relative mt-16 md:mt-0">
+          {!isGifComplete && (
+            <Image
+              src="/services/hero.svg"
+              alt="About Section Animation"
+              width={1920}
+              height={1080}
+              className="rounded-lg object-cover absolute top-0 left-0 z-10 w-full h-auto md:w-auto md:h-auto"
+              priority
+            />
+          )}
           <Image
             src="/services/hero.svg"
-            alt="Services illustration"
-            className="w-full h-full object-cover"
-            fill
-            priority
+            alt="About Section"
+            width={1920}
+            height={1080}
+            className={`rounded-lg object-cover transition-opacity duration-300 w-full h-auto md:w-auto md:h-auto ${
+              isGifComplete ? "opacity-100" : "opacity-0"
+            }`}
           />
         </div>
       </div>
-
-      {/* Content Container */}
-      <div className="relative z-10 container mx-auto px-4 h-screen">
-        <div className="flex flex-col justify-center h-full pt-16 md:pt-0">
-          <div className="max-w-2xl">
-            <TextGenerateEffect
-              words="Our Services"
-              className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6 relative z-20"
-            />
-            <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 md:mb-8 relative z-20">
-              Discover our comprehensive range of solutions designed to meet
-              your needs. We provide cutting-edge services that help transform
-              your ideas into reality.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 relative z-20">
-              <Button
-                size="lg"
-                className="bg-purple-600 hover:bg-purple-700 transition-colors"
-                asChild
-              >
-                <Link
-                  className="text-base sm:text-lg text-white font-black [text-shadow:_0_0_2px_rgba(0,0,0,0.75)] flex items-center"
-                  href="/contact"
-                >
-                  Contact <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </section>
   );
 };
-
-export default HeroSection;

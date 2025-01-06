@@ -74,14 +74,13 @@ export default function OrganizationalStructure() {
           className="w-full h-auto flex justify-center items-center"
         >
           <Image
-            // src="/images/organisationstructure.svg"
-            src="/Plogo.png"
+            src="/images/organisationstructure.svg"
             alt="Organizational Structure"
-            className="w-3/4 h-auto object-contain" // Adjust the size here
-            width={800} // Adjust the width here
-            height={450} // Adjust the height here
+            className="w-full h-auto object-contain" // Adjusted to take full width
+            width={1600} // Increased width
+            height={1200} // Increased height
             priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
           />
         </motion.div>
 

@@ -8,8 +8,9 @@ import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Footer from "@/components/Footer";
 import ManagementSection from "@/components/about/management-section";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import NewTimeline from "@/components/about/new-timeline";
+import SubHeading from "@/components/about/SubHeading"; // Import the new SubHeading component
 
 const teamMembers = [
   {
@@ -53,10 +54,10 @@ const teamMembers = [
     },
   },
 ];
-
 export default function AboutPage() {
   const [showScrollUp, setShowScrollUp] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isGifComplete, setIsGifComplete] = useState(false);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -65,35 +66,21 @@ export default function AboutPage() {
     restDelta: 0.001,
   });
 
-  const [isGifComplete, setIsGifComplete] = useState(false);
-
   useEffect(() => {
-    // Set a timer to match your GIF duration
-    const gifDuration = 3000; // Adjust this to match your GIF length in milliseconds
-    const timer = setTimeout(() => {
-      setIsGifComplete(true);
-    }, gifDuration);
-
+    const gifDuration = 3000; // Adjust this to match your GIF length
+    const timer = setTimeout(() => setIsGifComplete(true), gifDuration);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      if (currentScrollY < lastScrollY && currentScrollY > 200) {
-        setShowScrollUp(true);
-      } else {
-        setShowScrollUp(false);
-      }
-
+      setShowScrollUp(currentScrollY < lastScrollY && currentScrollY > 200);
       setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
   const scrollToTop = () => {
@@ -103,7 +90,7 @@ export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen overflow-x-hidden snap-y snap-mandatory scroll-smooth">
+      <div className="bg-[#09090B] min-h-screen overflow-x-hidden snap-y snap-mandatory scroll-smooth">
         <motion.div
           className="fixed top-0 left-0 right-0 h-1 bg-red-600 origin-left z-50"
           style={{ scaleX }}
@@ -128,8 +115,7 @@ export default function AboutPage() {
               >
                 Paddlelift, founded in 2020, is a global recruitment and HR firm
                 committed to providing streamlined, personalized talent
-                solutions. Our focus is on helping companies grow by
-                transforming recruitment challenges into opportunities.
+                solutions.
               </motion.p>
               <Button
                 size="lg"
@@ -166,16 +152,24 @@ export default function AboutPage() {
         <ManagementSection />
 
         {/* Core Values */}
-        <section className="snap-start py-20 bg-[#09090B]">
-          <div className="container mx-auto px-4 flex items-center justify-center">
-            <Image
-              src="/about/order.gif"
-              alt="World Map"
-              unoptimized
-              className="object-contain"
-              width={1200} // Adjust the width here
-              height={400} // Adjust the height here
-            />
+        <section className="snap-start py-20 bg-[#09090B] sm:px-6 md:px-8">
+          <div className="max-w-7xl mx-auto ">
+            <div className="text-left">
+              {" "}
+              <SubHeading>Core Values</SubHeading>
+            </div>
+            <div className="flex items-center justify-center mt-8">
+              {" "}
+              {/* Center the image */}
+              <Image
+                src="/about/order.gif"
+                alt="Core Values"
+                unoptimized
+                className="object-contain"
+                width={1200}
+                height={400}
+              />
+            </div>
           </div>
         </section>
 
@@ -184,62 +178,12 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto">
             <div className="mb-12 text-left">
               <motion.h2
-                initial="hidden"
-                animate="visible"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      delay: 0.2,
-                      duration: 0.8,
-                      ease: "easeInOut",
-                    },
-                  },
-                }}
-                className="text-3xl md:text-5xl font-bold text-white flex flex-wrap"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-3xl md:text-5xl font-bold text-white"
               >
-                <motion.span
-                  className="text-white mr-2"
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: (i: number) => ({
-                      opacity: 1,
-                      y: 0,
-                      transition: {
-                        delay: i * 0.2,
-                        duration: 0.8,
-                        ease: "easeInOut",
-                      },
-                    }),
-                  }}
-                  custom={2}
-                >
-                  Meet the
-                </motion.span>
-                <motion.span
-                  className="text-emerald-400 relative mr-2"
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: (i: number) => ({
-                      opacity: 1,
-                      y: 0,
-                      transition: {
-                        delay: i * 0.2,
-                        duration: 0.8,
-                        ease: "easeInOut",
-                      },
-                    }),
-                  }}
-                  custom={1}
-                >
-                  Management
-                </motion.span>
+                Meet the <span className="text-emerald-400">Management</span>
               </motion.h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

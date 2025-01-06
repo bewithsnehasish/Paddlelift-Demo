@@ -176,8 +176,7 @@ export default function ContactPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                We &apos;re here to help. Chat to our friendly team 24/7 and get
-                set up and ready to go in just 5 minutes.
+                We &apos;re here to help.
               </motion.p>
             </div>
 
@@ -244,7 +243,7 @@ export default function ContactPage() {
                     type="tel"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="+91 (555) 000-0000"
+                    placeholder="+91 91234-XXXXX"
                     className="bg-neutral-950 border-neutral-800 text-neutral-200 placeholder:text-neutral-500"
                     disabled={isLoading}
                   />

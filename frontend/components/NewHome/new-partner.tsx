@@ -162,13 +162,6 @@ const PartnersSection: React.FC = () => {
           </motion.div>
         </div>
       </div>
-
-      {/* Gradient Overlay and Background Effects */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        {/* Top and Bottom gradient overlays */}
-        <div className="absolute inset-x-0 top-0 h-1/4 bg-gradient-to-b from-gray-950 to-transparent"></div>
-        <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-gray-950 to-transparent"></div>
-      </div>
     </section>
   );
 };

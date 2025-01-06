@@ -46,9 +46,9 @@ const MainSection: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <div className="space-y-2">
-            <h1 className="text-5xl md:text-6xl font-bold text-white flex flex-wrap">
+            <h1 className="text-3xl md:text-5xl font-bold text-white flex flex-wrap mb-4">
               <motion.span
-                className="text-white relative mr-2"
+                className="text-teal-400 relative mr-2"
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
                 variants={wordPullAnimation}
@@ -57,14 +57,14 @@ const MainSection: React.FC = () => {
                 Industries
               </motion.span>
               <motion.span
-                className="text-emerald-400 relative mr-2"
+                className="text-white relative mr-2"
                 initial="hidden"
                 animate={inView ? "visible" : "hidden"}
                 variants={wordPullAnimation}
                 custom={1}
               >
                 We
-                <span className="absolute inset-0 blur-md bg-emerald-400/30 z-10"></span>
+                <span className="absolute inset-0  z-10"></span>
               </motion.span>
               <motion.span
                 className="text-white"
@@ -77,12 +77,17 @@ const MainSection: React.FC = () => {
               </motion.span>
             </h1>
           </div>
-          <p className="text-gray-400 mt-6 max-w-2xl">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-white text-xl font-semibold md:text-base my-4 max-w-lg"
+          >
             We partner with diverse industries, delivering innovative solutions
             that drive digital transformation and sustainable growth. Our
             expertise spans across multiple sectors, enabling businesses to
             thrive in the modern marketplace.
-          </p>
+          </motion.p>
         </div>
 
         {/* Industries Grid */}
