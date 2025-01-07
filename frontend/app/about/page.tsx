@@ -96,7 +96,7 @@ export default function AboutPage() {
         />
 
         {/* Hero Section */}
-        <section className="min-h-screen flex flex-col justify-center text-left relative overflow-hidden bg-black">
+        <section className="min-h-screen flex flex-col justify-center text-left relative overflow-hidden ">
           {/* Background Gradient */}
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-black to-transparent opacity-70" />
 
