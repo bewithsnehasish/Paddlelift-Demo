@@ -157,7 +157,7 @@ export default function ManagementSection() {
 
   return (
     <section
-      className="bg-[#09090B] snap-start py-20 px-4 sm:px-6 md:px-8"
+      className="bg-[#09090B] snap-start py-10 px-4 sm:px-6 md:px-8"
       ref={sectionRef}
       role="region"
       aria-label="Management Section"

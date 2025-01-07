@@ -72,7 +72,7 @@ export default function ExpertisePage() {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative py-10 md:py-20 min-h-screen overflow-hidden">
       <BackgroundPattern />
       <div className="relative z-10 mx-auto max-w-7xl px-4 pt-32 pb-20 sm:px-6 lg:px-8">
         <div className="text-left">
