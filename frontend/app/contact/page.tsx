@@ -349,7 +349,7 @@ export default function ContactPage() {
                   <div className="flex items-center">
                     <Phone className="w-5 h-5 mr-2 text-neutral-400" />
                     <p className="text-neutral-400">
-                      Call or WhatsApp: +91 9991023294
+                      Call or WhatsApp: +91-99710 23294
                     </p>
                   </div>
                   <div className="flex items-center">

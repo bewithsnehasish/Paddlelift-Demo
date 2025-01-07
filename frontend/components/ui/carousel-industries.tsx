@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 
-interface CarouselProps {
+interface IndustriesGridProps {
   items: string[];
 }
 
@@ -15,48 +15,71 @@ const colors = [
   "linear-gradient(135deg, #1D976C, #93F9B9)", // Green to Light Green
 ];
 
-const Carousel: React.FC<CarouselProps> = ({ items }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isPaused, setIsPaused] = useState(false);
+const IndustriesGrid: React.FC<IndustriesGridProps> = ({ items }) => {
+  const [currentColumn, setCurrentColumn] = useState(0);
+  const itemsPerColumn = 15; // 5x3 grid
+  const totalColumns = Math.ceil(items.length / itemsPerColumn);
 
-  // Duplicate items to create a seamless loop
-  const duplicatedItems = [...items, ...items];
+  const handleNext = () => {
+    setCurrentColumn((prev) => (prev + 1) % totalColumns);
+  };
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+  const handlePrevious = () => {
+    setCurrentColumn((prev) => (prev - 1 + totalColumns) % totalColumns);
+  };
 
-    let animationFrameId: number;
-    const speed = 1; // Adjust scroll speed (higher = faster)
-
-    const scroll = () => {
-      if (!isPaused && container) {
-        container.scrollLeft += speed;
-
-        // Reset scroll position to create a seamless loop
-        if (container.scrollLeft >= container.scrollWidth / 2) {
-          container.scrollLeft = 0;
-        }
-      }
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    animationFrameId = requestAnimationFrame(scroll);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isPaused]);
+  const startIndex = currentColumn * itemsPerColumn;
+  const endIndex = startIndex + itemsPerColumn;
+  const visibleItems = items.slice(startIndex, endIndex);
 
   return (
-    <div
-      ref={containerRef}
-      className="w-full overflow-hidden"
-      onMouseEnter={() => setIsPaused(true)} // Pause on hover
-      onMouseLeave={() => setIsPaused(false)} // Resume on mouse leave
-    >
-      <div className="flex w-max">
-        {duplicatedItems.map((item, index) => (
+    <div className="relative">
+      {/* Navigation Arrows */}
+      <button
+        onClick={handlePrevious}
+        className="absolute left-[-40px] top-1/2 transform -translate-y-1/2 bg-transparent p-2 rounded-full text-white hover:bg-white/10 transition-colors duration-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-8 w-8"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+      <button
+        onClick={handleNext}
+        className="absolute right-[-40px] top-1/2 transform -translate-y-1/2 bg-transparent p-2 rounded-full text-white hover:bg-white/10 transition-colors duration-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-8 w-8"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+
+      {/* Grid of Cards */}
+      <div className="grid grid-cols-5 gap-4">
+        {visibleItems.map((item, index) => (
           <div
             key={index}
-            className="flex-shrink-0 w-[150px] sm:w-[180px] md:w-[200px] p-2" // Responsive sizes
+            className="flex-shrink-0 p-2 transform transition-transform duration-300 hover:scale-125"
           >
             <div
               className="relative h-32 rounded-xl flex items-center justify-center text-white text-lg font-bold shadow-lg overflow-hidden"
@@ -83,4 +106,4 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
   );
 };
 
-export default Carousel;
+export default IndustriesGrid;

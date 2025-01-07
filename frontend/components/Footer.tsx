@@ -4,7 +4,7 @@ import { FaLinkedin, FaInstagram } from "react-icons/fa"; // Import icons from R
 
 const Footer = () => {
   return (
-    <div className="bg-[#09090B] py-6">
+    <div className=" py-6">
       <div
         className="max-w-7xl mx-auto flex flex-col justify-center antialiased relative border border-dark-300 rounded-xl mb-5 bg-gradient-to-br from-gray-800 via-gray-900 to-black shadow-xl p-4"
         id="contact"

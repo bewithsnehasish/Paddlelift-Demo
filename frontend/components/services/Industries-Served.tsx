@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import Carousel from "../ui/carousel-industries";
+import IndustriesGrid from "../ui/carousel-industries";
 
 const items = [
   "IT",
@@ -11,7 +11,7 @@ const items = [
   "AgriTech",
   "HealthTech",
   "EV",
-  "PinTech",
+  "FinTech",
   "EdTech",
   "E-Commerce",
   "Semiconductor",
@@ -19,12 +19,16 @@ const items = [
   "D2C",
   "Automobile",
   "HRTech",
+  "Energy & Utilities",
   "SportsTech",
+  "InsureTech",
   "Manufacturing",
-  "Media ",
+  "Media",
   "Entertainment",
   "InsurTech",
-  "Energy & Utilities",
+  "FMCG",
+  "Logistics",
+  "Supply Chain",
 ];
 
 const MainSection: React.FC = () => {
@@ -91,9 +95,9 @@ const MainSection: React.FC = () => {
           </motion.p>
         </div>
 
-        {/* Industries Carousel */}
-        <div className="overflow-hidden">
-          <Carousel items={items} />
+        {/* Industries Grid with Navigation */}
+        <div className="relative">
+          <IndustriesGrid items={items} />
         </div>
       </div>
     </section>
