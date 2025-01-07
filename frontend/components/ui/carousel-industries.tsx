@@ -17,8 +17,10 @@ const colors = [
 
 const IndustriesGrid: React.FC<IndustriesGridProps> = ({ items }) => {
   const [currentColumn, setCurrentColumn] = useState(0);
-  const itemsPerColumn = 15; // 5x3 grid
-  const totalColumns = Math.ceil(items.length / itemsPerColumn);
+  const itemsPerRow = 5; // 5 columns per row
+  const rowsPerView = 3; // 3 rows
+  const itemsPerColumn = itemsPerRow * rowsPerView; // 15 items per column view
+  const totalColumns = Math.ceil(items.length / itemsPerRow);
 
   const handleNext = () => {
     setCurrentColumn((prev) => (prev + 1) % totalColumns);
@@ -28,9 +30,14 @@ const IndustriesGrid: React.FC<IndustriesGridProps> = ({ items }) => {
     setCurrentColumn((prev) => (prev - 1 + totalColumns) % totalColumns);
   };
 
-  const startIndex = currentColumn * itemsPerColumn;
-  const endIndex = startIndex + itemsPerColumn;
-  const visibleItems = items.slice(startIndex, endIndex);
+  // Calculate the visible items based on the current column
+  const visibleItems = [];
+  for (let row = 0; row < rowsPerView; row++) {
+    for (let col = 0; col < itemsPerRow; col++) {
+      const index = ((currentColumn + col) % totalColumns) + row * itemsPerRow;
+      visibleItems.push(items[index % items.length]);
+    }
+  }
 
   return (
     <div className="relative">
@@ -79,7 +86,7 @@ const IndustriesGrid: React.FC<IndustriesGridProps> = ({ items }) => {
         {visibleItems.map((item, index) => (
           <div
             key={index}
-            className="flex-shrink-0 p-2 transform transition-transform duration-300 hover:scale-125"
+            className="flex-shrink-0 p-2 transform transition-transform duration-300 hover:scale-105"
           >
             <div
               className="relative h-32 rounded-xl flex items-center justify-center text-white text-lg font-bold shadow-lg overflow-hidden"
