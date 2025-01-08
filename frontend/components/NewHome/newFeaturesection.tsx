@@ -158,6 +158,7 @@ export default function InteractiveCards() {
                         autoPlay
                         muted
                         loop
+                        playsInline // Required for mobile devices
                         className="w-full h-full object-cover"
                       />
                     </div>

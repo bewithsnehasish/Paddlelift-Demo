@@ -191,7 +191,7 @@ export default function ContactPage() {
                           <div className="flex flex-col items-center space-y-2">
                             <Upload className="w-8 h-8 text-neutral-400" />
                             <span className="font-medium text-neutral-400">
-                              {file ? file.name : "Drop your CV here"}
+                              {file ? file.name : "Drop your Documents here"}
                             </span>
                           </div>
                         </div>
