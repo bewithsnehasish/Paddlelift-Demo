@@ -117,7 +117,7 @@ export default function NewHeroSection() {
         preload="auto" // Preload the video as soon as the page loads
         className="absolute inset-0 object-cover w-full h-full opacity-100 z-0"
       >
-        <source src="/background6.mp4" type="video/mp4" />
+        <source src="/background7.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div className="absolute inset-0 z-0" />
@@ -139,7 +139,7 @@ export default function NewHeroSection() {
                     We Fuel Your Journey
                   </div>
                 </div>
-                <p className="text-xl mb-8 text-black">
+                <p className="text-xl mb-8 text-white">
                   Tailor made solutions for Startups to Enterprises....
                 </p>
               </div>
