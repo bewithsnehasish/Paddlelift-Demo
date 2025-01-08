@@ -199,7 +199,7 @@ export default function AboutPage() {
         </section>
 
         {/* Team Gallery Section */}
-        <section className="snap-start bg-[#09090B]">
+        <section className=" bg-[#09090B]">
           <div className="container mx-auto px-4">
             <TeamGallery />
           </div>

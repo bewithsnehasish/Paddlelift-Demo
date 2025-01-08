@@ -1,16 +1,32 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 
 // Sample images array - replace with your actual images
-const photos = Array(8).fill("/placeholder.svg?height=300&width=400");
+const photos = [
+  { src: "/about/LifePaddlelift/IMG_1501.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_3096.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_3249.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_3701.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_3955.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_4133.JPG" },
+  { src: "/about/LifePaddlelift/IMG_4472.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_4497.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_4520.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_4524.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_4836.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_6310.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_6507.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_6536.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_6932.JPEG" },
+  { src: "/about/LifePaddlelift/IMG_7428.JPEG" },
+];
 
 export function TeamGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
-  const [isHovered, setIsHovered] = useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0, y: 100 },
@@ -111,11 +127,7 @@ export function TeamGallery() {
 
         <div className="flex flex-col gap-16">
           {/* Left to Right Row */}
-          <div
-            className="relative overflow-hidden"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
+          <div className="relative overflow-hidden">
             <motion.div
               className="flex gap-6"
               animate={{
@@ -129,18 +141,16 @@ export function TeamGallery() {
                   ease: "linear",
                 },
               }}
-              style={{
-                animationPlayState: isHovered ? "paused" : "running",
-              }}
             >
-              {[...photos, ...photos].map((photo, index) => (
+              {[...photos].reverse().map((photo, index) => (
                 <motion.div
                   key={`left-${index}`}
                   variants={itemVariants}
                   className="relative min-w-[300px] aspect-video"
+                  whileHover={{ scale: 1.05 }} // Scale up on hover
                 >
                   <Image
-                    src={photo}
+                    src={photo.src}
                     alt={`Team photo ${index + 1}`}
                     fill
                     className="rounded-xl object-cover"
@@ -152,11 +162,7 @@ export function TeamGallery() {
           </div>
 
           {/* Right to Left Row */}
-          <div
-            className="relative overflow-hidden"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
+          <div className="relative overflow-hidden">
             <motion.div
               className="flex gap-6"
               animate={{
@@ -170,18 +176,16 @@ export function TeamGallery() {
                   ease: "linear",
                 },
               }}
-              style={{
-                animationPlayState: isHovered ? "paused" : "running",
-              }}
             >
               {[...photos, ...photos].map((photo, index) => (
                 <motion.div
                   key={`right-${index}`}
                   variants={itemVariants}
                   className="relative min-w-[300px] aspect-video"
+                  whileHover={{ scale: 1.05 }} // Scale up on hover
                 >
                   <Image
-                    src={photo}
+                    src={photo.src}
                     alt={`Team photo ${index + 1}`}
                     fill
                     className="rounded-xl object-cover"
@@ -195,8 +199,6 @@ export function TeamGallery() {
       </motion.div>
 
       {/* Gradient Overlays */}
-      <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#09090B] to-transparent pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#09090B] to-transparent pointer-events-none" />
     </section>
   );
 }
