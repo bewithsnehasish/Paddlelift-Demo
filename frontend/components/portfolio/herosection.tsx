@@ -35,10 +35,9 @@ export default function HeroSection() {
             transition={{ duration: 0.8 }}
             className="max-w-2xl"
           >
-            <TextGenerateEffect
-              words="Our Portfolio"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
-            />
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+              Our <span className="text-red-600">Portfolio</span>
+            </h1>
             <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
               Tailor-made solutions for Startups to Enterprises. Let us help you
               bring your vision to life with our expertise and dedication.
