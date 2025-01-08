@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import IndustriesGrid from "../ui/carousel-industries";
+import CarouselIndustries from "../ui/carousel-industries";
 
 const items = [
   "IT",
@@ -97,7 +97,7 @@ const MainSection: React.FC = () => {
 
         {/* Industries Grid with Navigation */}
         <div className="relative">
-          <IndustriesGrid items={items} />
+          <CarouselIndustries items={items} />
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface IndustriesGridProps {
+interface CarouselIndustriesProps {
   items: string[];
 }
 
@@ -15,12 +16,14 @@ const colors = [
   "linear-gradient(135deg, #1D976C, #93F9B9)", // Green to Light Green
 ];
 
-const IndustriesGrid: React.FC<IndustriesGridProps> = ({ items }) => {
+const CarouselIndustries: React.FC<CarouselIndustriesProps> = ({ items }) => {
   const [currentColumn, setCurrentColumn] = useState(0);
+  const [isInView, setIsInView] = useState(false);
   const itemsPerRow = 5; // 5 columns per row
   const rowsPerView = 3; // 3 rows
-  const itemsPerColumn = itemsPerRow * rowsPerView; // 15 items per column view
-  const totalColumns = Math.ceil(items.length / itemsPerRow);
+  const itemsPerColumn = itemsPerRow; // 5 items per column
+  const totalColumns = Math.ceil(items.length / itemsPerColumn);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const handleNext = () => {
     setCurrentColumn((prev) => (prev + 1) % totalColumns);
@@ -30,21 +33,38 @@ const IndustriesGrid: React.FC<IndustriesGridProps> = ({ items }) => {
     setCurrentColumn((prev) => (prev - 1 + totalColumns) % totalColumns);
   };
 
-  // Calculate the visible items based on the current column
-  const visibleItems = [];
-  for (let row = 0; row < rowsPerView; row++) {
-    for (let col = 0; col < itemsPerRow; col++) {
-      const index = ((currentColumn + col) % totalColumns) + row * itemsPerRow;
-      visibleItems.push(items[index % items.length]);
+  // Assign a fixed color to each item based on its name
+  const getColorForItem = (item: string) => {
+    const itemIndex = items.indexOf(item);
+    return colors[itemIndex % colors.length];
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 },
+    );
+
+    if (carouselRef.current) {
+      observer.observe(carouselRef.current);
     }
-  }
+
+    return () => {
+      if (carouselRef.current) {
+        observer.unobserve(carouselRef.current);
+      }
+    };
+  }, []);
 
   return (
-    <div className="relative">
+    <div className="relative" ref={carouselRef}>
       {/* Navigation Arrows */}
       <button
         onClick={handlePrevious}
-        className="absolute left-[-40px] top-1/2 transform -translate-y-1/2 bg-transparent p-2 rounded-full text-white hover:bg-white/10 transition-colors duration-300"
+        disabled={currentColumn === 0}
+        className="absolute left-[-40px] top-1/2 transform -translate-y-1/2 bg-transparent p-2 rounded-full text-white hover:bg-white/10 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +83,8 @@ const IndustriesGrid: React.FC<IndustriesGridProps> = ({ items }) => {
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-[-40px] top-1/2 transform -translate-y-1/2 bg-transparent p-2 rounded-full text-white hover:bg-white/10 transition-colors duration-300"
+        disabled={currentColumn === totalColumns - 1}
+        className="absolute right-[-40px] top-1/2 transform -translate-y-1/2 bg-transparent p-2 rounded-full text-white hover:bg-white/10 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -81,36 +102,58 @@ const IndustriesGrid: React.FC<IndustriesGridProps> = ({ items }) => {
         </svg>
       </button>
 
-      {/* Grid of Cards */}
-      <div className="grid grid-cols-5 gap-4">
-        {visibleItems.map((item, index) => (
-          <div
-            key={index}
-            className="flex-shrink-0 p-2 transform transition-transform duration-300 hover:scale-105"
-          >
-            <div
-              className="relative h-32 rounded-xl flex items-center justify-center text-white text-lg font-bold shadow-lg overflow-hidden"
-              style={{
-                background: colors[index % colors.length],
-              }}
-            >
-              {/* Dark Overlay */}
-              <div className="absolute inset-0 bg-black/30 z-10"></div>
+      {/* Grid of Cards with Motion Animation */}
+      <div className="grid grid-cols-5 gap-4 overflow-hidden">
+        {isInView &&
+          Array.from({ length: itemsPerRow }).map((_, colIndex) => {
+            const columnItems = [];
+            for (let row = 0; row < rowsPerView; row++) {
+              const index =
+                ((currentColumn + colIndex) % totalColumns) + row * itemsPerRow;
+              columnItems.push(items[index % items.length]);
+            }
 
-              {/* Rings Pulse Effect */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="absolute w-24 h-24 rounded-full border-2 border-white/20 animate-ping"></div>
-                <div className="absolute w-20 h-20 rounded-full border-2 border-white/30 animate-ping"></div>
-              </div>
-
-              {/* Text */}
-              <span className="relative z-20">{item}</span>
-            </div>
-          </div>
-        ))}
+            return (
+              <motion.div
+                key={colIndex}
+                className="flex flex-col gap-4"
+                initial={{ x: currentColumn > 0 ? -100 : 100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: currentColumn > 0 ? 100 : -100, opacity: 0 }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeInOut",
+                  delay: colIndex * 0.1, // Add delay for cascading effect
+                }}
+              >
+                {columnItems.map((item, rowIndex) => (
+                  <motion.div
+                    key={`${item}-${rowIndex}`}
+                    className="flex-shrink-0 p-2"
+                    whileHover={{ scale: 1.05 }} // Add hover effect
+                  >
+                    <div
+                      className="relative h-32 rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg overflow-hidden"
+                      style={{
+                        background: getColorForItem(item),
+                      }}
+                    >
+                      {/* Rings Pulse Effect */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="absolute w-24 h-24 rounded-full border-2 border-white/40 animate-ping"></div>
+                        <div className="absolute w-20 h-20 rounded-full border-2 border-white/50 animate-ping"></div>
+                      </div>
+                      {/* Text */}
+                      <span className="relative z-20">{item}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            );
+          })}
       </div>
     </div>
   );
 };
 
-export default IndustriesGrid;
+export default CarouselIndustries;

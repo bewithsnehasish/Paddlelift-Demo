@@ -162,6 +162,7 @@ export default function AboutPage() {
                 src="/about/order.gif"
                 alt="Core Values"
                 unoptimized
+                priority
                 className="object-contain"
                 width={1200}
                 height={400}
