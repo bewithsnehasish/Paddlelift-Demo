@@ -73,8 +73,8 @@ export default function WorldMapSection() {
             alt="World Map"
             unoptimized
             className="object-contain"
-            width={900} // Adjust the width here
-            height={400} // Adjust the height here
+            width={800} // Adjust the width here
+            height={300} // Adjust the height here
             placeholder="blur"
             blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIiBzdHlsZT0iIiBmaWxsPSIjZmZmIiAvPgo="
           />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Users, TrendingUp, ClipboardList, UserCheck } from "lucide-react";
 import { useInView } from "react-intersection-observer";
@@ -49,11 +49,25 @@ const wordPullAnimation = {
 };
 
 export default function InteractiveCards() {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [activeCard, setActiveCard] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <section
@@ -93,27 +107,26 @@ export default function InteractiveCards() {
               </motion.span>
             </h1>
           </div>
-          <p className="text-base mt-6 max-w-2xl">
-            We offer a range of Services designed to streamline your business
-            operations and drive growth. From Talent Acquisition to Funding
-            Support, our comprehensive solutions cater to diverse needs.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {cards.map((card) => (
             <motion.div
               key={card.id}
-              className="relative overflow-hidden rounded-lg bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm border border-gray-800"
-              onHoverStart={() => setHoveredCard(card.id)}
-              onHoverEnd={() => setHoveredCard(null)}
+              className="relative overflow-hidden rounded-lg bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm border border-gray-800 cursor-pointer"
+              onHoverStart={() => !isMobile && setActiveCard(card.id)}
+              onHoverEnd={() => !isMobile && setActiveCard(null)}
+              onClick={() =>
+                isMobile &&
+                setActiveCard(activeCard === card.id ? null : card.id)
+              }
               initial="initial"
-              animate={hoveredCard === card.id ? "hover" : "initial"}
+              animate={activeCard === card.id ? "active" : "initial"}
               variants={{
                 initial: {
                   height: "100px",
                 },
-                hover: {
+                active: {
                   height: "auto",
                 },
               }}
@@ -131,7 +144,7 @@ export default function InteractiveCards() {
               </div>
 
               <AnimatePresence>
-                {hoveredCard === card.id && (
+                {activeCard === card.id && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -139,13 +152,14 @@ export default function InteractiveCards() {
                     transition={{ duration: 0.3 }}
                     className="px-6 pb-6 space-y-4"
                   >
-                    <div className="relative rounded-lg overflow-hidden h-64">
+                    <div className="relative rounded-lg overflow-hidden h-80">
                       <video
                         src={card.video}
                         autoPlay
                         muted
                         loop
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover object-center"
+                        style={{ objectFit: "cover", objectPosition: "center" }}
                       />
                     </div>
                   </motion.div>

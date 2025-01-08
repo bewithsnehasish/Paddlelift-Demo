@@ -4,12 +4,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useEffect, useRef } from "react";
 
-// Extend VideoHTMLAttributes to include fetchPriority
-interface CustomVideoAttributes
-  extends React.VideoHTMLAttributes<HTMLVideoElement> {
-  fetchPriority?: "high" | "low" | "auto";
-}
-
 interface AnimatedButtonProps {
   href: string;
   children: React.ReactNode;
@@ -120,7 +114,9 @@ export default function NewHeroSection() {
         <source src="/background7.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <div className="absolute inset-0 z-0" />
+
+      {/* Dark overlay to make the background dull */}
+      <div className="absolute inset-0 bg-black bg-opacity-30 z-1"></div>
 
       {/* Main content area */}
       <div className="flex-1 flex items-center">
@@ -132,14 +128,19 @@ export default function NewHeroSection() {
               transition={{ duration: 0.8 }}
               className="max-w-2xl mx-auto text-center"
             >
-              <div className="max-w-3xl mt-18">
+              <div className="max-w-3xl mt-12">
+                {" "}
+                {/* Adjusted margin-top */}
                 <div className="text-4xl md:text-6xl font-semibold md:font-bold">
                   <div className="text-white">From Seed to Scale</div>
                   <div className="text-red-700 py-4 rounded-md">
                     We Fuel Your Journey
                   </div>
                 </div>
-                <p className="text-xl mb-8 text-white">
+                <p
+                  className="text-2xl font-bold mb-4 text-white"
+                  style={{ textShadow: "0 0 8px rgba(255, 255, 255, 0.8)" }}
+                >
                   Tailor made solutions for Startups to Enterprises....
                 </p>
               </div>
