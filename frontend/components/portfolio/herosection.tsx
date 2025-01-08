@@ -9,7 +9,7 @@ import { TextGenerateEffect } from "../ui/text-generate-effect";
 
 export default function HeroSection() {
   return (
-    <section className="min-h-screen flex flex-col justify-center text-left relative overflow-hidden bg-black">
+    <section className="min-h-screen flex flex-col justify-center text-left relative overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
