@@ -53,7 +53,7 @@ const Navbar = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (e.clientY < 100) {
         setIsVisible(true);
       }
