@@ -81,7 +81,7 @@ const Footer = () => {
         <BackgroundBeams className="hidden sm:flex" />
         {/* Footer attribution */}
         <div className="py-4 text-center text-sm text-gray-500">
-          The Paddlelift India. Developed by{" "}
+          Developed by{" "}
           <a
             href="https://www.getsetdeployed.com/"
             target="_blank"
