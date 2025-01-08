@@ -119,18 +119,21 @@ export default function NewHeroSection() {
       <div className="absolute inset-0 bg-black bg-opacity-30 z-1"></div>
 
       {/* Main content area */}
-      <div className="flex-1 flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid grid-cols-1 gap-12 items-center pt-4">
+      <div className="mt-44 flex items-center">
+        <div className="max-w-7xl mx-auto relative z-10 w-full">
+          <div className="grid grid-cols-1 gap-12 ">
+            {" "}
+            {/* Reduced padding-top */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="max-w-2xl mx-auto text-center"
+              className="max-w-2xl text-left" // Changed to text-left and removed mx-auto
+              style={{ marginLeft: "2rem" }} // Adjust the margin as needed
             >
-              <div className="max-w-3xl mt-12">
+              <div className="max-w-3xl mt-6">
                 {" "}
-                {/* Adjusted margin-top */}
+                {/* Reduced margin-top */}{" "}
                 <div className="text-4xl md:text-6xl font-semibold md:font-bold">
                   <div className="text-white">From Seed to Scale</div>
                   <div className="text-red-700 py-4 rounded-md">
