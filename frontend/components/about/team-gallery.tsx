@@ -183,7 +183,7 @@ export function TeamGallery() {
                 },
               }}
             >
-              {photos.map((photo, index) => (
+              {[...photos].reverse().map((photo, index) => (
                 <motion.div
                   key={`right-${index}`}
                   variants={itemVariants}
