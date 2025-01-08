@@ -4,6 +4,12 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useEffect, useRef } from "react";
 
+// Extend VideoHTMLAttributes to include fetchPriority
+interface CustomVideoAttributes
+  extends React.VideoHTMLAttributes<HTMLVideoElement> {
+  fetchPriority?: "high" | "low" | "auto";
+}
+
 interface AnimatedButtonProps {
   href: string;
   children: React.ReactNode;
@@ -101,12 +107,14 @@ export default function NewHeroSection() {
 
   return (
     <section className="min-h-screen snap-start relative overflow-hidden flex flex-col justify-between">
+      {/* Preload the video in the background */}
       <video
         ref={videoRef}
         autoPlay
         playsInline
         loop
         muted
+        preload="auto" // Preload the video as soon as the page loads
         className="absolute inset-0 object-cover w-full h-full opacity-100 z-0"
       >
         <source src="/background6.mp4" type="video/mp4" />
