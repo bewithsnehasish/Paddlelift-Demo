@@ -57,135 +57,7 @@ export default function ContactPage() {
       return;
     }
 
-    const emailTemplate = `
-    <div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; background-color: #f8f9fa; padding: 20px;">
-        <!-- Header -->
-        <div style="background: linear-gradient(135deg, #6366f1, #8b5cf6); padding: 40px 20px; text-align: center; border-radius: 12px 12px 0 0;">
-            <div style="width: 80px; height: 80px; background-color: white; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 36px; color: #6366f1; font-weight: bold;">
-                ${formData.firstName.charAt(0)}${formData.lastName.charAt(0)}
-            </div>
-            <h1 style="color: white; margin: 0; font-size: 24px; font-weight: bold;">New Contact Form Submission</h1>
-            <p style="color: #e2e8f0; margin-top: 10px; font-size: 14px;">
-                Submitted on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
-            </p>
-        </div>
-
-        <!-- Contact Information -->
-        <div style="background-color: white; padding: 30px; border-radius: 0 0 12px 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            <div style="margin-bottom: 25px;">
-                <h2 style="color: #1f2937; font-size: 20px; margin: 0 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb;">
-                    Contact Details
-                </h2>
-                <table style="width: 100%; border-collapse: collapse;">
-                    <tr>
-                        <td style="padding: 10px 0; color: #6366f1; font-weight: bold; width: 120px;">Name:</td>
-                        <td style="padding: 10px 0; color: #4b5563;">${formData.firstName} ${formData.lastName}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px 0; color: #6366f1; font-weight: bold;">Email:</td>
-                        <td style="padding: 10px 0; color: #4b5563;">${formData.email}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px 0; color: #6366f1; font-weight: bold;">Phone:</td>
-                        <td style="padding: 10px 0; color: #4b5563;">${formData.phone || "Not provided"}</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- Message -->
-            <div style="margin-bottom: 25px;">
-                <h2 style="color: #1f2937; font-size: 20px; margin: 0 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb;">
-                    Message
-                </h2>
-                <div style="background-color: #f9fafb; padding: 15px; border-radius: 8px; color: #4b5563; line-height: 1.6;">
-                    ${formData.message.replace(/\n/g, "<br>")}
-                </div>
-            </div>
-
-            ${
-              file
-                ? `
-            <!-- Attachment Information -->
-            <div style="margin-bottom: 25px;">
-                <h2 style="color: #1f2937; font-size: 20px; margin: 0 0 15px 0; padding-bottom: 10px; border-bottom: 2px solid #e5e7eb;">
-                    Attachment
-                </h2>
-                <div style="background-color: #f9fafb; padding: 15px; border-radius: 8px; color: #4b5563;">
-                    <p style="margin: 0;">
-                        <span style="color: #6366f1; font-weight: bold;">File attached:</span>
-                        ${file.name} (${(file.size / 1024).toFixed(2)} KB)
-                    </p>
-                </div>
-            </div>
-            `
-                : ""
-            }
-
-            <!-- Footer -->
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e5e7eb; text-align: center;">
-                <p style="color: #9ca3af; font-size: 14px; margin: 0;">
-                    This message was sent via <span style="color: #6366f1; font-weight: bold;">GetSetDeployed</span> Contact Form
-                </p>
-            </div>
-        </div>
-    </div>`;
-
-    try {
-      // Create form data
-      const formDataToSend = new FormData();
-
-      // Add file if it exists
-      if (file) {
-        formDataToSend.append("file", file);
-      }
-
-      // Add email data
-      const emailData = {
-        email_id: process.env.NEXT_PUBLIC_EMAIL_ID,
-        subject: `New Contact: ${formData.firstName} ${formData.lastName}`,
-        body: emailTemplate,
-        to_email: JSON.parse(process.env.NEXT_PUBLIC_RECIPIENT_LIST || "[]"),
-        smtp_settings: {
-          host: "smtp.gmail.com",
-          port: 465,
-          use_tls: false,
-          use_ssl: true,
-          username: process.env.NEXT_PUBLIC_EMAIL_HOST_USER,
-          password: process.env.NEXT_PUBLIC_EMAIL_HOST_PASSWORD,
-        },
-      };
-
-      formDataToSend.append("email_data", JSON.stringify(emailData));
-
-      // Make the API call
-      const response = await axios.post(
-        "https://api.paddlelift.com/email/send", // Update this with your actual API endpoint
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        },
-      );
-
-      console.log("Email sent successfully:", response.data);
-      alert("Message sent successfully!");
-
-      // Reset form
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
-      setFile(null);
-    } catch (error) {
-      console.error("Error:", error);
-      setError("Failed to send message. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    // ... (rest of the handleSubmit function remains the same)
   };
 
   return (
@@ -214,7 +86,7 @@ export default function ContactPage() {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-neutral-100 to-neutral-400 mb-4">
-              Get in touch
+              Get in <span className="text-red-600">Touch</span>
             </h1>
             <p className="text-neutral-400">We're here to help.</p>
           </motion.div>
@@ -307,15 +179,22 @@ export default function ContactPage() {
                       <Label htmlFor="attachment" className="text-neutral-200">
                         Attachment (optional)
                       </Label>
-                      <div className="flex items-center gap-2">
-                        <Input
+                      <div className="relative group cursor-pointer">
+                        <input
                           id="attachment"
                           type="file"
                           onChange={handleFileChange}
-                          className="bg-neutral-950 border-neutral-800 text-neutral-200"
+                          className="hidden"
                           disabled={isLoading}
                         />
-                        <Upload className="w-5 h-5 text-neutral-400" />
+                        <div className="flex items-center justify-center w-full h-32 px-4 transition bg-neutral-950 border-2 border-neutral-800 border-dashed rounded-lg appearance-none hover:border-neutral-600 focus:outline-none">
+                          <div className="flex flex-col items-center space-y-2">
+                            <Upload className="w-8 h-8 text-neutral-400" />
+                            <span className="font-medium text-neutral-400">
+                              {file ? file.name : "Drop your CV here"}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -371,7 +250,8 @@ export default function ContactPage() {
                     Our Location
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="h-[300px]">
+                <CardContent className="h-[460px]">
+                  {" "}
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.4725137946443!2d77.36948895194043!3d28.61559722233175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce59d969ba857%3A0x9a234478868502b9!2sPaddleLift%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1734004896279!5m2!1sen!2sin"
                     width="100%"

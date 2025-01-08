@@ -9,6 +9,7 @@ import PartnersSection from "@/components/NewHome/new-partner";
 import { ServicesHero } from "@/components/services/hero";
 import "./services.css";
 import Navbar from "@/components/Navbar";
+import InteractiveCards from "@/components/NewHome/newFeaturesection";
 
 const ServicesPage: React.FC = () => {
   const [showScrollUp, setShowScrollUp] = useState(false);
@@ -43,13 +44,14 @@ const ServicesPage: React.FC = () => {
       <div className="overflow-hidden bg-[#09090B]">
         <Navbar />
         <ServicesHero />
-        <FeaturesSection />
+        <InteractiveCards />
         <PartnersSection />
         <IndustriesServed />
         <Footer />
       </div>
       {/* 
       <ElfsightReviews />
+      <FeaturesSection />
       Scroll-Up Button */}
       {showScrollUp && (
         <button

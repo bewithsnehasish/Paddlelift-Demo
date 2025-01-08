@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import HeroSection from "@/components/home/HeroSection";
 import "./globals.css";
 import FeaturesSection from "@/components/NewHome/FeaturesSection";
 import WorldMapSection from "@/components/NewHome/maps";
@@ -10,6 +9,7 @@ import Footer from "@/components/Footer";
 import PortfolioSection from "@/components/portfolio/portfoliosection";
 import PartnersSection from "@/components/NewHome/new-partner";
 import NewHeroSection from "@/components/NewHome/new-herosection";
+import InteractiveCards from "@/components/NewHome/newFeaturesection";
 
 export default function Home() {
   const [showScrollUp, setShowScrollUp] = useState(false);
@@ -44,13 +44,15 @@ export default function Home() {
       <Navbar />
       <NewHeroSection />
       {/*
-      <HeroSection />
+
+        <HeroSection />
         <GrowthTimeline />
         <ApproachSection />
         <OrganizationalStructure />
         <CompanyTimeline />
-        */}
       <FeaturesSection />
+        */}
+      <InteractiveCards />
       <WorldMapSection />
       <PortfolioSection />
       <PartnersSection />

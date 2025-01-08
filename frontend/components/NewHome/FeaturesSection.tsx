@@ -8,7 +8,6 @@ import { useInView } from "react-intersection-observer";
 interface Service {
   id: string;
   title: string;
-  description: string;
   video: string;
   height: number;
   width: number;
@@ -18,8 +17,6 @@ const services: Service[] = [
   {
     id: "recruitment",
     title: "Recruitment",
-    description:
-      "Delivering top talent across industries and verticals, from tech to non-tech, with precision and expertise.",
     video: "/services/recruitment.mp4",
     height: 400,
     width: 400,
@@ -27,8 +24,6 @@ const services: Service[] = [
   {
     id: "staffing",
     title: "Staffing",
-    description:
-      "Deploying skilled talent globally with seamless payroll management for efficient and compliant staffing solutions.",
     video: "/services/staffing.mp4",
     height: 400,
     width: 400,
@@ -36,8 +31,6 @@ const services: Service[] = [
   {
     id: "funding-gateway",
     title: "Funding Gateway",
-    description:
-      "Opening doors for startups by connecting them with global angel investors & VCs, guiding funding from pre-seed to Series B.",
     video: "/services/funding.mp4",
     height: 400,
     width: 400,
@@ -45,8 +38,6 @@ const services: Service[] = [
   {
     id: "hr-dynamics",
     title: "HR Dynamics",
-    description:
-      "Comprehensive HR management service that streamlines policy, strategies, salary benchmarking, etc. different analytics support.",
     video: "/services/hrdynamics.mp4",
     height: 400,
     width: 400,
@@ -113,7 +104,16 @@ const ServicesSection = () => {
                 variants={wordPullAnimation}
                 custom={0}
               >
-                Our
+                Range
+              </motion.span>
+              <motion.span
+                className="text-white relative mr-2"
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                variants={wordPullAnimation}
+                custom={0}
+              >
+                of
               </motion.span>
               <motion.span
                 className="text-teal-500 relative"
@@ -126,7 +126,7 @@ const ServicesSection = () => {
               </motion.span>
             </h1>
           </div>
-          <p className="text-gray-400 mt-6 max-w-2xl">
+          <p className="text-base mt-6 max-w-2xl">
             We offer a range of Services designed to streamline your business
             operations and drive growth. From Talent Acquisition to Funding
             Support, our comprehensive solutions cater to diverse needs.
@@ -210,11 +210,6 @@ const ServicesSection = () => {
                       className="overflow-hidden"
                     >
                       <div className="flex flex-col md:flex-row gap-8 h-full">
-                        <div className="md:w-1/2 flex items-center">
-                          <p className="text-white text-xl text-left">
-                            {service.description}
-                          </p>
-                        </div>
                         <motion.div
                           className="md:w-1/2 flex justify-center items-center relative"
                           initial={{ x: 100, opacity: 0 }}

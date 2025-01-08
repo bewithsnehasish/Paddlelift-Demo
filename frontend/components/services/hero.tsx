@@ -31,7 +31,7 @@ export const ServicesHero = () => {
             className="max-w-2xl"
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-              Our <span>Services</span>
+              Our <span className="text-red-600">Services</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
               Discover our comprehensive range of solutions designed to meet

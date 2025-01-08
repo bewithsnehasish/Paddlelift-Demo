@@ -77,7 +77,7 @@ export default function ExpertisePage() {
       <div className="relative z-10 mx-auto max-w-7xl px-4 pt-32 pb-20 sm:px-6 lg:px-8">
         <div className="text-left">
           <h1 className="text-3xl font-bold text-white md:text-5xl">
-            What <span className="text-emerald-400">Sets</span> Us Apart
+            What Sets Us<span className="text-red-600"> Apart</span>
           </h1>
         </div>
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">

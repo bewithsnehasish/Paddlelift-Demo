@@ -163,7 +163,6 @@ export default function PortfolioSection() {
           {counters[index]}
           {data.suffix}
         </p>
-        <p className="text-sm text-gray-200">{data.description}</p>
       </motion.div>
     );
   };
@@ -191,7 +190,7 @@ export default function PortfolioSection() {
             variants={wordPullAnimation}
             custom={1}
           >
-            Stats
+            Statistics
           </motion.span>
         </h1>
 
@@ -201,7 +200,7 @@ export default function PortfolioSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white text-xl font-semibold md:text-base my-4 max-w-lg"
         >
-          Our Numbers Speak&apos;s it all
+          Our Numbers Speak it all
         </motion.p>
 
         <div className="mt-12 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">

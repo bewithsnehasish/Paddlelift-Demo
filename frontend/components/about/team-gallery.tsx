@@ -64,6 +64,7 @@ export function TeamGallery() {
         animate={isInView ? "visible" : "hidden"}
         className="max-w-7xl mx-auto"
       >
+        {/* Title Section */}
         <div className="mb-12 text-left">
           <motion.h2
             initial="hidden"
@@ -125,9 +126,13 @@ export function TeamGallery() {
           </motion.h2>
         </div>
 
+        {/* Gallery Rows */}
         <div className="flex flex-col gap-16">
           {/* Left to Right Row */}
-          <div className="relative overflow-hidden">
+          <motion.div
+            className="relative overflow-hidden"
+            variants={containerVariants}
+          >
             <motion.div
               className="flex gap-6"
               animate={isInView ? { x: ["0%", "-50%"] } : {}}
@@ -140,12 +145,12 @@ export function TeamGallery() {
                 },
               }}
             >
-              {[...photos].reverse().map((photo, index) => (
+              {photos.map((photo, index) => (
                 <motion.div
                   key={`left-${index}`}
                   variants={itemVariants}
                   className="relative min-w-[300px] aspect-video"
-                  whileHover={{ scale: 1.05 }} // Scale up on hover
+                  whileHover={{ scale: 1.05 }}
                 >
                   <Image
                     src={photo.src}
@@ -153,16 +158,19 @@ export function TeamGallery() {
                     fill
                     className="rounded-xl object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority // Preload and prioritize this image
-                    loading="eager" // Load eagerly instead of lazily
+                    priority
+                    loading="eager"
                   />
                 </motion.div>
               ))}
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Right to Left Row */}
-          <div className="relative overflow-hidden">
+          <motion.div
+            className="relative overflow-hidden"
+            variants={containerVariants}
+          >
             <motion.div
               className="flex gap-6"
               animate={isInView ? { x: ["-50%", "0%"] } : {}}
@@ -175,12 +183,12 @@ export function TeamGallery() {
                 },
               }}
             >
-              {[...photos, ...photos].map((photo, index) => (
+              {photos.map((photo, index) => (
                 <motion.div
                   key={`right-${index}`}
                   variants={itemVariants}
                   className="relative min-w-[300px] aspect-video"
-                  whileHover={{ scale: 1.05 }} // Scale up on hover
+                  whileHover={{ scale: 1.05 }}
                 >
                   <Image
                     src={photo.src}
@@ -188,13 +196,13 @@ export function TeamGallery() {
                     fill
                     className="rounded-xl object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority // Preload and prioritize this image
-                    loading="eager" // Load eagerly instead of lazily
+                    priority
+                    loading="eager"
                   />
                 </motion.div>
               ))}
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </motion.div>
 

@@ -18,7 +18,6 @@ export default function NewTimeline() {
             height={1080}
             priority
             className="rounded-lg object-cover w-full shadow-2xl"
-            loading="lazy"
           />
         </div>
       </div>

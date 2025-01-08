@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import CarouselIndustries from "../ui/carousel-industries";
@@ -69,7 +69,7 @@ const MainSection: React.FC = () => {
                 custom={1}
               >
                 We
-                <span className="absolute inset-0  z-10"></span>
+                <span className="absolute inset-0 z-10"></span>
               </motion.span>
               <motion.span
                 className="text-white"

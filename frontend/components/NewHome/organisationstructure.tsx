@@ -75,9 +75,9 @@ export default function OrganizationalStructure() {
           <Image
             src="/Plogo.png"
             alt="Organizational Structure"
-            className="w-1/3 h-auto object-contain"
-            width={400}
-            height={300}
+            className="w-1/4 h-auto object-contain"
+            width={200}
+            height={100}
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
           />

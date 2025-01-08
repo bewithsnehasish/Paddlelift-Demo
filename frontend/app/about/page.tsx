@@ -152,7 +152,7 @@ export default function AboutPage() {
         <ManagementSection />
 
         {/* Core Values */}
-        <section className="snap-start pt-10 pb-20 bg-[#09090B] sm:px-6 md:px-8">
+        <section className="snap-start pb-20 bg-[#09090B] sm:px-6 md:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="text-left">
               <SubHeading>Core Values</SubHeading>

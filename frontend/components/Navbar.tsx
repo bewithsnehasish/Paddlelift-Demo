@@ -6,36 +6,68 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
-import { ArrowRight } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrollTimeout, setScrollTimeout] = useState(null);
   const router = useRouter();
 
+  // Previous functionality remains the same...
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
 
-    if (currentScrollY > lastScrollY) {
+    if (currentScrollY === 0) {
+      setIsVisible(true);
+      setIsScrolled(false);
+      return;
+    }
+
+    if (currentScrollY < lastScrollY) {
+      setIsVisible(true);
+    } else {
       if (currentScrollY > 100) {
         setIsVisible(false);
       }
-    } else {
-      setIsVisible(true);
     }
 
-    setIsScrolled(currentScrollY > 0);
+    setIsScrolled(true);
     setLastScrollY(currentScrollY);
-  }, [lastScrollY]);
+
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+
+    const newTimeout = setTimeout(() => {
+      if (window.scrollY > 0) {
+        setIsVisible(false);
+      }
+    }, 2000);
+
+    setScrollTimeout(newTimeout);
+  }, [lastScrollY, scrollTimeout]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+
+    const handleMouseMove = (e) => {
+      if (e.clientY < 100) {
+        setIsVisible(true);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
     };
-  }, [handleScroll]);
+  }, [handleScroll, scrollTimeout]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -69,7 +101,7 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    { name: "Our Services", path: "/services" },
+    { name: "Services", path: "/services" },
     { name: "Expertise", path: "/expertise" },
     { name: "Portfolio", path: "/portfolio" },
     { name: "Contact", path: "/contact" },
@@ -77,20 +109,66 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Navbar */}
-      <nav
-        className={`max-w-7xl fixed top-4 mx-auto inset-x-0 z-40 transition-all duration-300 ${
-          isScrolled ? "w-[90%] bg-black border" : "w-[95%] bg-transparent"
-        } rounded-md lg:w-full ${
-          isVisible
-            ? "translate-y-0 opacity-100"
-            : "transform -translate-y-full opacity-0"
-        } ${isMobileMenuOpen ? "hidden" : ""}`}
-      >
-        {/* Desktop Navigation */}
-        <div className="hidden lg:block w-full">
-          <div className="w-full flex relative justify-between px-4 py-3 rounded-md transition duration-200 mx-auto">
-            <div className="flex flex-row gap-2 items-center">
+      {/* Container div for centering */}
+      <div className="fixed top-5 left-0 right-0 flex justify-center items-start w-full z-40">
+        {/* Navbar */}
+        <nav
+          className={`max-w-7xl transition-all duration-300 ${
+            isScrolled ? "w-[90%] bg-black border" : "w-[95%] bg-transparent"
+          } rounded-md ${
+            isVisible
+              ? "translate-y-0 opacity-100"
+              : "transform -translate-y-full opacity-0"
+          } ${isMobileMenuOpen ? "hidden" : ""}`}
+        >
+          {/* Desktop Navigation */}
+          <div className="hidden lg:block w-full">
+            <div className="w-full flex relative justify-between px-4 py-3 rounded-md transition duration-200 mx-auto">
+              <div className="flex flex-row gap-2 items-center">
+                <Link
+                  href="/"
+                  className="font-normal flex space-x-2 items-center text-sm mr-4 text-black px-2 py-1 relative z-20"
+                >
+                  <Image
+                    src="/Plogo.png"
+                    alt="Paddlelite Logo"
+                    className="max-h-24 max-w-24 object-contain opacity-100 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
+                    width={84}
+                    height={84}
+                  />
+                </Link>
+                <div className="flex items-center gap-1.5">
+                  {navLinks.slice(1).map((link) => (
+                    <Link
+                      key={link.path}
+                      href={link.path}
+                      className="flex items-center justify-center text-lg font-bold leading-[110%] px-4 py-2 rounded-md hover:bg-neutral-800 hover:text-white/80 text-white hover:shadow-[0px_1px_0px_0px_#FFFFFF20_inset] transition duration-200"
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button
+                  size="sm"
+                  className="m-auto bg-white text-black hover:bg-blue-500 hover:text-white transition duration-200"
+                  asChild
+                >
+                  <Link
+                    className="text-xl font-black [text-shadow:_0_0_2px_rgba(0,0,0,0.75)]"
+                    href="/jobs"
+                  >
+                    Job Board
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Navigation */}
+          <div className="flex h-full w-full items-center lg:hidden">
+            <div className="flex justify-between bg-transparent items-center w-full rounded-md px-2.5 py-1.5 transition duration-200">
               <Link
                 href="/"
                 className="font-normal flex space-x-2 items-center text-sm mr-4 text-black px-2 py-1 relative z-20"
@@ -99,75 +177,32 @@ const Navbar = () => {
                   src="/Plogo.png"
                   alt="Paddlelite Logo"
                   className="max-h-24 max-w-24 object-contain opacity-100 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
-                  width={84}
-                  height={84}
+                  width={54}
+                  height={54}
+                  priority
                 />
               </Link>
-              <div className="flex items-center gap-1.5">
-                {navLinks.slice(1).map((link) => (
-                  <Link
-                    key={link.path}
-                    href={link.path}
-                    className="flex items-center justify-center text-lg font-bold leading-[110%] px-4 py-2 rounded-md hover:bg-neutral-800 hover:text-white/80 text-white hover:shadow-[0px_1px_0px_0px_#FFFFFF20_inset] transition duration-200"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                size="sm" // Adjust the size here
-                className="m-auto bg-white text-black hover:bg-blue-500 hover:text-white transition duration-200"
-                asChild
-              >
-                <Link
-                  className="text-xl font-black [text-shadow:_0_0_2px_rgba(0,0,0,0.75)]"
-                  href="/jobs"
-                >
-                  Job Board
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
 
-        {/* Mobile Hamburger */}
-        <div className="flex h-full w-full items-center lg:hidden">
-          <div className="flex justify-between bg-transparent items-center w-full rounded-md px-2.5 py-1.5 transition duration-200">
-            <Link
-              href="/"
-              className="font-normal flex space-x-2 items-center text-sm mr-4 text-black px-2 py-1 relative z-20"
-            >
-              <Image
-                src="/Plogo.png"
-                alt="Paddlelite Logo"
-                className="max-h-24 max-w-24 object-contain opacity-100 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
-                width={54}
-                height={54}
-                priority
-              />
-            </Link>
-
-            <button
-              onClick={toggleMobileMenu}
-              className="text-white h-6 w-6"
-              aria-label="Toggle menu"
-            >
-              <svg
-                stroke="currentColor"
-                fill="currentColor"
-                strokeWidth="0"
-                viewBox="0 0 512 512"
+              <button
+                onClick={toggleMobileMenu}
                 className="text-white h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
+                aria-label="Toggle menu"
               >
-                <path d="M432 176H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16zM432 272H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16zM432 368H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16z" />
-              </svg>
-            </button>
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 512 512"
+                  className="text-white h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M432 176H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16zM432 272H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16zM432 368H80c-8.8 0-16-7.2-16-16s7.2-16 16-16h352c8.8 0 16 7.2 16 16s-7.2 16-16 16z" />
+                </svg>
+              </button>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>

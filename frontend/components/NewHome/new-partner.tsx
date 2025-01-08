@@ -132,13 +132,8 @@ const PartnersSection: React.FC = () => {
             className="max-w-xl"
           >
             <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white max-w-2xl leading-[110%]">
-              <span className="text-teal-400">Our</span> Clients
+              Our <span className="text-teal-400">Clients</span>
             </h2>
-            <p className="mt-3 text-base md:text-lg">
-              Paddlelift partners with innovative companies worldwide,
-              delivering exceptional talent solutions to support business
-              success from startups to established organizations.
-            </p>
           </motion.div>
 
           {/* Marquee effect with two rows */}

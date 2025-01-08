@@ -1,5 +1,5 @@
 import ExpertisePage from "@/components/expertise/herosection";
-import RecruitmentProcess from "@/components/expertise/Requirement/RequirementProcess";
+import MobileOrgainsation from "@/components/expertise/MobileOrgainsation";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import OrganizationalStructure from "@/components/NewHome/organisationstructure";
@@ -11,7 +11,14 @@ const Expertise: React.FC = () => {
       <div className="overflow-hidden bg-[#09090B]">
         <Navbar />
         <ExpertisePage />
-        <OrganizationalStructure />
+        {/* Visible only on desktop and tablet */}
+        <div className="hidden md:block">
+          <OrganizationalStructure />
+        </div>
+        {/* Visible only on mobile */}
+        <div className="block md:hidden">
+          <MobileOrgainsation />
+        </div>
         <Footer />
         {/* 
         <RecruitmentProcess />
