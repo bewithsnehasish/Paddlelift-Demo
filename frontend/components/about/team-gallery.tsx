@@ -130,9 +130,7 @@ export function TeamGallery() {
           <div className="relative overflow-hidden">
             <motion.div
               className="flex gap-6"
-              animate={{
-                x: ["0%", "-50%"],
-              }}
+              animate={isInView ? { x: ["0%", "-50%"] } : {}}
               transition={{
                 x: {
                   repeat: Infinity,
@@ -155,6 +153,8 @@ export function TeamGallery() {
                     fill
                     className="rounded-xl object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority // Preload and prioritize this image
+                    loading="eager" // Load eagerly instead of lazily
                   />
                 </motion.div>
               ))}
@@ -165,9 +165,7 @@ export function TeamGallery() {
           <div className="relative overflow-hidden">
             <motion.div
               className="flex gap-6"
-              animate={{
-                x: ["-50%", "0%"],
-              }}
+              animate={isInView ? { x: ["-50%", "0%"] } : {}}
               transition={{
                 x: {
                   repeat: Infinity,
@@ -190,6 +188,8 @@ export function TeamGallery() {
                     fill
                     className="rounded-xl object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority // Preload and prioritize this image
+                    loading="eager" // Load eagerly instead of lazily
                   />
                 </motion.div>
               ))}
@@ -199,6 +199,8 @@ export function TeamGallery() {
       </motion.div>
 
       {/* Gradient Overlays */}
+      <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#09090B] to-transparent pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#09090B] to-transparent pointer-events-none" />
     </section>
   );
 }
