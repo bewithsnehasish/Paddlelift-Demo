@@ -115,25 +115,24 @@ const CarouselIndustries: React.FC<CarouselIndustriesProps> = ({ items }) => {
 
             return (
               <motion.div
-                key={colIndex}
+                key={`column-${currentColumn}-${colIndex}`}
                 className="flex flex-col gap-4"
-                initial={{ x: currentColumn > 0 ? -100 : 100, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: currentColumn > 0 ? 100 : -100, opacity: 0 }}
-                transition={{
-                  duration: 0.5,
-                  ease: "easeInOut",
-                  delay: colIndex * 0.1, // Add delay for cascading effect
-                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {columnItems.map((item, rowIndex) => (
                   <motion.div
                     key={`${item}-${rowIndex}`}
                     className="flex-shrink-0 p-2"
-                    whileHover={{ scale: 1.05 }} // Add hover effect
+                    initial={{ opacity: 0, x: currentColumn > 0 ? 100 : -100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: currentColumn > 0 ? -100 : 100 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
                   >
                     <div
-                      className="relative h-32 rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg overflow-hidden"
+                      className="relative h-32 rounded-xl flex items-center justify-center text-white text-2xl font-bold shadow-lg overflow-hidden"
                       style={{
                         background: getColorForItem(item),
                       }}
