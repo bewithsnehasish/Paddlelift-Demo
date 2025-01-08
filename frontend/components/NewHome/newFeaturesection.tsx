@@ -152,14 +152,13 @@ export default function InteractiveCards() {
                     transition={{ duration: 0.3 }}
                     className="px-6 pb-6 space-y-4"
                   >
-                    <div className="relative rounded-lg overflow-hidden h-80">
+                    <div className="relative rounded-lg overflow-hidden aspect-w-16 aspect-h-9">
                       <video
                         src={card.video}
                         autoPlay
                         muted
                         loop
-                        className="w-full h-full object-cover object-center"
-                        style={{ objectFit: "cover", objectPosition: "center" }}
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   </motion.div>
