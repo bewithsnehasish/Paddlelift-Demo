@@ -10,8 +10,7 @@ import { SparklesCore } from "@/components/ui/sparkles";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Phone, Mail, MapPin, Upload } from "lucide-react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import axios from "axios";
+import ContactFooter from "@/components/ContactFooter";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -77,7 +76,7 @@ export default function ContactPage() {
         </div>
         <BackgroundBeams className="absolute inset-0" />
 
-        <div className="container mx-auto px-4 py-12 relative z-10">
+        <div className="container mx-auto px-4 py-12 relative z-10 pt-14">
           {/* Hero Section */}
           <motion.div
             className="text-center mb-12"
@@ -270,7 +269,7 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-      <Footer />
+      <ContactFooter />
     </>
   );
 }
