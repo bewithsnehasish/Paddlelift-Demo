@@ -21,7 +21,7 @@ export const ServicesHero = () => {
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-black to-transparent opacity-70" />
 
       {/* Content Container */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-8 mt-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
           <motion.div
@@ -30,10 +30,10 @@ export const ServicesHero = () => {
             transition={{ duration: 0.8 }}
             className="max-w-2xl"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+            <h1 className="text-4xl font-bold mb-6 text-white">
               Our <span className="text-red-600">Services</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
+            <p className="text-lg md:text-lg text-gray-300 mb-8 leading-relaxed">
               Discover our comprehensive range of solutions designed to meet
               your needs. We provide cutting-edge services that help transform
               your ideas into reality.

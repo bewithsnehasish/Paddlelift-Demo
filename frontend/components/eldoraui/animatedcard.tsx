@@ -60,7 +60,7 @@ export const MainMenusGradientCard = ({
         </div>
       )}
       <div className="relative px-4 pb-2 pt-4">
-        <h3 className="text-lg font-semibold text-neutral-800 dark:text-neutral-300">
+        <h3 className="text-xl font-semibold text-neutral-800 dark:text-neutral-300">
           {title}
         </h3>
         <p className="mt-2 text-neutral-600 dark:text-neutral-400">

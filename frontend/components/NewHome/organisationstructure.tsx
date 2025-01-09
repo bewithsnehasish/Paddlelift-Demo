@@ -56,10 +56,10 @@ export default function OrganizationalStructure() {
     >
       {/* Header */}
       <div className="mb-12 md:mb-16 lg:mb-20">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white max-w-4xl leading-[110%]">
+        <h2 className="text-3xl font-bold mb-4 text-white max-w-4xl leading-[110%]">
           Organizational <span className="text-teal-400">Structure</span>
         </h2>
-        <p className="text-white text-lg md:text-xl font-semibold mt-4 max-w-lg">
+        <p className="text-white text-lg font-semibold mt-4 max-w-lg">
           Dedicated Customized Solution for clients
         </p>
       </div>
@@ -75,7 +75,7 @@ export default function OrganizationalStructure() {
           <Image
             src="/Plogo.png"
             alt="Organizational Structure"
-            className="w-1/4 h-auto object-contain"
+            className="w-1/6 h-auto object-contain"
             width={200}
             height={100}
             priority
@@ -88,7 +88,7 @@ export default function OrganizationalStructure() {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={controlsCards}
           className="absolute top-4 left-4"
-          style={{ width: "300px" }}
+          style={{ width: "400px" }}
         >
           <MainMenusGradientCard
             title="Technology / IT Recruitment Vertical"
@@ -100,11 +100,11 @@ export default function OrganizationalStructure() {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={controlsCards}
           className="absolute top-4 right-4"
-          style={{ width: "300px" }}
+          style={{ width: "400px" }}
         >
           <MainMenusGradientCard
             title="Non-Tech / Functional Recruitment Vertical"
-            description="Where team is dedicatedly focusing to cater Non-Tech / Functional Hiring for Clients."
+            description="Where team is dedicatedly focusing to cater Non-Tech Hiring for Clients."
           />
         </motion.div>
 
@@ -112,7 +112,7 @@ export default function OrganizationalStructure() {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={controlsCards}
           className="absolute bottom-4 left-4"
-          style={{ width: "300px" }}
+          style={{ width: "400px" }}
         >
           <MainMenusGradientCard
             title="Staffing / Payroll / HR Management Vertical"
@@ -124,11 +124,11 @@ export default function OrganizationalStructure() {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={controlsCards}
           className="absolute bottom-4 right-4"
-          style={{ width: "300px" }}
+          style={{ width: "400px" }}
         >
           <MainMenusGradientCard
             title="Customer Success / Growth Management Vertical"
-            description="Dedicated vertical to ensure smooth & productive business engagement with clients."
+            description="Dedicated vertical to ensure smooth business engagement with clients."
           />
         </motion.div>
       </div>

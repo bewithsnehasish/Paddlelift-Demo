@@ -16,7 +16,7 @@ const ExpertiseCard: React.FC<ExpertiseCardProps> = ({
   <div className="group relative transition-all duration-300 hover:-translate-y-2">
     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 blur-xl transition-all duration-300 group-hover:from-blue-500/30 group-hover:to-purple-500/30" />
     <div className="relative h-full rounded-2xl border border-white/10 bg-gray-900/40 p-8 backdrop-blur-xl">
-      <div className="mb-6 flex items-center space-x-4">
+      <div className=" flex items-center space-x-4">
         <div className="rounded-xl border border-white/10 bg-white/5 p-3">
           <Icon className="h-6 w-6 text-white" />
         </div>
@@ -72,15 +72,15 @@ export default function ExpertisePage() {
   ];
 
   return (
-    <div className="relative py-10 md:py-20 min-h-screen overflow-hidden">
+    <div className="relative py-10 md:py-20 overflow-hidden">
       <BackgroundPattern />
-      <div className="relative z-10 mx-auto max-w-7xl px-4 pt-32 pb-20 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 pt-24 pb-20 sm:px-6 lg:px-8">
         <div className="text-left">
-          <h1 className="text-3xl font-bold text-white md:text-5xl">
+          <h1 className="text-4xl font-bold text-white">
             What Sets Us<span className="text-red-600"> Apart</span>
           </h1>
         </div>
-        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2">
           {expertiseData.map((item) => (
             <ExpertiseCard key={item.title} {...item} />
           ))}

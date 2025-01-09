@@ -121,7 +121,7 @@ export default function NewHeroSection() {
       {/* Main content area */}
       <div className="mt-44 flex items-center">
         <div className="max-w-7xl mx-auto relative z-10 w-full">
-          <div className="grid grid-cols-1 gap-12 ">
+          <div className="grid grid-cols-1 gap-6 ">
             {" "}
             {/* Reduced padding-top */}
             <motion.div
@@ -134,34 +134,33 @@ export default function NewHeroSection() {
               <div className="max-w-3xl mt-6">
                 {" "}
                 {/* Reduced margin-top */}{" "}
-                <div className="text-4xl md:text-6xl font-semibold md:font-bold">
+                <div className="text-4xl md:text-4xl font-semibold md:font-bold">
                   <div className="text-white">From Seed to Scale</div>
                   <div className="text-red-700 py-4 rounded-md">
                     We Fuel Your Journey
                   </div>
                 </div>
                 <p
-                  className="text-2xl font-bold mb-4 text-white"
+                  className="text-xl font-bold mb-4 text-white"
                   style={{ textShadow: "0 0 8px rgba(255, 255, 255, 0.8)" }}
                 >
                   Tailor made solutions for Startups to Enterprises....
                 </p>
               </div>
             </motion.div>
+            {/* Button container at bottom */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex justify-start pl-8"
+            >
+              <AnimatedButton href="/contact">
+                Let&apos;s Connect
+              </AnimatedButton>
+            </motion.div>
           </div>
         </div>
-      </div>
-
-      {/* Button container at bottom */}
-      <div className="relative z-10 w-full pb-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex justify-center"
-        >
-          <AnimatedButton href="/contact">Let&apos;s Connect</AnimatedButton>
-        </motion.div>
       </div>
     </section>
   );

@@ -39,7 +39,7 @@ export default function MainHeading({
   return (
     <div className="space-y-2 py-8" ref={headingRef}>
       <h1
-        className="text-3xl md:text-5xl font-bold text-white flex flex-wrap gap-4"
+        className="text-3xl font-bold text-white flex flex-wrap gap-4"
         role="heading"
         aria-level={1}
       >

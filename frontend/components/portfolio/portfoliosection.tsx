@@ -158,7 +158,7 @@ export default function PortfolioSection() {
         className={`rounded-lg p-6 text-center transform transition-all hover:scale-105 hover:brightness-110 ${cardColor}`}
       >
         <h4 className="text-xl font-semibold text-white mb-2">{data.title}</h4>
-        <p className="text-4xl sm:text-5xl font-bold text-white mb-2">
+        <p className="text-4xl sm:text-4xl font-bold text-white mb-2">
           {data.prefix}
           {counters[index]}
           {data.suffix}
@@ -173,7 +173,7 @@ export default function PortfolioSection() {
       ref={sectionRef}
     >
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl md:text-5xl font-bold text-white flex flex-wrap mb-4">
+        <h1 className="text-3xl md:text-3xl font-bold text-white flex flex-wrap mb-4">
           <motion.span
             className="text-white relative mr-2"
             initial="hidden"

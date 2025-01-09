@@ -38,7 +38,7 @@ export default function WorldMapSection() {
   return (
     <div
       ref={sectionRef}
-      className="bg-[#09090B] snap-start py-20 px-4 sm:px-6 md:px-8"
+      className="bg-[#09090B] snap-start py-10 px-4 sm:px-6 md:px-8"
     >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
@@ -46,7 +46,7 @@ export default function WorldMapSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-3xl md:text-5xl font-bold mb-4 text-white max-w-3xl leading-[110%]"
+          className="text-3xl md:text-3xl font-bold mb-4 text-white max-w-3xl leading-[110%]"
         >
           Operations Around the <span className="text-teal-400">World</span>
         </motion.h2>
@@ -55,7 +55,7 @@ export default function WorldMapSection() {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -50 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-white text-xl font-semibold md:text-base my-4 max-w-lg"
+          className="text-white text-xl font-semibold md:text-xs my-4 max-w-lg"
         >
           We work successfully with clients across various regions, expanding
           our global footprint and delivering exceptional services worldwide.

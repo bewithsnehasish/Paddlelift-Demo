@@ -171,7 +171,7 @@ const MainSection: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <div className="space-y-2">
-            <h1 className="text-3xl md:text-5xl font-bold text-white flex flex-wrap mb-4">
+            <h1 className="text-3xl font-bold text-white flex flex-wrap mb-4">
               <motion.span
                 className="text-teal-400 relative mr-2"
                 initial="hidden"
@@ -205,7 +205,7 @@ const MainSection: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-white text-xl font-semibold md:text-base my-4 max-w-lg"
+            className="text-white text-xl font-semibold md:text-sm my-4 max-w-lg"
           >
             We partner with diverse industries, delivering innovative solutions
             that drive digital transformation and sustainable growth. Our

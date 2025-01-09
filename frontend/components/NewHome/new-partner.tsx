@@ -123,7 +123,7 @@ const PartnersSection: React.FC = () => {
       className="bg-[#09090B] snap-start py-20 px-4 sm:px-6 md:px-8"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="pb-4 md:pb-20">
+        <div className="pb-4">
           {/* Header Section */}
           <motion.div
             initial="hidden"
@@ -131,7 +131,7 @@ const PartnersSection: React.FC = () => {
             variants={headerVariants}
             className="max-w-xl"
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white max-w-2xl leading-[110%]">
+            <h2 className="text-3xl md:text-3xl font-bold mb-4 text-white max-w-2xl leading-[110%]">
               Our <span className="text-teal-400">Clients</span>
             </h2>
           </motion.div>

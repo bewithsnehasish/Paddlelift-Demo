@@ -126,7 +126,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-3xl md:text-5xl font-bold mb-4 text-white max-w-2xl leading-[1.1]"
+          className="text-3xl md:text-3xl font-bold mb-4 text-white max-w-2xl leading-[1.1]"
         >
           What Our <span className="text-teal-400">Clients</span> Say
         </motion.h2>
@@ -135,7 +135,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-white text-xl md:text-base font-semibold my-4 pb-5 max-w-lg"
+          className="text-white text-xl md:text-sm font-semibold my-4 pb-5 max-w-lg"
         >
           Global Reach, Local Expertise
         </motion.p>

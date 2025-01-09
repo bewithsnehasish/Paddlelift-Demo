@@ -95,7 +95,7 @@ export default function TestimonialsCarousel() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 50 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-3xl md:text-5xl font-bold mb-4 text-white max-w-2xl leading-[1.1] text-left"
+          className="text-3xl font-bold mb-4 text-white max-w-2xl leading-[1.1] text-left"
         >
           Few Success <span className="text-teal-400">Stories</span>
         </motion.h2>

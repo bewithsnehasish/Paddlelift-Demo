@@ -47,7 +47,9 @@ const ServicesPage: React.FC = () => {
         <InteractiveCards />
         <PartnersSection />
         <IndustriesServed />
-        <Footer />
+        <div className="pt-20">
+          <Footer />
+        </div>
       </div>
       {/* 
       <ElfsightReviews />

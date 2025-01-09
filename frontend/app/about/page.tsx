@@ -101,7 +101,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 z-0 bg-gradient-to-b from-black to-transparent opacity-70" />
 
           {/* Content Container */}
-          <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 mt-16 py-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left Column - Text Content */}
               <motion.div
@@ -110,13 +110,18 @@ export default function AboutPage() {
                 transition={{ duration: 0.8 }}
                 className="max-w-2xl"
               >
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+                <h1 className="text-4xl font-bold mb-6 text-white">
                   About <span className="text-red-600">PaddleLift</span>
                 </h1>
-                <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
-                  Paddlelift, founded in 2020, is a global recruitment and HR
-                  firm committed to providing streamlined, personalized talent
-                  solutions.
+                <p className="text-lg md:text-lg text-gray-300 mb-8 leading-relaxed">
+                  Founded in 2020, Paddlelift has rapidly become a beacon of
+                  excellence in the recruitment & HR industry. Born during the
+                  pandemic, we&apos;ve thrived by connecting businesses
+                  worldwide with top talent. Our innovative approach, global
+                  reach, and dedication to personalized service make us the
+                  preferred partner for companies aiming to grow and succeed.
+                  Join us as we elevate recruitment & HR practices to new
+                  heights, transforming challenges into opportunities.
                 </p>
                 <Link href="/contact">
                   <Button
@@ -138,8 +143,8 @@ export default function AboutPage() {
                 <Image
                   src="/about/about.svg"
                   alt="About Section"
-                  width={1200} // Increased size
-                  height={600} // Increased size
+                  width={800} // Increased size
+                  height={200} // Increased size
                   className="rounded-lg object-cover w-full h-auto md:w-auto md:h-auto"
                   priority
                 />
@@ -179,7 +184,7 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-3xl md:text-5xl font-bold text-white"
+                className="text-3xl font-bold text-white"
               >
                 Meet the <span className="text-emerald-400">Management</span>
               </motion.h2>
@@ -206,7 +211,10 @@ export default function AboutPage() {
           </div>
         </section>
       </div>
-      <Footer />
+
+      <div className="pt-20">
+        <Footer />
+      </div>
 
       {/* Scroll-Up Button */}
       {showScrollUp && (

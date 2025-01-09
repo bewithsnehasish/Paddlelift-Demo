@@ -85,10 +85,10 @@ export default function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-neutral-100 to-neutral-400 mb-4">
+            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-neutral-100 to-neutral-400 mb-4">
               Get in <span className="text-red-600">Touch</span>
             </h1>
-            <p className="text-neutral-400">We're here to help.</p>
+            <p className="text-neutral-400">We&apos;re here to help.</p>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-8 mb-8">

@@ -45,6 +45,22 @@ const animations = {
     hidden: { opacity: 0, scale: 0.9 },
     visible: { opacity: 1, scale: 1 },
   },
+  slideInFromLeft: {
+    hidden: { opacity: 0, x: -100 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  },
+  slideInFromRight: {
+    hidden: { opacity: 0, x: 100 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  },
 };
 
 // Memoized components
@@ -55,7 +71,7 @@ const MainHeading = memo(({ words, highlight = -1 }: MainHeadingProps) => {
   return (
     <div className="space-y-2 py-8" ref={headingRef}>
       <h1
-        className="text-3xl md:text-5xl font-bold text-white flex flex-wrap gap-4"
+        className="text-3xl md:text-3xl font-bold text-white flex flex-wrap gap-4"
         role="heading"
         aria-level={1}
       >
@@ -87,7 +103,7 @@ const SubHeading = memo(({ children }: SubHeadingProps) => {
       animate={inView ? "visible" : "hidden"}
       variants={animations.fadeUp}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="text-2xl md:text-3xl font-bold mb-6 text-emerald-400 relative"
+      className="text-2xl font-bold mb-6 text-emerald-400 relative"
       role="heading"
       aria-level={3}
     >
@@ -117,34 +133,48 @@ const AnimatedText = memo(({ children }: AnimatedTextProps) => {
   );
 });
 
-const ImageSection = memo(({ src, alt }: { src: string; alt: string }) => {
-  const imgRef = useRef(null);
-  const inView = useInView(imgRef, { once: true });
+const ImageSection = memo(
+  ({
+    src,
+    alt,
+    direction,
+  }: {
+    src: string;
+    alt: string;
+    direction: "left" | "right";
+  }) => {
+    const imgRef = useRef(null);
+    const inView = useInView(imgRef, { once: true });
 
-  return (
-    <motion.div
-      ref={imgRef}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      variants={animations.scaleUp}
-      transition={{ duration: 1, ease: "easeOut" }}
-      className="relative max-w-md mx-auto"
-    >
-      <Image
-        src={src}
-        alt={alt}
-        width={400}
-        height={300}
-        className="rounded-xl object-cover w-full h-auto"
-        loading="lazy"
-      />
-      <div
-        className="absolute inset-0 blur-2xl bg-emerald-500/10 -z-10"
-        aria-hidden="true"
-      ></div>
-    </motion.div>
-  );
-});
+    return (
+      <motion.div
+        ref={imgRef}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        variants={
+          direction === "left"
+            ? animations.slideInFromLeft
+            : animations.slideInFromRight
+        }
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative max-w-md mx-auto"
+      >
+        <Image
+          src={src}
+          alt={alt}
+          width={300} // Reduced size
+          height={225} // Reduced size
+          className="rounded-xl object-cover w-full md:w-3/4 "
+          loading="lazy"
+        />
+        <div
+          className="absolute inset-0 blur-2xl bg-emerald-500/10 -z-10"
+          aria-hidden="true"
+        ></div>
+      </motion.div>
+    );
+  },
+);
 
 // Set display names for memo components
 MainHeading.displayName = "MainHeading";
@@ -164,9 +194,28 @@ export default function ManagementSection() {
     >
       <div className="max-w-7xl mx-auto">
         <MainHeading
-          words={["Our", "Mission,", "Vision", "& Core Values"]}
+          words={["Our", "Vision,", "Mission", "& Core Values"]}
           highlight={1}
         />
+
+        {/* Vision Section */}
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <ImageSection
+            src="/about/vision.svg"
+            alt="Vision Graphic"
+            direction="left"
+          />
+          <AnimatedText>
+            <SubHeading>Vision</SubHeading>
+            <p className="text-gray-300 text-base leading-relaxed">
+              To establish our presence in the market as unrivaled leaders,
+              offering the ultimate solution to overcome the hiring bottlenecks
+              faced by start-ups. We envision a future where every innovative
+              idea has the opportunity to flourish, supported by a robust
+              ecosystem of talent and resources that we facilitate.
+            </p>
+          </AnimatedText>
+        </div>
 
         {/* Mission Section */}
         <div className="grid md:grid-cols-2 gap-8 mb-16 mt-12">
@@ -180,22 +229,11 @@ export default function ManagementSection() {
               need to overcome challenges and achieve sustainable growth.
             </p>
           </AnimatedText>
-          <ImageSection src="/about/mission.svg" alt="Mission Graphic" />
-        </div>
-
-        {/* Vision Section */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <ImageSection src="/about/vision.svg" alt="Vision Graphic" />
-          <AnimatedText>
-            <SubHeading>Vision</SubHeading>
-            <p className="text-gray-300 text-base leading-relaxed">
-              To establish our presence in the market as unrivaled leaders,
-              offering the ultimate solution to overcome the hiring bottlenecks
-              faced by start-ups. We envision a future where every innovative
-              idea has the opportunity to flourish, supported by a robust
-              ecosystem of talent and resources that we facilitate.
-            </p>
-          </AnimatedText>
+          <ImageSection
+            src="/about/mission.svg"
+            alt="Mission Graphic"
+            direction="right"
+          />
         </div>
       </div>
     </section>

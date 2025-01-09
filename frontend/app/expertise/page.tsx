@@ -19,7 +19,9 @@ const Expertise: React.FC = () => {
         <div className="block md:hidden">
           <MobileOrgainsation />
         </div>
-        <Footer />
+        <div className="pt-20">
+          <Footer />
+        </div>
         {/* 
         <RecruitmentProcess />
       Scroll-Up Button */}

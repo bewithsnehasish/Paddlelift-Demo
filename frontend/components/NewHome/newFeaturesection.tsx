@@ -77,7 +77,7 @@ export default function InteractiveCards() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <div className="space-y-2">
-            <h1 className="text-3xl md:text-5xl font-bold text-white flex flex-wrap">
+            <h1 className="text-3xl md:text-3xl font-bold text-white flex flex-wrap">
               <motion.span
                 className="text-white relative mr-2"
                 initial="hidden"
@@ -137,7 +137,7 @@ export default function InteractiveCards() {
                   <div className="p-2 bg-gray-800/50 rounded-lg text-gray-400">
                     {card.icon}
                   </div>
-                  <h3 className="text-xl font-semibold text-white">
+                  <h3 className="text-lg font-semibold text-white">
                     {card.title}
                   </h3>
                 </div>

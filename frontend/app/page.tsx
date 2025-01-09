@@ -10,6 +10,7 @@ import PortfolioSection from "@/components/portfolio/portfoliosection";
 import PartnersSection from "@/components/NewHome/new-partner";
 import NewHeroSection from "@/components/NewHome/new-herosection";
 import InteractiveCards from "@/components/NewHome/newFeaturesection";
+import Testimonials from "@/components/portfolio/testimonial";
 
 export default function Home() {
   const [showScrollUp, setShowScrollUp] = useState(false);
@@ -56,7 +57,10 @@ export default function Home() {
       <WorldMapSection />
       <PortfolioSection />
       <PartnersSection />
-      <Footer />
+      <Testimonials />
+      <div className="pt-20">
+        <Footer />
+      </div>
 
       {/* Scroll-Up Button */}
       {showScrollUp && (

@@ -81,7 +81,7 @@ export function TeamGallery() {
                 },
               },
             }}
-            className="text-3xl md:text-5xl font-bold text-white flex flex-wrap gap-4"
+            className="text-3xl font-bold text-white flex flex-wrap gap-4"
           >
             <motion.span
               className="text-white relative mr-2"
@@ -101,10 +101,10 @@ export function TeamGallery() {
               }}
               custom={0}
             >
-              Life at{"  "}
+              Life at
             </motion.span>
             <motion.span
-              className="text-emerald-400 relative mr-2"
+              className="text-emerald-400 relative"
               initial="hidden"
               animate="visible"
               variants={{
