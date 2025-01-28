@@ -12,57 +12,72 @@ import { useEffect, useState } from "react";
 import NewTimeline from "@/components/about/new-timeline";
 import SubHeading from "@/components/about/SubHeading";
 import Link from "next/link";
+import axios from "axios";
 
-const teamMembers = [
-  {
-    name: "Utkarsh Rastogi",
-    title: "Co-Founder & Director",
-    position: "Head of Growth & Ops",
-    photo: "/founder-images/Utkarsh.png",
-    description:
-      "Utkarsh Rastogi, a BITS Pilani alumnus with 15+ years of experience and leadership in top recruitment firms, drives Paddlelift’s growth. His strategic expertise ensures Paddlelift stays at the forefront of the recruitment industry.",
-    socials: {
-      linkedin: "https://www.linkedin.com/in/utkarsh-rastogi-02801024/",
-    },
-  },
-  {
-    name: "Kanika Mahajan",
-    title: "Co-Founder & Director",
-    position: "Head of Non-Tech Recruitment",
-    photo: "/founder-images/Kanika.png",
-    description:
-      "Kanika Mahajan, an MBA-HR with 16+ years in business administration and NonIT hiring, excels in understanding diverse business talent needs. Her strategic vision and market insights have significantly elevated Paddlelift, showcasing her pivotal role in the company's success.",
-    socials: {
-      linkedin: "https://www.linkedin.com/in/kanika-mahajan-67978a1aa/",
-    },
-  },
-  {
-    name: "Rohit Dutt",
-    title: "Co-Founder & Director",
-    position: "Head of Tech Recruitment",
-    photo: "/founder-images/Rohit.png",
-    description:
-      "Rohit Dutt, with 14+ years in software development and tech recruitment, leads Paddlelift’s tech hiring. His industry experience and strategic foresight deliver top tech talent, ensuring Paddlelift connects cutting-edge companies with exceptional professionals.",
-    socials: {
-      linkedin: "https://www.linkedin.com/in/rodutt/",
-    },
-  },
-  {
-    name: "Sanjay Amar",
-    title: "Co-Founder & Director",
-    position: "Head of Global Partnerships",
-    photo: "/founder-images/Sanjay.png",
-    description:
-      "Sanjay Amar, with 37+ years of experience and 26 years in Dubai, has held leadership roles including CEO, CFO, and Board Advisor, driving diversified conglomerates across the Middle East, Africa, and Asia. A Chartered Accountant with an Honorary Doctorate in Organizational Leadership, he is a Fellow of the Institute of Directors and a member of WHRPC.",
-    socials: {
-      linkedin: "https://www.linkedin.com/in/sanjayamar/",
-    },
-  },
-];
+// Define the type for a team member
+interface TeamMember {
+  name: string;
+  title: string;
+  position: string;
+  photo: string;
+  description: string;
+  socials: {
+    linkedin: string;
+  };
+}
+
+// const teamMembers = [
+//   {
+//     name: "Utkarsh Rastogi",
+//     title: "Co-Founder & Director",
+//     position: "Head of Growth & Ops",
+//     photo: "/founder-images/Utkarsh.png",
+//     description:
+//       "Utkarsh Rastogi, a BITS Pilani alumnus with 15+ years of experience and leadership in top recruitment firms, drives Paddlelift’s growth. His strategic expertise ensures Paddlelift stays at the forefront of the recruitment industry.",
+//     socials: {
+//       linkedin: "https://www.linkedin.com/in/utkarsh-rastogi-02801024/",
+//     },
+//   },
+//   {
+//     name: "Kanika Mahajan",
+//     title: "Co-Founder & Director",
+//     position: "Head of Non-Tech Recruitment",
+//     photo: "/founder-images/Kanika.png",
+//     description:
+//       "Kanika Mahajan, an MBA-HR with 16+ years in business administration and NonIT hiring, excels in understanding diverse business talent needs. Her strategic vision and market insights have significantly elevated Paddlelift, showcasing her pivotal role in the company's success.",
+//     socials: {
+//       linkedin: "https://www.linkedin.com/in/kanika-mahajan-67978a1aa/",
+//     },
+//   },
+//   {
+//     name: "Rohit Dutt",
+//     title: "Co-Founder & Director",
+//     position: "Head of Tech Recruitment",
+//     photo: "/founder-images/Rohit.png",
+//     description:
+//       "Rohit Dutt, with 14+ years in software development and tech recruitment, leads Paddlelift’s tech hiring. His industry experience and strategic foresight deliver top tech talent, ensuring Paddlelift connects cutting-edge companies with exceptional professionals.",
+//     socials: {
+//       linkedin: "https://www.linkedin.com/in/rodutt/",
+//     },
+//   },
+//   {
+//     name: "Sanjay Amar",
+//     title: "Co-Founder & Director",
+//     position: "Head of Global Partnerships",
+//     photo: "/founder-images/Sanjay.png",
+//     description:
+//       "Sanjay Amar, with 37+ years of experience and 26 years in Dubai, has held leadership roles including CEO, CFO, and Board Advisor, driving diversified conglomerates across the Middle East, Africa, and Asia. A Chartered Accountant with an Honorary Doctorate in Organizational Leadership, he is a Fellow of the Institute of Directors and a member of WHRPC.",
+//     socials: {
+//       linkedin: "https://www.linkedin.com/in/sanjayamar/",
+//     },
+//   },
+// ];
 
 export default function AboutPage() {
   const [showScrollUp, setShowScrollUp] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [description, setDescription] = useState("");
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]); // Explicitly type the state
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -85,6 +100,28 @@ export default function AboutPage() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    // Fetch the about description
+    axios
+      .get("https://paddlelift.onrender.com/components/about/")
+      .then((res) => {
+        setDescription(res.data.description);
+      })
+      .catch(() => {
+        console.error("Failed to load the description");
+      });
+
+    // Fetch the management team data
+    axios
+      .get("https://paddlelift.onrender.com/components/management/")
+      .then((res) => {
+        setTeamMembers(res.data.management_team);
+      })
+      .catch(() => {
+        console.error("Failed to load the management team data");
+      });
+  }, []);
 
   return (
     <>
@@ -114,14 +151,7 @@ export default function AboutPage() {
                   About <span className="text-red-600">PaddleLift</span>
                 </h1>
                 <p className="text-lg md:text-lg text-gray-300 mb-8 leading-relaxed">
-                  Founded in 2020, Paddlelift has rapidly become a beacon of
-                  excellence in the recruitment & HR industry. Born during the
-                  pandemic, we&apos;ve thrived by connecting businesses
-                  worldwide with top talent. Our innovative approach, global
-                  reach, and dedication to personalized service make us the
-                  preferred partner for companies aiming to grow and succeed.
-                  Join us as we elevate recruitment & HR practices to new
-                  heights, transforming challenges into opportunities.
+                  {description}
                 </p>
                 <Link href="/contact">
                   <Button

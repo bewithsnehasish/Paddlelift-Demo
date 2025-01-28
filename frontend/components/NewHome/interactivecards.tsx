@@ -4,6 +4,21 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Users, TrendingUp, ClipboardList, UserCheck } from "lucide-react";
 import { useInView } from "react-intersection-observer";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+
+interface Service {
+  id: string;
+  heading: string;
+  vedio_url: string;
+}
+
+interface ApiResponse {
+  service1: Service;
+  service2: Service;
+  service3: Service;
+  service4: Service;
+}
 
 interface Card {
   id: string;
@@ -12,32 +27,13 @@ interface Card {
   video: string;
 }
 
-const cards: Card[] = [
-  {
-    id: "recruitment",
-    title: "Recruitment",
-    icon: <Users className="w-6 h-6" />,
-    video: "/services/recruitment.mp4", // Replace with actual video path
-  },
-  {
-    id: "staffing",
-    title: "Staffing",
-    icon: <TrendingUp className="w-6 h-6" />,
-    video: "/services/staffing.mp4", // Replace with actual video path
-  },
-  {
-    id: "funding-gateway",
-    title: "Funding Gateway",
-    icon: <ClipboardList className="w-6 h-6" />,
-    video: "/services/funding.mp4", // Replace with actual video path
-  },
-  {
-    id: "hr-dynamics",
-    title: "HR Dynamics",
-    icon: <UserCheck className="w-6 h-6" />,
-    video: "/services/hrdynamics.mp4", // Replace with actual video path
-  },
-];
+// Icons for each service
+const serviceIcons = {
+  service1: <Users className="w-6 h-6" />,
+  service2: <TrendingUp className="w-6 h-6" />,
+  service3: <ClipboardList className="w-6 h-6" />,
+  service4: <UserCheck className="w-6 h-6" />,
+};
 
 // Animations
 const sectionVariants = {
@@ -79,6 +75,18 @@ export default function InteractiveCards() {
     rootMargin: "-20px 0px 0px 0px",
   });
 
+  // Fetch data using TanStack Query and Axios
+  const { data, isLoading, isError } = useQuery<ApiResponse>({
+    queryKey: ["services"],
+    queryFn: async () => {
+      const response = await axios.get(
+        "https://paddlelift.onrender.com/components/get-service/",
+      );
+      console.log(response.data);
+      return response.data;
+    },
+  });
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -91,6 +99,39 @@ export default function InteractiveCards() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // Transform API data into cards
+  const cards: Card[] = data
+    ? [
+        {
+          id: data.service1.id,
+          title: data.service1.heading,
+          icon: serviceIcons.service1,
+          video: data.service1.vedio_url,
+        },
+        {
+          id: data.service2.id,
+          title: data.service2.heading,
+          icon: serviceIcons.service2,
+          video: data.service2.vedio_url,
+        },
+        {
+          id: data.service3.id,
+          title: data.service3.heading,
+          icon: serviceIcons.service3,
+          video: data.service3.vedio_url,
+        },
+        {
+          id: data.service4.id,
+          title: data.service4.heading,
+          icon: serviceIcons.service4,
+          video: data.service4.vedio_url,
+        },
+      ]
+    : [];
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error fetching data</div>;
 
   return (
     <motion.section

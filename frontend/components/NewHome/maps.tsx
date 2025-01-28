@@ -2,10 +2,26 @@
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+
+interface ApiResponse {
+  description: string;
+}
 
 export default function WorldMapSection() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  const { data } = useQuery<ApiResponse>({
+    queryKey: ["global-expansion"],
+    queryFn: async () => {
+      const response = await axios.get(
+        "https://paddlelift.onrender.com/components/operations-around-the-world/",
+      );
+      return response.data;
+    },
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -57,8 +73,7 @@ export default function WorldMapSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white text-xl font-semibold md:text-xs my-4 max-w-lg"
         >
-          We work successfully with clients across various regions, expanding
-          our global footprint and delivering exceptional services worldwide.
+          {data?.description}
         </motion.p>
 
         {/* World Map */}

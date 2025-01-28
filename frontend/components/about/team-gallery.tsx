@@ -81,28 +81,8 @@ export function TeamGallery() {
                 },
               },
             }}
-            className="text-3xl font-bold text-white flex flex-wrap gap-4"
+            className="text-3xl font-bold text-white flex flex-wrap gap-2"
           >
-            <motion.span
-              className="text-white relative mr-2"
-              initial="hidden"
-              animate="visible"
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: (i: number) => ({
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    delay: i * 0.2,
-                    duration: 0.8,
-                    ease: "easeInOut",
-                  },
-                }),
-              }}
-              custom={0}
-            >
-              Life at
-            </motion.span>
             <motion.span
               className="text-emerald-400 relative"
               initial="hidden"
@@ -119,9 +99,29 @@ export function TeamGallery() {
                   },
                 }),
               }}
-              custom={1}
+              custom={0}
             >
-              PaddleLift
+              Life
+            </motion.span>
+            <motion.span
+              className="text-white relative"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: (i: number) => ({
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    delay: i * 0.2,
+                    duration: 0.8,
+                    ease: "easeInOut",
+                  },
+                }),
+              }}
+              custom={0}
+            >
+              {""}at PaddleLift
             </motion.span>
           </motion.h2>
         </div>

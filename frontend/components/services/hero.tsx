@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export const ServicesHero = () => {
   const [isGifComplete, setIsGifComplete] = useState(false);
@@ -38,12 +39,14 @@ export const ServicesHero = () => {
               your needs. We provide cutting-edge services that help transform
               your ideas into reality.
             </p>
-            <Button
-              size="lg"
-              className="bg-blue-600 hover:bg-blue-700 px-6 py-3 text-white rounded-md"
-            >
-              Let&apos;s Connect
-            </Button>
+            <Link href="/contact">
+              <Button
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 px-6 py-3 text-white rounded-md"
+              >
+                Let&apos;s Connect
+              </Button>
+            </Link>
           </motion.div>
 
           {/* Right Column - Image */}

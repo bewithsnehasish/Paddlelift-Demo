@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="space-y-4 p-4">
             <h1 className="text-3xl font-bold max-w-2xl leading-[110%] relative z-10">
               <Link
-                href="mailto:mandalsneh97@gmail.com"
+                href="/contact"
                 className="text-primary hover:text-primary/80 border-b-2 border-primary hover:border-primary/80 transition-colors duration-200"
               >
                 Contact Us
@@ -24,7 +24,7 @@ const Footer = () => {
           <div className="mt-8 p-4 border-t border-dark-200 dark:border-white/10 flex flex-col md:flex-row justify-between gap-4 md:gap-0">
             <div className="space-y-2">
               <h3 className="text-lg font-bold relative z-10">
-                Paddlift Pvt. Ltd.
+                PaddleLift Pvt. Ltd.
               </h3>
               <p className="text-dark-200/70 dark:text-stone-200/70 relative z-10">
                 &copy; 2024 | All rights reserved.

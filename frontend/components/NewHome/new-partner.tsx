@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
+import axios from "axios";
 
 interface PartnerLogo {
   id: number;
@@ -10,49 +11,28 @@ interface PartnerLogo {
   name: string;
 }
 
-const partnerLogos: PartnerLogo[] = [
-  { id: 1, src: "/Partner Logos/Royal_Enfield.png", name: "Royal Enfield" },
-  { id: 2, src: "/Partner Logos/Gruner.png", name: "Gruner" },
-  { id: 3, src: "/Partner Logos/ITC.png", name: "ITC" },
-  { id: 4, src: "/Partner Logos/Sanskriti.png", name: "Sanskriti" },
-  { id: 5, src: "/Partner Logos/ximkart.png", name: "ximkart" },
-  { id: 6, src: "/Partner Logos/Stancebeam.png", name: "Stancebeam" },
-  { id: 7, src: "/Partner Logos/WazirX.png", name: "WazirX" },
-  { id: 9, src: "/Partner Logos/liquiloans.jpg", name: "liquiloans" },
-  { id: 10, src: "/Partner Logos/park.png", name: "park" },
-  { id: 11, src: "/Partner Logos/werize_logo.png", name: "werize_logo" },
-  { id: 12, src: "/Partner Logos/Terra_Motors.png", name: "Terra Motors" },
-  { id: 14, src: "/Partner Logos/Otipy.png", name: "Otipy" },
-  { id: 16, src: "/Partner Logos/Healthkart.png", name: "Healthkart" },
-  { id: 17, src: "/Partner Logos/Farmley.png", name: "Farmley" },
-  { id: 18, src: "/Partner Logos/Field Assist.png", name: "Field Assist" },
-  { id: 19, src: "/Partner Logos/Draup.png", name: "Draup" },
-  { id: 20, src: "/Partner Logos/Locofast.png", name: "Locofast" },
-  { id: 21, src: "/Partner Logos/Eureka Forbes.png", name: "Eureka Forbes" },
-  { id: 23, src: "/Partner Logos/Fresh_to_home.png", name: "Fresh_to_home" },
-  { id: 24, src: "/Partner Logos/Getsupp.png", name: "Getsupp" },
-  { id: 25, src: "/Partner Logos/Aditya Birls.png", name: "Aditya Birla" },
-  { id: 26, src: "/Partner Logos/Lifelong.png", name: "Lifelong" },
-  { id: 27, src: "/Partner Logos/Lendingkart.png", name: "Lendingkart" },
-  { id: 28, src: "/Partner Logos/Mindtickle.png", name: "Mindtickle" },
-  { id: 29, src: "/Partner Logos/NoBroker.png", name: "NoBroker" },
-  {
-    id: 30,
-    src: "/Partner Logos/Battery_Smart_Logo.png",
-    name: "Battery Smart",
-  },
-  { id: 31, src: "/Partner Logos/Blinkit_Logo.png", name: "Blinkit" },
-  { id: 32, src: "/Partner Logos/Joveo.png", name: "Joveo" },
-  { id: 33, src: "/Partner Logos/Coverfox.png", name: "Coverfox" },
-  { id: 34, src: "/Partner Logos/DG Liger.png", name: "DG Liger" },
-  { id: 35, src: "/Partner Logos/Bharat agri.png", name: "Bharat agri" },
-];
-
 const PartnersSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const controlsHeader = useAnimation();
   const controlsPartners = useAnimation();
   const [isVisible, setIsVisible] = useState(false);
+  const [partnerLogos, setPartnerLogos] = useState<PartnerLogo[]>([]);
+
+  useEffect(() => {
+    // Fetch client logos from the API
+    const fetchClientLogos = async () => {
+      try {
+        const response = await axios.get(
+          "https://paddlelift.onrender.com/components/clients/",
+        );
+        setPartnerLogos(response.data.clients_logos);
+      } catch (error) {
+        console.error("Error fetching client logos:", error);
+      }
+    };
+
+    fetchClientLogos();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -114,8 +94,11 @@ const PartnersSection: React.FC = () => {
   };
 
   // Divide the partnerLogos array into two parts
-  const firstRowLogos = partnerLogos.slice(0, 17);
-  const secondRowLogos = partnerLogos.slice(17);
+  const firstRowLogos = partnerLogos.slice(
+    0,
+    Math.ceil(partnerLogos.length / 2),
+  );
+  const secondRowLogos = partnerLogos.slice(Math.ceil(partnerLogos.length / 2));
 
   return (
     <section
@@ -189,7 +172,7 @@ const LogoCard: React.FC<LogoCardProps> = ({ logo }) => {
     <div className="group relative flex-shrink-0 w-40 h-40">
       <div className="absolute inset-0 bg-white rounded-full"></div>
       <div className="relative z-10 h-full w-full flex items-center justify-center p-6">
-        <Image
+        <img
           src={logo.src}
           alt={logo.name}
           className="max-h-28 max-w-28 m-8 object-contain group-hover:scale-102 transition-transform duration-300"

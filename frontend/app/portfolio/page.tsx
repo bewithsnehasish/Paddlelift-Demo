@@ -8,6 +8,10 @@ import PortfolioSection from "@/components/portfolio/portfoliosection";
 import Testimonials from "@/components/portfolio/testimonial";
 import CompanyTestimonials from "@/components/portfolio/company-testimonials";
 import ElfsightReviews from "@/components/services/elfsight";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+// Create a QueryClient instance
+const queryClient = new QueryClient();
 
 const PortfolioPage: React.FC = () => {
   const [showScrollUp, setShowScrollUp] = useState(false);
@@ -38,7 +42,7 @@ const PortfolioPage: React.FC = () => {
   };
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <div className="overflow-hidden bg-[#09090B]">
         <Navbar />
         <HeroSection />
@@ -58,7 +62,7 @@ const PortfolioPage: React.FC = () => {
           ↑
         </button>
       )}
-    </>
+    </QueryClientProvider>
   );
 };
 

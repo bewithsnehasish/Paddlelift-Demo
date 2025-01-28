@@ -2,60 +2,24 @@
 
 import { motion, Variants } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 interface StatItem {
   title: string;
   value: number;
   prefix?: string;
   suffix?: string;
-  description: string;
 }
 
-const STATS_DATA: StatItem[] = [
-  {
-    title: "Clients Served",
-    value: 150,
-    suffix: "+",
-    description: "Empowering Businesses",
-  },
-  {
-    title: "Candidates Placed",
-    value: 1250,
-    suffix: "+",
-    description: "Redefining Recruitment",
-  },
-  {
-    title: "Client Retention Rate (CRR)",
-    prefix: ">",
-    value: 75,
-    suffix: "%",
-    description: "Connecting Top Talent",
-  },
-  {
-    title: "Turn Around Time (TAT)",
-    prefix: "<",
-    value: 48,
-    suffix: "Hrs",
-    description: "Connecting Top Talent",
-  },
-  {
-    title: "Joining Ratio",
-    prefix: ">",
-    value: 80,
-    suffix: "%",
-    description: "Connecting Top Talent",
-  },
-  {
-    title: "Candidate Satisfaction Rate (CSR)",
-    prefix: ">",
-    value: 80,
-    suffix: "%",
-    description: "Connecting Top Talent",
-  },
-];
+interface ApiResponse {
+  id: number;
+  description: string;
+  data: StatItem[];
+}
 
 const ANIMATION_DURATION = 3000; // Increased duration for slower animation
-const FRAME_RATE = 30; // Adjusted frame rate for smoother animation
+const FRAME_RATE = 60; // Adjusted frame rate for smoother animation
 const INTERSECTION_THRESHOLD = 0.1;
 
 const CARD_COLORS = [
@@ -85,10 +49,19 @@ const wordPullAnimation: Variants = {
 
 export default function PortfolioSection() {
   const [isVisible, setIsVisible] = useState(false);
-  const [counters, setCounters] = useState<number[]>(
-    new Array(STATS_DATA.length).fill(0),
-  );
+  const [counters, setCounters] = useState<number[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Fetch data using TanStack Query
+  const { data, isLoading, isError } = useQuery<ApiResponse>({
+    queryKey: ["our-statistics"],
+    queryFn: async () => {
+      const response = await axios.get(
+        "https://paddlelift.onrender.com/components/our-statistics/",
+      );
+      return response.data;
+    },
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -114,13 +87,13 @@ export default function PortfolioSection() {
   }, []);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || !data) return;
 
     const intervals: NodeJS.Timeout[] = [];
 
-    STATS_DATA.forEach((data, index) => {
+    data.data.forEach((item, index) => {
       let start = 0;
-      const end = data.value;
+      const end = item.value;
       const increment = end / (ANIMATION_DURATION / FRAME_RATE);
 
       const interval = setInterval(() => {
@@ -144,7 +117,7 @@ export default function PortfolioSection() {
     return () => {
       intervals.forEach(clearInterval);
     };
-  }, [isVisible]);
+  }, [isVisible, data]);
 
   const renderStatCard = (data: StatItem, index: number) => {
     const cardColor = CARD_COLORS[index % CARD_COLORS.length]; // Cycle through colors
@@ -200,11 +173,11 @@ export default function PortfolioSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-white text-xl font-semibold md:text-base my-4 max-w-lg"
         >
-          Our Numbers Speak it all
+          {data?.description}
         </motion.p>
 
         <div className="mt-12 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {STATS_DATA.map((data, index) => renderStatCard(data, index))}
+          {data?.data.map((item, index) => renderStatCard(item, index))}
         </div>
       </div>
     </div>

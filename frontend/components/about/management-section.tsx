@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
-import { useRef, memo } from "react";
+import { useRef, memo, useEffect, useState } from "react";
 
 // Types
 interface MainHeadingProps {
@@ -16,6 +16,17 @@ interface SubHeadingProps {
 
 interface AnimatedTextProps {
   children: React.ReactNode;
+}
+
+interface ApiResponse {
+  vision: {
+    image_url: string;
+    description: string;
+  };
+  mission: {
+    image_url: string;
+    description: string;
+  };
 }
 
 // Animation variants
@@ -184,6 +195,27 @@ ImageSection.displayName = "ImageSection";
 
 export default function ManagementSection() {
   const sectionRef = useRef(null);
+  const [data, setData] = useState<ApiResponse | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://paddlelift.onrender.com/components/mission-and-vision/",
+        );
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!data) {
+    return <div>Loading...</div>; // Or some other loading state
+  }
 
   return (
     <section
@@ -201,18 +233,14 @@ export default function ManagementSection() {
         {/* Vision Section */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           <ImageSection
-            src="/about/vision.svg"
+            src={data.vision.image_url}
             alt="Vision Graphic"
             direction="left"
           />
           <AnimatedText>
             <SubHeading>Vision</SubHeading>
             <p className="text-gray-300 text-base leading-relaxed">
-              To establish our presence in the market as unrivaled leaders,
-              offering the ultimate solution to overcome the hiring bottlenecks
-              faced by start-ups. We envision a future where every innovative
-              idea has the opportunity to flourish, supported by a robust
-              ecosystem of talent and resources that we facilitate.
+              {data.vision.description}
             </p>
           </AnimatedText>
         </div>
@@ -222,15 +250,11 @@ export default function ManagementSection() {
           <AnimatedText>
             <SubHeading>Mission</SubHeading>
             <p className="text-gray-300 text-base leading-relaxed">
-              Our mission is to be the guiding light for start-ups, offering
-              them not just advice, but tangible, hands-on support to propel
-              their businesses to new heights. We strive to empower
-              entrepreneurs with the resources, knowledge, and connections they
-              need to overcome challenges and achieve sustainable growth.
+              {data.mission.description}
             </p>
           </AnimatedText>
           <ImageSection
-            src="/about/mission.svg"
+            src={data.mission.image_url}
             alt="Mission Graphic"
             direction="right"
           />
