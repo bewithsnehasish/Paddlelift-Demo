@@ -5,9 +5,41 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { TextGenerateEffect } from "../ui/text-generate-effect";
+import { useEffect, useState } from "react";
 
 export default function HeroSection() {
+  const [description, setDescription] = useState<string>(
+    "Tailor-made solutions for Startups to Enterprises. Let us help you bring your vision to life with our expertise and dedication.",
+  );
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDescription = async () => {
+      try {
+        const response = await fetch(
+          "https://paddlelift.onrender.com/components/portfolio-description/",
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch description");
+        }
+        const data = await response.json();
+        setDescription(data.description);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error occurred");
+      }
+    };
+
+    fetchDescription();
+  }, []);
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-500">
+        Error: {error}
+      </div>
+    );
+  }
+
   return (
     <section className="min-h-screen flex flex-col justify-center text-left relative overflow-hidden">
       {/* Background Image */}
@@ -39,8 +71,7 @@ export default function HeroSection() {
               Our <span className="text-red-600">Portfolio</span>
             </h1>
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-              Tailor-made solutions for Startups to Enterprises. Let us help you
-              bring your vision to life with our expertise and dedication.
+              {description}
             </p>
             <div className="flex flex-wrap gap-4">
               <Button size="lg" asChild>

@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -14,40 +12,53 @@ import {
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-interface Testimonial {
-  companyName: string;
-  logo: string;
-  title: string;
-  description: string;
-  bgColor: string;
+interface SuccessStory {
+  image_url: string;
+  heading: string;
+  response: string;
 }
 
-const testimonials: Testimonial[] = [
-  {
-    companyName: "Reevooy",
-    logo: "/Partner Logos/Reevooy.jfif",
-    title: "Built from the Ground Up",
-    description:
-      "Partnered with Reevooy at their inception, we provided comprehensive recruitment services that helped grow their team from the founding members to a strong, skilled workforce of 70+ professionals.",
-    bgColor: "bg-gradient-to-br from-cyan-400 to-cyan-600",
-  },
-  {
-    companyName: "Otipy",
-    logo: "/Partner Logos/Otipy.png",
-    title: "Scaled to New Heights",
-    description:
-      "Collaborated with Otipy from their early stages, we implemented a strategic recruitment plan that expanded their team from the founding members to a thriving workforce of 300+, supporting their rapid growth.",
-    bgColor: "bg-gradient-to-br from-emerald-400 to-emerald-600",
-  },
+interface ApiResponse {
+  few_success_stories: SuccessStory[];
+}
+
+const gradients = [
+  "bg-gradient-to-br from-cyan-400 to-cyan-600",
+  "bg-gradient-to-br from-emerald-400 to-emerald-600",
+  "bg-gradient-to-br from-purple-400 to-purple-600",
+  "bg-gradient-to-br from-orange-400 to-orange-600",
+  "bg-gradient-to-br from-pink-400 to-pink-600",
+  "bg-gradient-to-br from-indigo-400 to-indigo-600",
 ];
 
 export default function TestimonialsCarousel() {
   const [api, setApi] = useState<CarouselApi>();
   const [isPaused, setIsPaused] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [stories, setStories] = useState<SuccessStory[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const INTERSECTION_THRESHOLD = 0.1;
+
+  // Fetch data from API
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const response = await fetch(
+          "https://paddlelift.onrender.com/components/few-success-stories/",
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch success stories");
+        }
+        const data: ApiResponse = await response.json();
+        setStories(data.few_success_stories);
+      } catch (err) {
+        console.error(`Unknown error occurred + ${err}`);
+      }
+    };
+
+    fetchStories();
+  }, []);
 
   // Intersection Observer setup
   useEffect(() => {
@@ -73,6 +84,7 @@ export default function TestimonialsCarousel() {
     };
   }, []);
 
+  // Auto-scroll carousel
   useEffect(() => {
     if (!api) return;
 
@@ -84,6 +96,11 @@ export default function TestimonialsCarousel() {
 
     return () => clearInterval(interval);
   }, [api, isPaused]);
+
+  // Get gradient based on index
+  const getGradient = (index: number) => {
+    return gradients[index % gradients.length];
+  };
 
   return (
     <div
@@ -118,30 +135,31 @@ export default function TestimonialsCarousel() {
         onMouseLeave={() => setIsPaused(false)}
       >
         <CarouselContent className="-ml-2 md:-ml-4">
-          {testimonials.map((testimonial, index) => (
+          {stories.map((story, index) => (
             <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2">
               <Card className="flex flex-col h-full border-0 shadow-lg">
                 <div className="bg-white p-6 flex items-center justify-center h-32 flex-shrink-0">
                   <Image
-                    src={testimonial.logo}
-                    alt={`${testimonial.companyName} logo`}
+                    src={story.image_url}
+                    alt={`${story.heading} image`}
                     className="object-contain"
                     height={80}
                     width={200}
+                    unoptimized
                   />
                 </div>
                 <div
                   className={cn(
                     "p-6 text-white min-h-[250px] flex flex-col",
-                    testimonial.bgColor,
+                    getGradient(index),
                   )}
                 >
                   <h3 className="text-2xl font-semibold mb-4">
-                    {testimonial.title}
+                    {story.heading}
                   </h3>
                   <div className="overflow-y-auto flex-grow">
                     <p className="text-white/90 leading-relaxed">
-                      {testimonial.description}
+                      {story.response}
                     </p>
                   </div>
                 </div>

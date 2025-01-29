@@ -1,15 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Users, TrendingUp, FileCheck, UserCheck } from "lucide-react";
 import { motion } from "framer-motion";
 
-// Define the interface for the props
 interface ExpertiseCardProps {
   title: string;
   description: string;
   icon: React.ComponentType<{ className?: string }>;
   index: number;
+}
+
+interface CardData {
+  heading: string;
+  description: string;
+}
+
+interface ApiResponse {
+  what_sets_us_apart_cards: {
+    [key: string]: CardData;
+  };
 }
 
 const ExpertiseCard: React.FC<ExpertiseCardProps> = ({
@@ -75,33 +85,53 @@ const BackgroundPattern = () => (
   </div>
 );
 
+const getIcon = (heading: string) => {
+  switch (heading) {
+    case "Expert Team":
+      return Users;
+    case "Proven Success":
+      return TrendingUp;
+    case "Tailored Strategy":
+      return FileCheck;
+    case "Personalized Approach":
+      return UserCheck;
+    default:
+      return Users;
+  }
+};
+
 export default function ExpertisePage() {
-  const expertiseData = [
-    {
-      title: "Expert Team",
-      description:
-        "Our squad of seasoned specialists, Tier 1 pedigree holders with 45+ years of combined expertise in talent acquisition and HR management.",
-      icon: Users,
-    },
-    {
-      title: "Proven Success",
-      description:
-        "Deep industry insights delivering high-quality talent & HR practices, with global scale across multiple fields and consistent success rates.",
-      icon: TrendingUp,
-    },
-    {
-      title: "Tailored Strategy",
-      description:
-        "Masterfully guiding from initial setup to rapid scaling, ensuring hires align with your vision and organizational goals.",
-      icon: FileCheck,
-    },
-    {
-      title: "Personalized Approach",
-      description:
-        "Beyond candidates, we promote your brand and identify crème talent eligible for hiring, ensuring perfect cultural and skill matches.",
-      icon: UserCheck,
-    },
-  ];
+  const [data, setData] = useState<ApiResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://paddlelift.onrender.com/components/what-sets-us-apart/",
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error occurred");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (error) {
+    return (
+      <div className="relative min-h-screen flex items-center justify-center text-red-500">
+        Error: {error}
+      </div>
+    );
+  }
+
+  const cards = data ? Object.values(data.what_sets_us_apart_cards) : [];
 
   return (
     <div className="relative min-h-screen py-10 md:py-20 overflow-hidden">
@@ -132,8 +162,14 @@ export default function ExpertisePage() {
           </h1>
         </motion.div>
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
-          {expertiseData.map((item, index) => (
-            <ExpertiseCard key={item.title} {...item} index={index} />
+          {cards.map((card, index) => (
+            <ExpertiseCard
+              key={card.heading}
+              title={card.heading}
+              description={card.description}
+              icon={getIcon(card.heading)}
+              index={index}
+            />
           ))}
         </div>
       </motion.div>

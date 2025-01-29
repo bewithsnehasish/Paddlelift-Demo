@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 import axios from "axios";
 
