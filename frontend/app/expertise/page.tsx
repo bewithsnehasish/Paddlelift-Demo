@@ -1,5 +1,6 @@
 import ExpertisePage from "@/components/expertise/herosection";
 import MobileOrgainsation from "@/components/expertise/MobileOrgainsation";
+import NewSuccess from "@/components/expertise/newsuccess";
 import SuccessApproach from "@/components/expertise/SuccessApproach";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -21,6 +22,7 @@ const Expertise: React.FC = () => {
           <MobileOrgainsation />
         </div>
         <SuccessApproach />
+        <NewSuccess />
         <div className="pt-20">
           <Footer />
         </div>
