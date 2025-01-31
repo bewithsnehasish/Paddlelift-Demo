@@ -10,6 +10,7 @@ import { ServicesHero } from "@/components/services/hero";
 import "./services.css";
 import Navbar from "@/components/Navbar";
 import InteractiveCards from "@/components/NewHome/newFeaturesection";
+import GoogleReviewsCarousel from "@/components/services/GoogleReviews";
 
 const ServicesPage: React.FC = () => {
   const [showScrollUp, setShowScrollUp] = useState(false);
@@ -47,6 +48,7 @@ const ServicesPage: React.FC = () => {
         <InteractiveCards />
         <PartnersSection />
         <IndustriesServed />
+        <GoogleReviewsCarousel />
         <div className="pt-20">
           <Footer />
         </div>

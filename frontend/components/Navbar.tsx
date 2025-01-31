@@ -115,7 +115,9 @@ const Navbar = () => {
         {/* Navbar */}
         <nav
           className={`max-w-7xl transition-all duration-300 ${
-            isScrolled ? "w-[90%] bg-black border" : "w-[95%] bg-transparent"
+            isScrolled
+              ? "w-[90%] bg-[#09090B] border"
+              : "w-[95%] bg-transparent"
           } rounded-md ${
             isVisible
               ? "translate-y-0 opacity-100"
@@ -213,7 +215,7 @@ const Navbar = () => {
             animate="visible"
             exit="hidden"
             variants={menuVariants}
-            className="fixed inset-0 bg-black z-50 flex flex-col justify-center items-center"
+            className="fixed inset-0 bg-[#09090B] z-50 flex flex-col justify-center items-center"
           >
             <button
               onClick={toggleMobileMenu}

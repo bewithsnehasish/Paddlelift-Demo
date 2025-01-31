@@ -92,7 +92,7 @@ const NewSuccess = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black p-8" ref={ref}>
+    <div className="min-h-screen bg-[#09090B] p-8" ref={ref}>
       <div className="max-w-6xl mx-auto space-y-6">
         <motion.div
           className="mb-8 sm:mb-12"
