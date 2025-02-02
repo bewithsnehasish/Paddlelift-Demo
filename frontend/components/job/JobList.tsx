@@ -13,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { JobListing } from "@/lib/types";
+import { FilterDialog, type Filters } from "./filter-dialog";
 
 const salaryRanges = [
   { label: "All Ranges", min: 0, max: Number.POSITIVE_INFINITY },
@@ -22,6 +23,17 @@ const salaryRanges = [
   { label: "80,000+", min: 80000, max: Number.POSITIVE_INFINITY },
 ];
 
+const initialFilters: Filters = {
+  skills: [],
+  position: "",
+  experienceLevel: "",
+  employmentType: "",
+  workMode: "",
+  jobLocation: "",
+  yearsOfExperience: { min: 0, max: 0 },
+  industry: "",
+};
+
 export default function JobList({
   initialJobs,
 }: {
@@ -30,6 +42,7 @@ export default function JobList({
   const [jobs, setJobs] = useState<JobListing[]>(initialJobs);
   const [filteredJobs, setFilteredJobs] = useState<JobListing[]>(initialJobs);
   const [selectedSalaryRange, setSelectedSalaryRange] = useState("all ranges");
+  const [filters, setFilters] = useState<Filters>(initialFilters);
 
   useEffect(() => {
     const filtered = jobs.filter((job) => {
@@ -44,25 +57,87 @@ export default function JobList({
               (range) => range.label.toLowerCase() === selectedSalaryRange,
             )!.max);
 
-      return matchesSalary;
+      const matchesSkills =
+        filters.skills.length === 0 ||
+        filters.skills.every((skill) =>
+          job.Required_skills.some((jobSkill) =>
+            jobSkill.toLowerCase().includes(skill.toLowerCase()),
+          ),
+        );
+
+      const matchesPosition =
+        !filters.position ||
+        job.Title.toLowerCase().includes(filters.position.toLowerCase());
+
+      const matchesExperienceLevel =
+        !filters.experienceLevel ||
+        job.Experience_level.toLowerCase() ===
+          filters.experienceLevel.toLowerCase();
+
+      const matchesEmploymentType =
+        !filters.employmentType ||
+        job.Employment_type.toLowerCase() ===
+          filters.employmentType.toLowerCase();
+
+      const matchesWorkMode =
+        !filters.workMode ||
+        job.Work_Mode.toLowerCase() === filters.workMode.toLowerCase();
+
+      const matchesJobLocation =
+        !filters.jobLocation ||
+        job.Job_Location.toLowerCase().includes(
+          filters.jobLocation.toLowerCase(),
+        );
+
+      const matchesYearsOfExperience =
+        (filters.yearsOfExperience.min === 0 ||
+          job.Years_of_Experience_Required >= filters.yearsOfExperience.min) &&
+        (filters.yearsOfExperience.max === 0 ||
+          job.Years_of_Experience_Required <= filters.yearsOfExperience.max);
+
+      const matchesIndustry =
+        !filters.industry ||
+        job.Client_Industry.toLowerCase() === filters.industry.toLowerCase();
+
+      return (
+        matchesSalary &&
+        matchesSkills &&
+        matchesPosition &&
+        matchesExperienceLevel &&
+        matchesEmploymentType &&
+        matchesWorkMode &&
+        matchesJobLocation &&
+        matchesYearsOfExperience &&
+        matchesIndustry
+      );
     });
 
     setFilteredJobs(filtered);
-  }, [jobs, selectedSalaryRange]);
+  }, [jobs, selectedSalaryRange, filters]);
+
+  const handleFilterApply = (newFilters: Filters) => {
+    setFilters(newFilters);
+  };
 
   return (
-    <div className="relative min-h-screen mt-28">
+    <div className="relative mt-32 min-h-screen">
       {/* Header */}
-      <div className="bg[#09090B]">
+      <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-sm">
         <div className="mx-auto max-w-6xl space-y-6 p-6">
           <div className="flex items-center justify-between border-b border-gray-800 pb-4">
-            <h2 className="text-xl font-semibold text-white">Recent Posts</h2>
+            <div className="flex items-center gap-4">
+              <h2 className="text-xl font-semibold text-white">Recent Posts</h2>
+              <FilterDialog
+                onFilterApply={handleFilterApply}
+                currentFilters={filters}
+              />
+            </div>
             <div className="flex items-center gap-4">
               <Select
                 value={selectedSalaryRange}
                 onValueChange={setSelectedSalaryRange}
               >
-                <SelectTrigger className="w-[180px] bg-transparent text-white">
+                <SelectTrigger className="w-[180px] text-white">
                   <SelectValue placeholder="Salary Range" />
                 </SelectTrigger>
                 <SelectContent>
@@ -88,18 +163,23 @@ export default function JobList({
       <div className="mx-auto max-w-6xl space-y-4 p-6">
         {filteredJobs.map((job, index) => (
           <Link key={index} href={`/jobs/${index}`}>
-            <Card className="transition-all hover:scale-[1.01] mb-6 ">
+            <Card className="bg-white transition-all hover:scale-[1.01] mb-4">
               <div className="p-6">
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="text-xl font-semibold">{job.Title}</h3>
-                    <p className="text-muted-foreground">{job.Client_Name}</p>
+                    <h3 className="text-xl font-semibold text-gray-900">
+                      {job.Title}
+                    </h3>
+                    <p className="text-gray-600">{job.Client_Name}</p>
                   </div>
                   <div className="text-right">
-                    <Badge variant="secondary" className="mb-2">
+                    <Badge
+                      variant="secondary"
+                      className="mb-2 bg-blue-100 text-blue-800"
+                    >
                       ₹{job.Salary_Range}
                     </Badge>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-gray-600">
                       {job.Employment_type}
                     </div>
                   </div>
@@ -107,31 +187,35 @@ export default function JobList({
 
                 <div className="mb-4 flex flex-wrap gap-2">
                   {job.Required_skills.map((skill) => (
-                    <Badge key={skill} variant="outline">
+                    <Badge
+                      key={skill}
+                      variant="outline"
+                      className="border-blue-200 text-blue-800"
+                    >
                       {skill}
                     </Badge>
                   ))}
                 </div>
 
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600">
                   <div className="flex items-center gap-2">
                     <Badge
                       variant="secondary"
-                      className="h-2 w-2 rounded-full p-0"
+                      className="h-2 w-2 rounded-full bg-blue-500 p-0"
                     />
                     {job.Job_Location}
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge
                       variant="secondary"
-                      className="h-2 w-2 rounded-full p-0"
+                      className="h-2 w-2 rounded-full bg-blue-500 p-0"
                     />
                     {job.Work_Mode}
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge
                       variant="secondary"
-                      className="h-2 w-2 rounded-full p-0"
+                      className="h-2 w-2 rounded-full bg-blue-500 p-0"
                     />
                     {job.Experience_level}
                   </div>

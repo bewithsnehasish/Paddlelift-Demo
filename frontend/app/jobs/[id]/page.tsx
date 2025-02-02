@@ -1,225 +1,174 @@
-"use client";
-
-import { useState, use } from "react";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { motion } from "framer-motion";
-import React from "react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
 import { getJobs } from "@/lib/api";
-import { JobListing } from "@/lib/types";
-import LoadingAnimation from "@/components/Loader";
+import { JobApplication } from "@/components/job/JobApplication";
+import { JobDetailsSkeleton } from "@/components/job/job-details-skeleton";
+import Navbar from "@/components/Navbar";
 
-export default function JobPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = use(params);
-  const [job, setJob] = useState<JobListing | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [answers, setAnswers] = useState<string[]>([]);
-
-  React.useEffect(() => {
-    const fetchJob = async () => {
-      try {
-        const { job_listings } = await getJobs();
-        const fetchedJob = job_listings[Number.parseInt(id)];
-        if (!fetchedJob) {
-          notFound();
-        }
-        setJob(fetchedJob);
-      } catch (error) {
-        console.error("Failed to fetch job:", error);
-        notFound();
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchJob();
-  }, [id]);
-
-  if (isLoading) {
-    return <LoadingAnimation />;
-  }
+async function JobDetails({ id }: { id: string }) {
+  const { job_listings } = await getJobs();
+  const job = job_listings[Number.parseInt(id)];
 
   if (!job) {
-    return notFound();
+    notFound();
   }
 
-  const questions = job.Questions.split("\r\n").filter(Boolean);
-
-  const handleAnswerChange = (index: number, value: string) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value;
-    setAnswers(newAnswers);
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    // Handle form submission here
-    console.log("Answers:", answers);
-  };
-
   return (
-    <div className="min-h-screen bg-[#09090B] p-6">
-      <div className="mx-auto max-w-4xl">
-        <Card className="mb-8">
-          <div className="p-8">
-            <div className="mb-6">
-              <h1 className="mb-2 text-3xl font-bold">{job.Title}</h1>
-              <p className="text-xl text-muted-foreground">
-                {job.Client_Name} • {job.Client_Industry}
-              </p>
-            </div>
-
-            <div className="mb-6 grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <div className="text-sm text-muted-foreground">Location</div>
-                <div className="font-medium">{job.Job_Location}</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-sm text-muted-foreground">
-                  Salary Range
-                </div>
-                <div className="font-medium">₹{job.Salary_Range}</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-sm text-muted-foreground">Experience</div>
-                <div className="font-medium">
-                  {job.Experience_level} • {job.Years_of_Experience_Required}{" "}
-                  years
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-sm text-muted-foreground">Work Type</div>
-                <div className="font-medium">
-                  {job.Employment_type} • {job.Work_Mode}
-                </div>
-              </div>
-            </div>
-
-            <Separator className="my-6" />
-
-            <div className="mb-6">
-              <h2 className="mb-4 text-xl font-semibold">Required Skills</h2>
-              <div className="flex flex-wrap gap-2">
-                {job.Required_skills.map((skill) => (
-                  <Badge key={skill} variant="secondary">
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <h2 className="mb-4 text-xl font-semibold">Job Description</h2>
-              <div
-                className="prose prose-gray max-w-none dark:prose-invert"
-                dangerouslySetInnerHTML={{ __html: job.Job_Description }}
-              />
-            </div>
-
-            <div className="mb-6">
-              <h2 className="mb-4 text-xl font-semibold">Requirements</h2>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <div className="text-sm text-muted-foreground">Education</div>
-                  <div className="font-medium">
-                    {job.Educational_Qualifications}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-sm text-muted-foreground">
-                    Certifications
-                  </div>
-                  <div className="font-medium">{job.Certifications}</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mb-6">
-              <h2 className="mb-4 text-xl font-semibold">Benefits</h2>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <div className="text-sm text-muted-foreground">
-                    Other Benefits
-                  </div>
-                  <div className="font-medium">{job.Other_Benefits}</div>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-sm text-muted-foreground">
-                    Number of Openings
-                  </div>
-                  <div className="font-medium">{job.Number_of_Openings}</div>
-                </div>
-              </div>
-            </div>
-
-            <form onSubmit={handleSubmit}>
-              {questions.length > 0 && (
-                <div className="mb-6">
-                  <h2 className="mb-4 text-xl font-semibold">
-                    Screening Questions
+    <div className="min-h-screen bg-[#09090B]">
+      <Navbar />
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-32">
+        <div className="py-8">
+          <Link
+            href="/jobs"
+            className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-500"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Jobs
+          </Link>
+          <div className="mt-4 overflow-hidden rounded-lg bg-white shadow">
+            <div className="px-4 py-5 sm:p-6">
+              <div className="md:flex md:items-center md:justify-between">
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                    {job.Title}
                   </h2>
-                  <div className="space-y-4">
-                    {questions.map((question, index) => (
-                      <div key={index} className="rounded-lg border p-4">
-                        <p className="mb-2 font-medium">{question}</p>
-                        <Textarea
-                          placeholder="Your answer"
-                          value={answers[index] || ""}
-                          onChange={(e) =>
-                            handleAnswerChange(index, e.target.value)
-                          }
-                          className="mt-2"
-                        />
-                      </div>
-                    ))}
+                  <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+                    <div className="mt-2 flex items-center text-sm text-gray-500">
+                      <span className="font-medium">{job.Client_Name}</span>
+                      <span className="mx-2">•</span>
+                      <span>{job.Client_Industry}</span>
+                    </div>
                   </div>
                 </div>
-              )}
-
-              <motion.div
-                className="mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Card className="p-6">
-                  <h2 className="mb-4 text-xl font-semibold">Attach Your CV</h2>
-                  <p className="mb-4 text-muted-foreground">
-                    Please attach your CV in PDF format. Max file size: 5MB
-                  </p>
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    className="block w-full text-sm text-slate-500
-                      file:mr-4 file:rounded-full file:border-0
-                      file:bg-violet-50 file:px-4 file:py-2
-                      file:text-sm file:font-semibold file:text-violet-700
-                      hover:file:bg-violet-100"
-                  />
-                </Card>
-              </motion.div>
-
-              <div className="flex justify-end">
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="bg-blue-600 hover:bg-blue-700"
-                >
-                  Submit Application
-                </Button>
+                <div className="mt-4 flex md:ml-4 md:mt-0">
+                  <Badge
+                    variant="secondary"
+                    className="ml-2 bg-blue-100 text-blue-800"
+                  >
+                    ₹{job.Salary_Range}
+                  </Badge>
+                </div>
               </div>
-            </form>
+              <div className="mt-6 border-t border-gray-100">
+                <dl className="divide-y divide-gray-100">
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Location
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      {job.Job_Location}
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Experience
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      {job.Experience_level} •{" "}
+                      {job.Years_of_Experience_Required} years
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Work Type
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      {job.Employment_type} • {job.Work_Mode}
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Required Skills
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      <div className="flex flex-wrap gap-2">
+                        {job.Required_skills.map((skill) => (
+                          <Badge
+                            key={skill}
+                            variant="outline"
+                            className="border-blue-200 text-blue-800"
+                          >
+                            {skill}
+                          </Badge>
+                        ))}
+                      </div>
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+              <div className="mt-6">
+                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  Job Description
+                </h3>
+                <div
+                  className="mt-2 prose prose-sm text-gray-500"
+                  dangerouslySetInnerHTML={{ __html: job.Job_Description }}
+                />
+              </div>
+              <div className="mt-6">
+                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  Requirements
+                </h3>
+                <dl className="mt-2 divide-y divide-gray-100">
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Education
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      {job.Educational_Qualifications}
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Certifications
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      {job.Certifications}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+              <div className="mt-6">
+                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  Benefits
+                </h3>
+                <dl className="mt-2 divide-y divide-gray-100">
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Other Benefits
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      {job.Other_Benefits}
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Number of Openings
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      {job.Number_of_Openings}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
           </div>
-        </Card>
+          <JobApplication job={job} />
+        </div>
       </div>
     </div>
+  );
+}
+
+export default async function JobPage({ params }: { params: { id: string } }) {
+  const resolvedParams = await params;
+  return (
+    <Suspense fallback={<JobDetailsSkeleton />}>
+      <JobDetails id={resolvedParams.id} />
+    </Suspense>
   );
 }

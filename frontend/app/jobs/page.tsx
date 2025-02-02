@@ -10,8 +10,8 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#09090B]">
-      <Navbar />
       <Suspense fallback={<JobListSkeleton />}>
+        <Navbar />
         <JobList initialJobs={job_listings} />
       </Suspense>
     </div>

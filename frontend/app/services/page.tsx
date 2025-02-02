@@ -54,7 +54,7 @@ const ServicesPage: React.FC = () => {
         </div>
       </div>
       {/* 
-      <ElfsightReviews />
+      <ElfsightReviews /
       <FeaturesSection />
       Scroll-Up Button */}
       {showScrollUp && (

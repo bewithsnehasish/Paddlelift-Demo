@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientLoading from "./loading";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
         className={`${inter.className} font-inter text-base text-gray-200 antialiased`}
       >
         <ClientLoading>
+          <Toaster position="bottom-center" />
           <main>{children}</main>
         </ClientLoading>
       </body>
