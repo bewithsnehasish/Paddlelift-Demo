@@ -7,7 +7,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -20,23 +19,14 @@ import { Filter } from "lucide-react";
 import { Badge } from "../ui/badge";
 
 const experienceLevels = [
-  "Entry Level",
-  "Mid Level",
-  "Senior Level",
-  "Lead",
+  "Entry-level",
+  "Mid-Level",
+  "Senior-level",
   "Manager",
+  "Leadership / CXO",
 ];
 const employmentTypes = ["Full-Time", "Part-Time", "Contract", "Freelance"];
 const workModes = ["On-site", "Remote", "Hybrid"];
-const industries = [
-  "Technology",
-  "Healthcare",
-  "Finance",
-  "Education",
-  "Manufacturing",
-  "Retail",
-  "Media",
-];
 
 export interface Filters {
   skills: string[];
@@ -52,11 +42,19 @@ export interface Filters {
 interface FilterDialogProps {
   onFilterApply: (filters: Filters) => void;
   currentFilters: Filters;
+  industries: string[];
+  skills: string[];
+  positions: string[];
+  jobLocations: string[];
 }
 
 export function FilterDialog({
   onFilterApply,
   currentFilters,
+  industries,
+  skills,
+  positions,
+  jobLocations,
 }: FilterDialogProps) {
   const [filters, setFilters] = useState<Filters>(currentFilters);
 
@@ -64,12 +62,11 @@ export function FilterDialog({
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleSkillsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const skills = e.target.value
-      .split(",")
-      .map((skill) => skill.trim())
-      .filter(Boolean);
-    handleFilterChange("skills", skills);
+  const handleSkillsChange = (value: string) => {
+    const updatedSkills = filters.skills.includes(value)
+      ? filters.skills.filter((skill) => skill !== value)
+      : [...filters.skills, value];
+    handleFilterChange("skills", updatedSkills);
   };
 
   const handleYearsOfExperienceChange = (key: "min" | "max", value: string) => {
@@ -132,19 +129,51 @@ export function FilterDialog({
         <div className="grid gap-6 py-4">
           <div className="grid gap-2">
             <Label>Skills</Label>
-            <Input
-              placeholder="e.g. React, Python, JavaScript"
-              value={filters.skills.join(", ")}
-              onChange={handleSkillsChange}
-            />
+            <Select
+              value={filters.skills.join(",")}
+              onValueChange={(value) => handleSkillsChange(value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select skills" />
+              </SelectTrigger>
+              <SelectContent>
+                {skills.map((skill) => (
+                  <SelectItem key={skill} value={skill}>
+                    {skill}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {filters.skills.map((skill) => (
+                <Badge
+                  key={skill}
+                  variant="secondary"
+                  className="cursor-pointer"
+                  onClick={() => handleSkillsChange(skill)}
+                >
+                  {skill} ×
+                </Badge>
+              ))}
+            </div>
           </div>
           <div className="grid gap-2">
             <Label>Position</Label>
-            <Input
-              placeholder="e.g. Software Engineer, Designer"
+            <Select
               value={filters.position}
-              onChange={(e) => handleFilterChange("position", e.target.value)}
-            />
+              onValueChange={(value) => handleFilterChange("position", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select position" />
+              </SelectTrigger>
+              <SelectContent>
+                {positions.map((position) => (
+                  <SelectItem key={position} value={position}>
+                    {position}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="grid gap-2">
             <Label>Experience Level</Label>
@@ -158,7 +187,6 @@ export function FilterDialog({
                 <SelectValue placeholder="Select experience level" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="any">Any</SelectItem>
                 {experienceLevels.map((level) => (
                   <SelectItem key={level} value={level.toLowerCase()}>
                     {level}
@@ -179,7 +207,6 @@ export function FilterDialog({
                 <SelectValue placeholder="Select employment type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="any">Any</SelectItem>
                 {employmentTypes.map((type) => (
                   <SelectItem key={type} value={type.toLowerCase()}>
                     {type}
@@ -198,7 +225,6 @@ export function FilterDialog({
                 <SelectValue placeholder="Select work mode" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="any">Any</SelectItem>
                 {workModes.map((mode) => (
                   <SelectItem key={mode} value={mode.toLowerCase()}>
                     {mode}
@@ -209,35 +235,61 @@ export function FilterDialog({
           </div>
           <div className="grid gap-2">
             <Label>Job Location</Label>
-            <Input
-              placeholder="e.g. New York, London, Remote"
+            <Select
               value={filters.jobLocation}
-              onChange={(e) =>
-                handleFilterChange("jobLocation", e.target.value)
+              onValueChange={(value) =>
+                handleFilterChange("jobLocation", value)
               }
-            />
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select job location" />
+              </SelectTrigger>
+              <SelectContent>
+                {jobLocations.map((location) => (
+                  <SelectItem key={location} value={location}>
+                    {location}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="grid gap-2">
             <Label>Years of Experience</Label>
             <div className="flex gap-4">
-              <Input
-                type="number"
-                placeholder="Min"
-                className="flex-1"
-                value={filters.yearsOfExperience.min || ""}
-                onChange={(e) =>
-                  handleYearsOfExperienceChange("min", e.target.value)
+              <Select
+                value={filters.yearsOfExperience.min.toString()}
+                onValueChange={(value) =>
+                  handleYearsOfExperienceChange("min", value)
                 }
-              />
-              <Input
-                type="number"
-                placeholder="Max"
-                className="flex-1"
-                value={filters.yearsOfExperience.max || ""}
-                onChange={(e) =>
-                  handleYearsOfExperienceChange("max", e.target.value)
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Min" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[0, 1, 2, 3, 5, 7, 10].map((year) => (
+                    <SelectItem key={year} value={year.toString()}>
+                      {year}+
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={filters.yearsOfExperience.max.toString()}
+                onValueChange={(value) =>
+                  handleYearsOfExperienceChange("max", value)
                 }
-              />
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Max" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[1, 2, 3, 5, 7, 10, 15, 20].map((year) => (
+                    <SelectItem key={year} value={year.toString()}>
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <div className="grid gap-2">
@@ -250,7 +302,6 @@ export function FilterDialog({
                 <SelectValue placeholder="Select industry" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="any">Any</SelectItem>
                 {industries.map((industry) => (
                   <SelectItem key={industry} value={industry.toLowerCase()}>
                     {industry}

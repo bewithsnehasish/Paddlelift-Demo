@@ -43,6 +43,10 @@ export default function JobList({
   const [filteredJobs, setFilteredJobs] = useState<JobListing[]>(initialJobs);
   const [selectedSalaryRange, setSelectedSalaryRange] = useState("all ranges");
   const [filters, setFilters] = useState<Filters>(initialFilters);
+  const [uniqueIndustries, setUniqueIndustries] = useState<string[]>([]);
+  const [uniqueSkills, setUniqueSkills] = useState<string[]>([]);
+  const [uniquePositions, setUniquePositions] = useState<string[]>([]);
+  const [uniqueJobLocations, setUniqueJobLocations] = useState<string[]>([]);
 
   useEffect(() => {
     const filtered = jobs.filter((job) => {
@@ -115,12 +119,32 @@ export default function JobList({
     setFilteredJobs(filtered);
   }, [jobs, selectedSalaryRange, filters]);
 
+  useEffect(() => {
+    const industries = Array.from(
+      new Set(jobs.map((job) => job.Client_Industry)),
+    );
+    setUniqueIndustries(industries);
+
+    const skills = Array.from(
+      new Set(jobs.flatMap((job) => job.Required_skills)),
+    );
+    setUniqueSkills(skills);
+
+    const positions = Array.from(new Set(jobs.map((job) => job.Title)));
+    setUniquePositions(positions);
+
+    const jobLocations = Array.from(
+      new Set(jobs.map((job) => job.Job_Location)),
+    );
+    setUniqueJobLocations(jobLocations);
+  }, [jobs]);
+
   const handleFilterApply = (newFilters: Filters) => {
     setFilters(newFilters);
   };
 
   return (
-    <div className="relative mt-32 min-h-screen">
+    <div className="relative min-h-screen mt-32">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-sm">
         <div className="mx-auto max-w-6xl space-y-6 p-6">
@@ -130,6 +154,10 @@ export default function JobList({
               <FilterDialog
                 onFilterApply={handleFilterApply}
                 currentFilters={filters}
+                industries={uniqueIndustries}
+                skills={uniqueSkills}
+                positions={uniquePositions}
+                jobLocations={uniqueJobLocations}
               />
             </div>
             <div className="flex items-center gap-4">
@@ -137,7 +165,7 @@ export default function JobList({
                 value={selectedSalaryRange}
                 onValueChange={setSelectedSalaryRange}
               >
-                <SelectTrigger className="w-[180px] text-white">
+                <SelectTrigger className="w-[180px] bg-transparent text-white">
                   <SelectValue placeholder="Salary Range" />
                 </SelectTrigger>
                 <SelectContent>

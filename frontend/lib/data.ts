@@ -22,14 +22,11 @@ export const jobTitles = [
 ];
 
 export const positions = [
-  "Junior",
+  "Entry-level",
   "Mid-Level",
-  "Senior",
-  "Lead",
+  "Senior-level",
   "Manager",
-  "Director",
-  "VP",
-  "C-Level",
+  "Leadership / CXO",
 ];
 
 export const postedDaysOptions = [
@@ -45,6 +42,7 @@ export const jobTypes = [
   { id: "contract", label: "Contract" },
   { id: "fulltime", label: "Full-Time" },
   { id: "parttime", label: "Part-Time" },
+  { id: "internship", label: "Internship" },
 ] as const;
 
 // Generate 100 mock jobs

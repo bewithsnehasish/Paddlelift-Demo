@@ -9,8 +9,15 @@ import { JobApplication } from "@/components/job/JobApplication";
 import { JobDetailsSkeleton } from "@/components/job/job-details-skeleton";
 import Navbar from "@/components/Navbar";
 
-async function JobDetails({ id }: { id: string }) {
+// Define proper types for the params
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+async function JobDetails({ params }: PageProps) {
+  const { id } = await params;
   const { job_listings } = await getJobs();
+
   const job = job_listings[Number.parseInt(id)];
 
   if (!job) {
@@ -102,15 +109,6 @@ async function JobDetails({ id }: { id: string }) {
               </div>
               <div className="mt-6">
                 <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Job Description
-                </h3>
-                <div
-                  className="mt-2 prose prose-sm text-gray-500"
-                  dangerouslySetInnerHTML={{ __html: job.Job_Description }}
-                />
-              </div>
-              <div className="mt-6">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
                   Requirements
                 </h3>
                 <dl className="mt-2 divide-y divide-gray-100">
@@ -128,6 +126,14 @@ async function JobDetails({ id }: { id: string }) {
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                       {job.Certifications}
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">
+                      Industry
+                    </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      {job.Client_Industry}
                     </dd>
                   </div>
                 </dl>
@@ -153,6 +159,16 @@ async function JobDetails({ id }: { id: string }) {
                       {job.Number_of_Openings}
                     </dd>
                   </div>
+
+                  <div className="mt-6">
+                    <h3 className="text-lg font-medium leading-6 text-gray-900">
+                      Job Description
+                    </h3>
+                    <div
+                      className="mt-2 prose prose-sm text-gray-500"
+                      dangerouslySetInnerHTML={{ __html: job.Job_Description }}
+                    />
+                  </div>
                 </dl>
               </div>
             </div>
@@ -164,10 +180,11 @@ async function JobDetails({ id }: { id: string }) {
   );
 }
 
-export default async function JobPage({ params }: { params: { id: string } }) {
+// Use the same PageProps type for the main page component
+export default function JobPage({ params }: PageProps) {
   return (
     <Suspense fallback={<JobDetailsSkeleton />}>
-      <JobDetails id={params.id} />
+      <JobDetails params={params} />
     </Suspense>
   );
 }
