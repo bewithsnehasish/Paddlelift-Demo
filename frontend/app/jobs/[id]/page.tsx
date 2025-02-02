@@ -165,10 +165,9 @@ async function JobDetails({ id }: { id: string }) {
 }
 
 export default async function JobPage({ params }: { params: { id: string } }) {
-  const resolvedParams = await params;
   return (
     <Suspense fallback={<JobDetailsSkeleton />}>
-      <JobDetails id={resolvedParams.id} />
+      <JobDetails id={params.id} />
     </Suspense>
   );
 }
