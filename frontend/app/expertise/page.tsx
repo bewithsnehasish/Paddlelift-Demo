@@ -23,11 +23,11 @@ const Expertise: React.FC = () => {
           <MobileOrgainsation />
         </div>
         <NewSuccessApproach />
-        <SuccessApproach />
         <div className="pt-20">
           <Footer />
         </div>
         {/* 
+        <SuccessApproach />
         <NewSuccess />
         <RecruitmentProcess />
       Scroll-Up Button */}

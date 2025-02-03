@@ -114,10 +114,10 @@ export default function SuccessApproach() {
             A comprehensive five-step methodology for exceptional results
           </p>
         </motion.div>
-        <div className="relative flex gap-8">
+        <div className="relative flex gap-6 md:gap-8">
           {/* Lazy Loaded Image */}
           <div
-            className="hidden md:block w-1/4 sticky top-2 h-[800px]"
+            className="hidden md:block w-1/4 sticky top-4 h-[800px]"
             ref={imageRef}
           >
             {imageInView && (
@@ -144,7 +144,9 @@ export default function SuccessApproach() {
                 <motion.div
                   key={step.id}
                   style={{ y: yOffset }}
-                  className={`group relative ${index % 2 === 0 ? "ml-0" : "ml-auto"} mb-6 w-full sm:w-[85%]`}
+                  className={`group relative ${
+                    index % 2 === 0 ? "ml-0" : "ml-auto"
+                  } mb-4 sm:mb-6 w-full sm:w-[90%]`}
                 >
                   <MotionCard
                     initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
@@ -215,7 +217,7 @@ export default function SuccessApproach() {
                       </div>
                     </div>
                     <motion.div
-                      className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-white/20 transition-all duration-300"
+                      className="absolute top-0 right-0 w-20 h-20 sm:w-28 sm:h-28 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-white/20 transition-all duration-300"
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}
                       transition={{
