@@ -256,6 +256,26 @@ const Navbar = () => {
                   </button>
                 </motion.div>
               ))}
+              {/* Job Board Button for Mobile */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {
+                    delay: navLinks.length * 0.2,
+                    duration: 0.5,
+                  },
+                }}
+              >
+                <Button
+                  size="lg"
+                  className="bg-white text-black hover:bg-blue-500 hover:text-white transition duration-200"
+                  onClick={() => handleNavigation("/jobs")}
+                >
+                  Job Board
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
         )}
