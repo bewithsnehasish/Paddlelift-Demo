@@ -52,7 +52,8 @@ export function JobApplication({ job }: { job: JobListing }) {
       // Validate form inputs
       if (!file) throw new Error("Please attach your CV");
       if (
-        answers.length !== job.Questions.split("\r\n").filter(Boolean).length
+        answers.length !==
+        job.Questions.split("\r\n").filter(Boolean).length + 2 // +2 for hardcoded questions
       ) {
         throw new Error("Please answer all screening questions");
       }
@@ -64,7 +65,11 @@ export function JobApplication({ job }: { job: JobListing }) {
       const base64CV = await fileToBase64(file);
 
       // Create email template
-      const questions = job.Questions.split("\r\n").filter(Boolean);
+      const questions = [
+        "What is your Name?",
+        "What is Your Email?",
+        ...job.Questions.split("\r\n").filter(Boolean),
+      ];
       const emailTemplate = `
 <div style="max-width: 100%; background: #0a0f1f; font-family: 'Inter', sans-serif; color: #ffffff;">
   <!-- Header -->
@@ -225,7 +230,11 @@ export function JobApplication({ job }: { job: JobListing }) {
     }
   };
 
-  const questions = job.Questions.split("\r\n").filter(Boolean);
+  const questions = [
+    "What is your Name?",
+    "What is Your Email?",
+    ...job.Questions.split("\r\n").filter(Boolean),
+  ];
 
   return (
     <Card className="mt-8 bg-white text-black">
