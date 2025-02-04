@@ -115,7 +115,7 @@ export default function GoogleReviewsCarousel() {
               variants={wordPullAnimation}
               custom={0}
             >
-              Industries
+              Google
             </motion.span>
             <motion.span
               className="text-white relative mr-2"
@@ -124,16 +124,7 @@ export default function GoogleReviewsCarousel() {
               variants={wordPullAnimation}
               custom={1}
             >
-              We
-            </motion.span>
-            <motion.span
-              className="text-white"
-              initial="hidden"
-              animate="visible"
-              variants={wordPullAnimation}
-              custom={2}
-            >
-              Serve
+              Reviews
             </motion.span>
           </h1>
         </div>
