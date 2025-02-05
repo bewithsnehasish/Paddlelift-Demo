@@ -146,7 +146,7 @@ export default function JobList({
   return (
     <div className="relative min-h-screen mt-32">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-sm">
+      <div className="sticky top-0 z-10 bg-[#09090B] backdrop-blur-sm">
         <div className="mx-auto max-w-6xl space-y-6 p-4 sm:p-6">
           <div className="flex flex-col items-start justify-between gap-4 border-b border-gray-800 pb-4 sm:flex-row">
             {/* Title and Filter Button */}
