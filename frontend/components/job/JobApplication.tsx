@@ -53,7 +53,7 @@ export function JobApplication({ job }: { job: JobListing }) {
       if (!file) throw new Error("Please attach your CV");
       if (
         answers.length !==
-        job.Questions.split("\r\n").filter(Boolean).length + 2 // +2 for hardcoded questions
+        job.Questions.split(",").filter(Boolean).length + 2
       ) {
         throw new Error("Please answer all screening questions");
       }
@@ -68,7 +68,7 @@ export function JobApplication({ job }: { job: JobListing }) {
       const questions = [
         "What is your Name?",
         "What is Your Email?",
-        ...job.Questions.split("\r\n").filter(Boolean),
+        ...job.Questions.split(",").filter(Boolean),
       ];
       const emailTemplate = `
 <div style="max-width: 100%; background: #0a0f1f; font-family: 'Inter', sans-serif; color: #ffffff;">
@@ -233,7 +233,7 @@ export function JobApplication({ job }: { job: JobListing }) {
   const questions = [
     "What is your Name?",
     "What is Your Email?",
-    ...job.Questions.split("\r\n").filter(Boolean),
+    ...job.Questions.split(",").filter(Boolean),
   ];
 
   return (

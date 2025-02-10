@@ -49,7 +49,6 @@ export default function Home() {
         <Navbar />
         <NewHeroSection />
         {/*
-
           <HeroSection />
           <GrowthTimeline />
           <ApproachSection />
