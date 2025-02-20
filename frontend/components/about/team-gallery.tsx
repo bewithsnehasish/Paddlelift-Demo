@@ -205,10 +205,6 @@ export function TeamGallery() {
           </motion.div>
         </div>
       </motion.div>
-
-      {/* Gradient Overlays */}
-      <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#09090B] to-transparent pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-[#09090B] to-transparent pointer-events-none" />
     </section>
   );
 }
