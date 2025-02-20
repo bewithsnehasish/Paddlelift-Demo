@@ -94,6 +94,7 @@ export default function JobList({
         );
 
       const matchesYearsOfExperience =
+        Array.isArray(job.Years_of_Experience_Required) &&
         (filters.yearsOfExperience.min === 0 ||
           job.Years_of_Experience_Required[0] >=
             filters.yearsOfExperience.min) &&

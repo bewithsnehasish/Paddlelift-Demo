@@ -28,6 +28,17 @@ async function JobDetails({ params }: PageProps) {
     ? job.Years_of_Experience_Required.join("-")
     : job.Years_of_Experience_Required;
 
+  // Ensure Educational_Qualifications is treated as an array
+  const educationalQualifications = Array.isArray(
+    job.Educational_Qualifications,
+  )
+    ? job.Educational_Qualifications.join(", ")
+    : job.Educational_Qualifications;
+
+  const certifications = Array.isArray(job.Certifications)
+    ? job.Certifications.join(", ")
+    : job.Certifications;
+
   return (
     <div className="min-h-screen bg-[#09090B]">
       <Navbar />
@@ -102,15 +113,17 @@ async function JobDetails({ params }: PageProps) {
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                       <div className="flex flex-wrap gap-2">
-                        {job.Required_skills?.map((skill) => (
-                          <Badge
-                            key={skill}
-                            variant="outline"
-                            className="border-blue-200 text-blue-800"
-                          >
-                            {skill}
-                          </Badge>
-                        ))}
+                        {job.Required_skills?.map(
+                          (skill: string, index: number) => (
+                            <Badge
+                              key={index}
+                              variant="outline"
+                              className="border-blue-200 text-blue-800"
+                            >
+                              {skill}
+                            </Badge>
+                          ),
+                        )}
                       </div>
                     </dd>
                   </div>
@@ -121,23 +134,23 @@ async function JobDetails({ params }: PageProps) {
                   Requirements
                 </h3>
                 <dl className="mt-2 divide-y divide-gray-100">
-                  {job.Educational_Qualifications?.length > 0 && (
+                  {educationalQualifications && (
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                       <dt className="text-sm font-medium leading-6 text-gray-900">
                         Education
                       </dt>
                       <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        {job.Educational_Qualifications.join(", ")}
+                        {educationalQualifications}
                       </dd>
                     </div>
                   )}
-                  {job.Certifications?.length > 0 && (
+                  {certifications && (
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                       <dt className="text-sm font-medium leading-6 text-gray-900">
                         Certifications
                       </dt>
                       <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        {job.Certifications.join(", ")}
+                        {certifications}
                       </dd>
                     </div>
                   )}
@@ -187,13 +200,13 @@ async function JobDetails({ params }: PageProps) {
                   dangerouslySetInnerHTML={{ __html: job.Job_Description }}
                 />
               </div>
-              {job.Questions?.length > 0 && (
+              {Array.isArray(job.Questions) && job.Questions.length > 0 && (
                 <div className="mt-6">
                   <h3 className="text-lg font-medium leading-6 text-gray-900">
                     Application Questions
                   </h3>
                   <ul className="mt-2 space-y-2">
-                    {job.Questions.map((question, index) => (
+                    {job.Questions.map((question: string, index: number) => (
                       <li key={index} className="text-sm text-gray-700">
                         {question}
                       </li>
