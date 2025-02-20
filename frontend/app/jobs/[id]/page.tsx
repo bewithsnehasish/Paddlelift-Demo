@@ -23,6 +23,11 @@ async function JobDetails({ params }: PageProps) {
     notFound();
   }
 
+  // Ensure Years_of_Experience_Required is treated as an array
+  const experienceRange = Array.isArray(job.Years_of_Experience_Required)
+    ? job.Years_of_Experience_Required.join("-")
+    : job.Years_of_Experience_Required;
+
   return (
     <div className="min-h-screen bg-[#09090B]">
       <Navbar />
@@ -80,8 +85,7 @@ async function JobDetails({ params }: PageProps) {
                       Experience
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {job.Experience_level} •{" "}
-                      {job.Years_of_Experience_Required?.join("-")} years
+                      {job.Experience_level} • {experienceRange} years
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
