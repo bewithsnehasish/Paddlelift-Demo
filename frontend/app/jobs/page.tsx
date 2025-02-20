@@ -9,10 +9,16 @@ export default async function HomePage() {
   const { job_listings } = await getJobs();
 
   return (
-    <div className="min-h-screen bg-[#09090B]">
+    <div className="min-h-screen bg-[#09090B] text-white flex flex-col">
+      <Navbar />
       <Suspense fallback={<JobListSkeleton />}>
-        <Navbar />
-        <JobList initialJobs={job_listings} />
+        {job_listings.length > 0 ? (
+          <JobList initialJobs={job_listings} />
+        ) : (
+          <div className="flex flex-grow items-center justify-center text-xl font-semibold">
+            No Jobs are listed Please Checkback after sometime.
+          </div>
+        )}
       </Suspense>
     </div>
   );
