@@ -51,10 +51,7 @@ export function JobApplication({ job }: { job: JobListing }) {
     try {
       // Validate form inputs
       if (!file) throw new Error("Please attach your CV");
-      if (
-        answers.length !==
-        job.Questions.split(",").filter(Boolean).length + 2
-      ) {
+      if (answers.length !== (job.Questions?.length || 0) + 2) {
         throw new Error("Please answer all screening questions");
       }
       if (answers.some((answer) => !answer.trim())) {
@@ -68,7 +65,7 @@ export function JobApplication({ job }: { job: JobListing }) {
       const questions = [
         "What is your Name?",
         "What is Your Email?",
-        ...job.Questions.split(",").filter(Boolean),
+        ...(job.Questions || []),
       ];
       const emailTemplate = `
 <div style="max-width: 100%; background: #0a0f1f; font-family: 'Inter', sans-serif; color: #ffffff;">
@@ -118,35 +115,23 @@ export function JobApplication({ job }: { job: JobListing }) {
       </h2>
       
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-        <!-- Detail Card 1 -->
-        <div style="background: #1a1f38; padding: 20px; border-radius: 8px; border: 1px solid #242942;">
-          <div style="color: #8c94b0; margin-bottom: 8px;">Position</div>
-          <div style="color: #ffffff; font-size: 1.1em;">${job.Title}</div>
-        </div>
-
-        <!-- Detail Card 2 -->
-        <div style="background: #1a1f38; padding: 20px; border-radius: 8px; border: 1px solid #242942;">
-          <div style="color: #8c94b0; margin-bottom: 8px;">Experience Level</div>
-          <div style="color: #ffffff; font-size: 1.1em;">${job.Experience_level}</div>
-        </div>
-
-        <!-- Detail Card 3 -->
-        <div style="background: #1a1f38; padding: 20px; border-radius: 8px; border: 1px solid #242942;">
-          <div style="color: #8c94b0; margin-bottom: 8px;">Employment Type</div>
-          <div style="color: #ffffff; font-size: 1.1em;">${job.Employment_type}</div>
-        </div>
-
-        <!-- Detail Card 4 -->
-        <div style="background: #1a1f38; padding: 20px; border-radius: 8px; border: 1px solid #242942;">
-          <div style="color: #8c94b0; margin-bottom: 8px;">Work Mode</div>
-          <div style="color: #ffffff; font-size: 1.1em;">${job.Work_Mode}</div>
-        </div>
-
-        <!-- Detail Card 5 -->
-        <div style="background: #1a1f38; padding: 20px; border-radius: 8px; border: 1px solid #242942;">
-          <div style="color: #8c94b0; margin-bottom: 8px;">Location</div>
-          <div style="color: #ffffff; font-size: 1.1em;">${job.Job_Location}</div>
-        </div>
+        <!-- Detail Cards -->
+        ${Object.entries({
+          Position: job.Title,
+          "Experience Level": job.Experience_level,
+          "Employment Type": job.Employment_type,
+          "Work Mode": job.Work_Mode,
+          Location: job.Job_Location,
+        })
+          .map(
+            ([label, value]) => `
+          <div style="background: #1a1f38; padding: 20px; border-radius: 8px; border: 1px solid #242942;">
+            <div style="color: #8c94b0; margin-bottom: 8px;">${label}</div>
+            <div style="color: #ffffff; font-size: 1.1em;">${value}</div>
+          </div>
+        `,
+          )
+          .join("")}
 
         <!-- CV Attachment Card -->
         <div style="background: #1a1f38; padding: 20px; border-radius: 8px; border: 1px solid #242942;">
@@ -233,7 +218,7 @@ export function JobApplication({ job }: { job: JobListing }) {
   const questions = [
     "What is your Name?",
     "What is Your Email?",
-    ...job.Questions.split(",").filter(Boolean),
+    ...(job.Questions || []),
   ];
 
   return (

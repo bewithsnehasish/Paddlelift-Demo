@@ -9,7 +9,6 @@ import { JobApplication } from "@/components/job/JobApplication";
 import { JobDetailsSkeleton } from "@/components/job/job-details-skeleton";
 import Navbar from "@/components/Navbar";
 
-// Define proper types for the params
 interface PageProps {
   params: Promise<{ id: string }>;
 }
@@ -45,19 +44,25 @@ async function JobDetails({ params }: PageProps) {
                   </h2>
                   <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                     <div className="mt-2 flex items-center text-sm text-gray-500">
-                      <span className="font-medium">{job.Client_Name}</span>
-                      <span className="mx-2">•</span>
+                      {job.Client_Name && (
+                        <>
+                          <span className="font-medium">{job.Client_Name}</span>
+                          <span className="mx-2">•</span>
+                        </>
+                      )}
                       <span>{job.Client_Industry}</span>
                     </div>
                   </div>
                 </div>
                 <div className="mt-4 flex md:ml-4 md:mt-0">
-                  <Badge
-                    variant="secondary"
-                    className="ml-2 bg-blue-100 text-blue-800"
-                  >
-                    ₹{job.Salary_Range}
-                  </Badge>
+                  {job.Salary_Range?.length === 2 && (
+                    <Badge
+                      variant="secondary"
+                      className="ml-2 bg-blue-100 text-blue-800"
+                    >
+                      ₹{job.Salary_Range[0]} - ₹{job.Salary_Range[1]}
+                    </Badge>
+                  )}
                 </div>
               </div>
               <div className="mt-6 border-t border-gray-100">
@@ -76,7 +81,7 @@ async function JobDetails({ params }: PageProps) {
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                       {job.Experience_level} •{" "}
-                      {job.Years_of_Experience_Required} years
+                      {job.Years_of_Experience_Required?.join("-")} years
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -93,7 +98,7 @@ async function JobDetails({ params }: PageProps) {
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                       <div className="flex flex-wrap gap-2">
-                        {job.Required_skills.map((skill) => (
+                        {job.Required_skills?.map((skill) => (
                           <Badge
                             key={skill}
                             variant="outline"
@@ -112,22 +117,26 @@ async function JobDetails({ params }: PageProps) {
                   Requirements
                 </h3>
                 <dl className="mt-2 divide-y divide-gray-100">
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Education
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {job.Educational_Qualifications}
-                    </dd>
-                  </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Certifications
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {job.Certifications}
-                    </dd>
-                  </div>
+                  {job.Educational_Qualifications?.length > 0 && (
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                      <dt className="text-sm font-medium leading-6 text-gray-900">
+                        Education
+                      </dt>
+                      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        {job.Educational_Qualifications.join(", ")}
+                      </dd>
+                    </div>
+                  )}
+                  {job.Certifications?.length > 0 && (
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                      <dt className="text-sm font-medium leading-6 text-gray-900">
+                        Certifications
+                      </dt>
+                      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        {job.Certifications.join(", ")}
+                      </dd>
+                    </div>
+                  )}
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">
                       Industry
@@ -143,34 +152,51 @@ async function JobDetails({ params }: PageProps) {
                   Benefits
                 </h3>
                 <dl className="mt-2 divide-y divide-gray-100">
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Other Benefits
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {job.Other_Benefits}
-                    </dd>
-                  </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Number of Openings
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {job.Number_of_Openings}
-                    </dd>
-                  </div>
-
-                  <div className="mt-6">
-                    <h3 className="text-lg font-medium leading-6 text-gray-900">
-                      Job Description
-                    </h3>
-                    <div
-                      className="mt-2 prose prose-sm text-gray-500"
-                      dangerouslySetInnerHTML={{ __html: job.Job_Description }}
-                    />
-                  </div>
+                  {job.Other_Benefits && (
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                      <dt className="text-sm font-medium leading-6 text-gray-900">
+                        Other Benefits
+                      </dt>
+                      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        {job.Other_Benefits}
+                      </dd>
+                    </div>
+                  )}
+                  {typeof job.Number_of_Openings !== "undefined" && (
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                      <dt className="text-sm font-medium leading-6 text-gray-900">
+                        Open Positions
+                      </dt>
+                      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        {job.Number_of_Openings}
+                      </dd>
+                    </div>
+                  )}
                 </dl>
               </div>
+              <div className="mt-6">
+                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  Job Description
+                </h3>
+                <div
+                  className="mt-2 prose prose-sm text-gray-500"
+                  dangerouslySetInnerHTML={{ __html: job.Job_Description }}
+                />
+              </div>
+              {job.Questions?.length > 0 && (
+                <div className="mt-6">
+                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                    Application Questions
+                  </h3>
+                  <ul className="mt-2 space-y-2">
+                    {job.Questions.map((question, index) => (
+                      <li key={index} className="text-sm text-gray-700">
+                        {question}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
           <JobApplication job={job} />
@@ -180,7 +206,6 @@ async function JobDetails({ params }: PageProps) {
   );
 }
 
-// Use the same PageProps type for the main page component
 export default function JobPage({ params }: PageProps) {
   return (
     <Suspense fallback={<JobDetailsSkeleton />}>

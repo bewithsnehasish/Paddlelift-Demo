@@ -30,29 +30,29 @@ export function ManagementCard({
 
   return (
     <Card
-      className="relative overflow-hidden group cursor-pointer bg-[#09090B] w-[280px] shadow-lg transition-transform duration-300 hover:scale-[1.02]"
+      className="relative overflow-hidden group cursor-pointer bg-[#09090B] max-w-sm w-full shadow-lg transition-transform duration-300 hover:scale-[1.02]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <CardContent className="p-0">
-        <div className="relative w-full h-[320px]">
+        <div className="relative w-full h-96 sm:h-96 md:h-[400px]">
           <Image
             src={photo}
             alt={name}
             fill
             className="object-cover"
-            sizes="(max-width: 280px) 100vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             quality={90}
             priority
           />
         </div>
-        <div className="p-4 space-y-1">
+        <div className="p-4 space-y-1 sm:text-left">
           <h3 className="text-lg font-semibold text-white tracking-wide">
             {name}
           </h3>
           <p className="text-sm text-gray-300 font-medium">{title}</p>
           <p className="text-sm text-gray-300 font-medium">{position}</p>
-          <div className="flex justify-end gap-4 mt-2">
+          <div className="flex justify-end sm:justify-end gap-4 mt-2">
             {socials.linkedin && (
               <a
                 href={socials.linkedin}
@@ -97,7 +97,7 @@ export function ManagementCard({
                 </p>
               </div>
               <div className="p-4 bg-black/40">
-                <div className="flex justify-end gap-4">
+                <div className="flex justify-end sm:justify-end gap-4">
                   {socials.linkedin && (
                     <a
                       href={socials.linkedin}

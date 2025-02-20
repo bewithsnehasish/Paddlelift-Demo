@@ -9,50 +9,48 @@ import {
   UserCheck,
 } from "lucide-react";
 import { useRef } from "react";
-import Image from "next/image";
-import { useInView } from "react-intersection-observer";
 
 const steps = [
   {
-    id: 5,
-    title: "Onboard",
-    icon: <UserCheck className="w-6 h-6 sm:w-7 sm:h-7" />,
-    description: "Candidate Engagements / Client Feedbacks",
-    color: "from-[#FF1744] via-[#FF4081] to-[#D500F9]",
-    glowColor: "group-hover:shadow-[#FF1744]/50",
+    id: 1,
+    title: "Consult",
+    icon: <ClipboardList className="w-8 h-8 sm:w-10 sm:h-10" />,
+    description: "Industry Benchmarking / Market Mapping / Budgeting",
+    color: "from-[#FF0080] via-[#FF00FF] to-[#8A2BE2]",
+    glowColor: "group-hover:shadow-[#FF0080]/50",
+  },
+  {
+    id: 2,
+    title: "Access",
+    icon: <Users className="w-8 h-8 sm:w-10 sm:h-10" />,
+    description: "Recruitment Plan / Search Strategy / Sourcing & Head-hunting",
+    color: "from-[#00FF00] via-[#00FFFF] to-[#0080FF]",
+    glowColor: "group-hover:shadow-[#00FF00]/50",
+  },
+  {
+    id: 3,
+    title: "Assess",
+    icon: <FileSearch className="w-8 h-8 sm:w-10 sm:h-10" />,
+    description: "Assessment Development / Interview Service",
+    color: "from-[#FF3D00] via-[#FF9100] to-[#FFEA00]",
+    glowColor: "group-hover:shadow-[#FF3D00]/50",
   },
   {
     id: 4,
     title: "Select",
-    icon: <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7" />,
+    icon: <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10" />,
     description:
       "Candidate & Stakeholder Management / Decisioning & Negotiation",
     color: "from-[#7C4DFF] via-[#536DFE] to-[#00B0FF]",
     glowColor: "group-hover:shadow-[#7C4DFF]/50",
   },
   {
-    id: 3,
-    title: "Assess",
-    icon: <FileSearch className="w-6 h-6 sm:w-7 sm:h-7" />,
-    description: "Assessment Development / Interview Service",
-    color: "from-[#FF3D00] via-[#FF9100] to-[#FFEA00]",
-    glowColor: "group-hover:shadow-[#FF3D00]/50",
-  },
-  {
-    id: 2,
-    title: "Access",
-    icon: <Users className="w-6 h-6 sm:w-7 sm:h-7" />,
-    description: "Recruitment Plan / Search Strategy / Sourcing & Head-hunting",
-    color: "from-[#00FF00] via-[#00FFFF] to-[#0080FF]",
-    glowColor: "group-hover:shadow-[#00FF00]/50",
-  },
-  {
-    id: 1,
-    title: "Consult",
-    icon: <ClipboardList className="w-6 h-6 sm:w-7 sm:h-7" />,
-    description: "Industry Benchmarking / Market Mapping / Budgeting",
-    color: "from-[#FF0080] via-[#FF00FF] to-[#8A2BE2]",
-    glowColor: "group-hover:shadow-[#FF0080]/50",
+    id: 5,
+    title: "Onboard",
+    icon: <UserCheck className="w-8 h-8 sm:w-10 sm:h-10" />,
+    description: "Candidate Engagements / Client Feedbacks",
+    color: "from-[#FF1744] via-[#FF4081] to-[#D500F9]",
+    glowColor: "group-hover:shadow-[#FF1744]/50",
   },
 ];
 
@@ -91,15 +89,12 @@ export default function SuccessApproach() {
     },
   };
 
-  // Intersection Observer for Lazy Loading
-  const { ref: imageRef, inView: imageInView } = useInView({
-    triggerOnce: true, // Load the image only once
-    threshold: 0.1, // Trigger when 10% of the element is visible
-  });
-
   return (
     <main className="min-h-screen bg-[#09090B] text-white overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 py-12 sm:py-16" ref={containerRef}>
+      <div
+        className="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-16"
+        ref={containerRef}
+      >
         <motion.div
           className="mb-8 sm:mb-12"
           initial="hidden"
@@ -114,135 +109,118 @@ export default function SuccessApproach() {
             A comprehensive five-step methodology for exceptional results
           </p>
         </motion.div>
-        <div className="relative flex gap-6 md:gap-8">
-          {/* Lazy Loaded Image */}
-          <div
-            className="hidden md:block w-1/4 sticky top-4 h-[800px]"
-            ref={imageRef}
-          >
-            {imageInView && (
-              <Image
-                src="/Arrow.gif"
-                alt="Animated arrow"
-                width={250}
-                height={700}
-                className="w-full h-full object-contain"
-              />
-            )}
-          </div>
-          <div className="w-full md:w-3/4">
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-b from-[#FF00FF]/10 via-[#00FFFF]/5 to-[#FF1744]/10 blur-3xl -z-10"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={backgroundVariants}
-            />
-            {steps.map((step, index) => {
-              const yOffset = yOffsets[index];
-              return (
-                <motion.div
-                  key={step.id}
-                  style={{ y: yOffset }}
-                  className={`group relative ${
-                    index % 2 === 0 ? "ml-0" : "ml-auto"
-                  } mb-4 sm:mb-6 w-full sm:w-[90%]`}
+
+        <div className="relative">
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-b from-[#FF00FF]/10 via-[#00FFFF]/5 to-[#FF1744]/10 blur-3xl -z-10"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={backgroundVariants}
+          />
+          {steps.map((step, index) => {
+            const yOffset = yOffsets[index];
+            const xInitial = index % 2 === 0 ? 100 : -100;
+
+            return (
+              <motion.div
+                key={step.id}
+                style={{ y: yOffset }}
+                className="mb-6 sm:mb-8"
+              >
+                <MotionCard
+                  initial={{ opacity: 0, x: xInitial }}
+                  whileInView={{
+                    opacity: 1,
+                    x: 0,
+                    transition: {
+                      duration: 0.8,
+                      delay: index * 0.2,
+                      ease: "easeOut",
+                    },
+                  }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  className={`
+                    group relative overflow-hidden border-0
+                    bg-gradient-to-r ${step.color}
+                    transition-all duration-300
+                    hover:translate-y-[-0.25rem]
+                    hover:shadow-xl ${step.glowColor}
+                    hover:scale-[1.01]
+                  `}
                 >
-                  <MotionCard
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                    whileInView={{
-                      opacity: 1,
-                      x: 0,
-                      transition: {
-                        duration: 0.8,
-                        delay: index * 0.2,
-                        ease: "easeOut",
-                      },
-                    }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    className={`
-                      relative overflow-hidden border-0
-                      bg-gradient-to-r ${step.color}
-                      backdrop-blur-xl bg-opacity-20
-                      transition-all duration-300
-                      group-hover:translate-y-[-0.25rem]
-                      group-hover:shadow-xl ${step.glowColor}
-                      group-hover:scale-[1.01]
-                    `}
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-black/40"
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      transition={{ duration: 0.5, delay: index * 0.2 }}
-                    />
-                    <div className="relative p-4 sm:p-6">
-                      <div className="flex items-center gap-4 sm:gap-5">
-                        <motion.div
-                          className="flex-shrink-0"
-                          initial={{ scale: 0 }}
-                          whileInView={{ scale: 1 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 200,
-                            damping: 20,
-                            delay: index * 0.2 + 0.3,
-                          }}
-                        >
-                          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm border border-white/30 group-hover:scale-105 transition-transform duration-300 group-hover:border-white/50">
-                            {step.icon}
-                          </div>
-                        </motion.div>
-                        <motion.div
-                          className="flex-grow"
-                          initial={{ opacity: 0, x: 20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{
-                            duration: 0.5,
-                            delay: index * 0.2 + 0.4,
-                          }}
-                        >
-                          <div className="flex items-center gap-2 sm:gap-3 mb-2">
-                            <span className="text-xs sm:text-sm font-bold px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 group-hover:border-white/50 group-hover:bg-white/30 transition-all duration-300">
-                              Step {step.id}
-                            </span>
-                            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white group-hover:scale-[1.02] transition-transform duration-300">
-                              {step.title}
-                            </h2>
-                          </div>
-                          <p className="text-white text-sm sm:text-base font-medium tracking-wide">
-                            {step.description}
-                          </p>
-                        </motion.div>
-                      </div>
+                  <motion.div
+                    className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
+                  />
+                  <div className="relative p-6 sm:p-8 lg:p-10">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8">
+                      <motion.div
+                        className="flex-shrink-0"
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 20,
+                          delay: index * 0.2 + 0.3,
+                        }}
+                      >
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-sm border border-white/30 group-hover:scale-105 transition-transform duration-300 group-hover:border-white/50">
+                          {step.icon}
+                        </div>
+                      </motion.div>
+                      <motion.div
+                        className="flex-grow"
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{
+                          duration: 0.5,
+                          delay: index * 0.2 + 0.4,
+                        }}
+                      >
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-3">
+                          <span className="text-sm sm:text-base font-bold px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 group-hover:border-white/50 group-hover:bg-white/30 transition-all duration-300">
+                            Step {step.id}
+                          </span>
+                          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white group-hover:scale-[1.02] transition-transform duration-300">
+                            {step.title}
+                          </h2>
+                        </div>
+                        <p className="text-white/90 text-lg sm:text-xl font-medium tracking-wide max-w-3xl">
+                          {step.description}
+                        </p>
+                      </motion.div>
                     </div>
-                    <motion.div
-                      className="absolute top-0 right-0 w-20 h-20 sm:w-28 sm:h-28 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-white/20 transition-all duration-300"
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 20,
-                        delay: index * 0.2 + 0.5,
-                      }}
-                    />
-                    <motion.div
-                      className="absolute bottom-0 left-0 w-20 h-20 sm:w-28 sm:h-28 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2 group-hover:bg-white/20 transition-all duration-300"
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 20,
-                        delay: index * 0.2 + 0.6,
-                      }}
-                    />
-                  </MotionCard>
-                </motion.div>
-              );
-            })}
-          </div>
+                  </div>
+                  <motion.div
+                    className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-white/20 transition-all duration-300"
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 20,
+                      delay: index * 0.2 + 0.5,
+                    }}
+                  />
+                  <motion.div
+                    className="absolute bottom-0 left-0 w-32 h-32 sm:w-40 sm:h-40 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2 group-hover:bg-white/20 transition-all duration-300"
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 20,
+                      delay: index * 0.2 + 0.6,
+                    }}
+                  />
+                </MotionCard>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </main>

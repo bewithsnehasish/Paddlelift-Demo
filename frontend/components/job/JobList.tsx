@@ -52,11 +52,11 @@ export default function JobList({
     const filtered = jobs.filter((job) => {
       const matchesSalary =
         selectedSalaryRange === "all ranges" ||
-        (Number.parseInt(job.Salary_Range) >=
+        (Number.parseInt(job.Salary_Range[0]) >=
           salaryRanges.find(
             (range) => range.label.toLowerCase() === selectedSalaryRange,
           )!.min &&
-          Number.parseInt(job.Salary_Range) <=
+          Number.parseInt(job.Salary_Range[1]) <=
             salaryRanges.find(
               (range) => range.label.toLowerCase() === selectedSalaryRange,
             )!.max);
@@ -95,9 +95,10 @@ export default function JobList({
 
       const matchesYearsOfExperience =
         (filters.yearsOfExperience.min === 0 ||
-          job.Years_of_Experience_Required >= filters.yearsOfExperience.min) &&
+          job.Years_of_Experience_Required[0] >=
+            filters.yearsOfExperience.min) &&
         (filters.yearsOfExperience.max === 0 ||
-          job.Years_of_Experience_Required <= filters.yearsOfExperience.max);
+          job.Years_of_Experience_Required[1] <= filters.yearsOfExperience.max);
 
       const matchesIndustry =
         !filters.industry ||
@@ -202,12 +203,6 @@ export default function JobList({
                     <p className="text-gray-600">{job.Client_Name}</p>
                   </div>
                   <div className="text-right">
-                    <Badge
-                      variant="secondary"
-                      className="mb-2 bg-blue-100 text-blue-800"
-                    >
-                      ₹{job.Salary_Range}
-                    </Badge>
                     <div className="text-sm text-gray-600">
                       {job.Employment_type}
                     </div>
@@ -225,6 +220,13 @@ export default function JobList({
                     </Badge>
                   ))}
                 </div>
+
+                <Badge
+                  variant="secondary"
+                  className="mb-2 bg-blue-100 text-blue-800"
+                >
+                  ₹{job.Salary_Range[0]} - ₹{job.Salary_Range[1]}
+                </Badge>
 
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600">
                   <div className="flex items-center gap-2">

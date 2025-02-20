@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Button } from "./ui/button";
 
 const Navbar = () => {
@@ -16,6 +16,7 @@ const Navbar = () => {
     null,
   );
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleScroll = useCallback(() => {
     const currentScrollY = window.scrollY;
@@ -145,7 +146,11 @@ const Navbar = () => {
                     <Link
                       key={link.path}
                       href={link.path}
-                      className="flex items-center justify-center text-lg font-bold leading-[110%] px-4 py-2 rounded-md hover:bg-neutral-800 hover:text-white/80 text-white hover:shadow-[0px_1px_0px_0px_#FFFFFF20_inset] transition duration-200"
+                      className={`flex items-center justify-center text-lg font-bold leading-[110%] px-4 py-2 rounded-md hover:bg-neutral-800 hover:text-white/80 text-white hover:shadow-[0px_1px_0px_0px_#FFFFFF20_inset] transition duration-200 ${
+                        pathname === link.path
+                          ? "bg-neutral-800 text-white/80 shadow-[0px_1px_0px_0px_#FFFFFF20_inset]"
+                          : ""
+                      }`}
                     >
                       {link.name}
                     </Link>
@@ -230,7 +235,7 @@ const Navbar = () => {
                 className="h-8 w-8"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M278.6 256l68.2-68.2c6.2-6.2 6.2-16.4 0-22.6-6.2-6.2-16.4-6.2-22.6 0L256 233.4l-68.2-68.2c-6.2-6.2-16.4-6.2-22.6 0-6.2 6.2-6.2 16.4 0 22.6L233.4 256l-68.2 68.2c-6.2 6.2-6.2 16.4 0 22.6 6.2 6.2 16.4 6.2 22.6 0L256 278.6l68.2 68.2c6.2 6.2 16.4 6.2 22.6 0 6.2-6.2 6.2-16.4 0-22.6L278.6 256z" />
+                <path d="M278.6 256l68.2-68.2c6.2-6.2 6.2-16.4 0-22.6-6.2-6.2-16.4-6.2-22.6 0L256 233.4l-68.2-68.2c-6.2-6.2-16.4-6.2-22.6 0-6.2 6.2-6.2 16.4 0 22.6L233.4 256l-68.2 68.2c-6.2 6.2-16.4 6.2 22.6 0 6.2-6.2 6.2-16.4 0-22.6L278.6 256z" />
               </svg>
             </button>
 
@@ -250,7 +255,7 @@ const Navbar = () => {
                 >
                   <button
                     onClick={() => handleNavigation(link.path)}
-                    className="text-white text-4xl font-bold"
+                    className={`text-white text-4xl font-bold ${pathname === link.path ? "underline" : ""}`}
                   >
                     {link.name}
                   </button>
