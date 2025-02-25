@@ -17,15 +17,14 @@ import { FilterDialog, type Filters } from "./filter-dialog";
 
 const salaryRanges = [
   { label: "All Ranges", min: 0, max: Number.POSITIVE_INFINITY },
-  { label: "0-30,000", min: 0, max: 30000 },
-  { label: "30,000-50,000", min: 30000, max: 50000 },
-  { label: "50,000-80,000", min: 50000, max: 80000 },
-  { label: "80,000+", min: 80000, max: Number.POSITIVE_INFINITY },
+  { label: "Above 0", min: 1, max: Number.POSITIVE_INFINITY },
+  { label: "Above 30,000", min: 30001, max: Number.POSITIVE_INFINITY },
+  { label: "Above 100,000", min: 100001, max: Number.POSITIVE_INFINITY },
+  { label: "Above 500,000", min: 500001, max: Number.POSITIVE_INFINITY },
 ];
 
 const initialFilters: Filters = {
   skills: [],
-  position: "",
   experienceLevel: "",
   employmentType: "",
   workMode: "",
@@ -45,21 +44,16 @@ export default function JobList({
   const [filters, setFilters] = useState<Filters>(initialFilters);
   const [uniqueIndustries, setUniqueIndustries] = useState<string[]>([]);
   const [uniqueSkills, setUniqueSkills] = useState<string[]>([]);
-  const [uniquePositions, setUniquePositions] = useState<string[]>([]);
   const [uniqueJobLocations, setUniqueJobLocations] = useState<string[]>([]);
 
   useEffect(() => {
     const filtered = jobs.filter((job) => {
       const matchesSalary =
         selectedSalaryRange === "all ranges" ||
-        (Number.parseInt(job.Salary_Range[0]) >=
+        Number(job.Salary_Range[1]) >=
           salaryRanges.find(
             (range) => range.label.toLowerCase() === selectedSalaryRange,
-          )!.min &&
-          Number.parseInt(job.Salary_Range[1]) <=
-            salaryRanges.find(
-              (range) => range.label.toLowerCase() === selectedSalaryRange,
-            )!.max);
+          )!.min;
 
       const matchesSkills =
         filters.skills.length === 0 ||
@@ -68,10 +62,6 @@ export default function JobList({
             jobSkill.toLowerCase().includes(skill.toLowerCase()),
           ),
         );
-
-      const matchesPosition =
-        !filters.position ||
-        job.Title.toLowerCase().includes(filters.position.toLowerCase());
 
       const matchesExperienceLevel =
         !filters.experienceLevel ||
@@ -93,11 +83,25 @@ export default function JobList({
           filters.jobLocation.toLowerCase(),
         );
 
-      const matchesYearsOfExperience =
-        Array.isArray(job.Years_of_Experience_Required) &&
-        job.Years_of_Experience_Required[0] >= filters.yearsOfExperience.min &&
-        (filters.yearsOfExperience.max === 0 ||
-          job.Years_of_Experience_Required[1] <= filters.yearsOfExperience.max);
+      const matchesYearsOfExperience = (() => {
+        if (
+          !Array.isArray(job.Years_of_Experience_Required) ||
+          job.Years_of_Experience_Required.length !== 2
+        ) {
+          return false;
+        }
+
+        const [jobMin, jobMax] = job.Years_of_Experience_Required;
+        const { min: filterMin, max: filterMax } = filters.yearsOfExperience;
+
+        const rule1 = filterMin === 0 || filterMin <= jobMax;
+
+        const rule2 = filterMin === 0 || filterMin >= jobMin;
+
+        const rule4 = filterMax !== 0 && filterMax >= jobMin;
+
+        return (rule1 && rule2) || rule4;
+      })();
 
       const matchesIndustry =
         !filters.industry ||
@@ -106,7 +110,6 @@ export default function JobList({
       return (
         matchesSalary &&
         matchesSkills &&
-        matchesPosition &&
         matchesExperienceLevel &&
         matchesEmploymentType &&
         matchesWorkMode &&
@@ -129,9 +132,6 @@ export default function JobList({
       new Set(jobs.flatMap((job) => job.Required_skills)),
     );
     setUniqueSkills(skills);
-
-    const positions = Array.from(new Set(jobs.map((job) => job.Title)));
-    setUniquePositions(positions);
 
     const jobLocations = Array.from(
       new Set(jobs.map((job) => job.Job_Location)),
@@ -157,7 +157,6 @@ export default function JobList({
                 currentFilters={filters}
                 industries={uniqueIndustries}
                 skills={uniqueSkills}
-                positions={uniquePositions}
                 jobLocations={uniqueJobLocations}
               />
             </div>

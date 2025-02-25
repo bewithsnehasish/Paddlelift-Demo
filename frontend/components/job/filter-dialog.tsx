@@ -25,12 +25,12 @@ const experienceLevels = [
   "Manager",
   "Leadership / CXO",
 ];
+
 const employmentTypes = ["Full-Time", "Part-Time", "Contract", "Freelance"];
 const workModes = ["On-site", "Remote", "Hybrid"];
 
 export interface Filters {
   skills: string[];
-  position: string;
   experienceLevel: string;
   employmentType: string;
   workMode: string;
@@ -44,7 +44,6 @@ interface FilterDialogProps {
   currentFilters: Filters;
   industries: string[];
   skills: string[];
-  positions: string[];
   jobLocations: string[];
 }
 
@@ -53,7 +52,6 @@ export function FilterDialog({
   currentFilters,
   industries,
   skills,
-  positions,
   jobLocations,
 }: FilterDialogProps) {
   const [filters, setFilters] = useState<Filters>(currentFilters);
@@ -71,9 +69,16 @@ export function FilterDialog({
 
   const handleYearsOfExperienceChange = (key: "min" | "max", value: string) => {
     const numValue = value === "" ? 0 : Number.parseInt(value, 10);
+    const updatedFilters = { ...filters.yearsOfExperience, [key]: numValue };
+
+    // Ensure max is not less than min
+    if (key === "min" && updatedFilters.max < numValue) {
+      updatedFilters.max = numValue;
+    }
+
     setFilters((prev) => ({
       ...prev,
-      yearsOfExperience: { ...prev.yearsOfExperience, [key]: numValue },
+      yearsOfExperience: updatedFilters,
     }));
   };
 
@@ -84,7 +89,6 @@ export function FilterDialog({
   const handleReset = () => {
     const resetFilters: Filters = {
       skills: [],
-      position: "",
       experienceLevel: "",
       employmentType: "",
       workMode: "",
@@ -95,6 +99,14 @@ export function FilterDialog({
     setFilters(resetFilters);
     onFilterApply(resetFilters);
   };
+
+  // Years of Experience Options
+  const yearsOptions = [0, 1, 2, 3, 5, 7, 10, 15, 20];
+
+  // Filter max options based on selected min
+  const maxOptions = yearsOptions.filter(
+    (year) => year >= filters.yearsOfExperience.min,
+  );
 
   return (
     <Dialog>
@@ -127,6 +139,7 @@ export function FilterDialog({
           <DialogTitle>Filter Jobs</DialogTitle>
         </DialogHeader>
         <div className="grid gap-6 py-4">
+          {/* Skills Filter */}
           <div className="grid gap-2">
             <Label>Skills</Label>
             <Select
@@ -157,6 +170,8 @@ export function FilterDialog({
               ))}
             </div>
           </div>
+
+          {/* Experience Level Filter */}
           <div className="grid gap-2">
             <Label>Experience Level</Label>
             <Select
@@ -177,6 +192,8 @@ export function FilterDialog({
               </SelectContent>
             </Select>
           </div>
+
+          {/* Employment Type Filter */}
           <div className="grid gap-2">
             <Label>Employment Type</Label>
             <Select
@@ -197,6 +214,8 @@ export function FilterDialog({
               </SelectContent>
             </Select>
           </div>
+
+          {/* Work Mode Filter */}
           <div className="grid gap-2">
             <Label>Work Mode</Label>
             <Select
@@ -215,6 +234,8 @@ export function FilterDialog({
               </SelectContent>
             </Select>
           </div>
+
+          {/* Job Location Filter */}
           <div className="grid gap-2">
             <Label>Job Location</Label>
             <Select
@@ -235,6 +256,8 @@ export function FilterDialog({
               </SelectContent>
             </Select>
           </div>
+
+          {/* Years of Experience Filter */}
           <div className="grid gap-2">
             <Label>Years of Experience</Label>
             <div className="flex gap-4">
@@ -248,7 +271,7 @@ export function FilterDialog({
                   <SelectValue placeholder="Min" />
                 </SelectTrigger>
                 <SelectContent>
-                  {[0, 1, 2, 3, 5, 7, 10, 15, 20].map((year) => (
+                  {yearsOptions.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
                       {year}+
                     </SelectItem>
@@ -265,7 +288,7 @@ export function FilterDialog({
                   <SelectValue placeholder="Max" />
                 </SelectTrigger>
                 <SelectContent>
-                  {[1, 2, 3, 5, 7, 10, 15, 20].map((year) => (
+                  {maxOptions.map((year) => (
                     <SelectItem key={year} value={year.toString()}>
                       {year}
                     </SelectItem>
@@ -274,6 +297,8 @@ export function FilterDialog({
               </Select>
             </div>
           </div>
+
+          {/* Industry Filter */}
           <div className="grid gap-2">
             <Label>Industry</Label>
             <Select
