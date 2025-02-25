@@ -39,7 +39,9 @@ export default function JobList({
   initialJobs: JobListing[];
 }) {
   const [jobs, setJobs] = useState<JobListing[]>(initialJobs);
-  const [filteredJobs, setFilteredJobs] = useState<JobListing[]>(initialJobs);
+  const [filteredJobs, setFilteredJobs] = useState<
+    { job: JobListing; originalIndex: number }[]
+  >(initialJobs.map((job, index) => ({ job, originalIndex: index })));
   const [selectedSalaryRange, setSelectedSalaryRange] = useState("all ranges");
   const [filters, setFilters] = useState<Filters>(initialFilters);
   const [uniqueIndustries, setUniqueIndustries] = useState<string[]>([]);
@@ -47,77 +49,79 @@ export default function JobList({
   const [uniqueJobLocations, setUniqueJobLocations] = useState<string[]>([]);
 
   useEffect(() => {
-    const filtered = jobs.filter((job) => {
-      const matchesSalary =
-        selectedSalaryRange === "all ranges" ||
-        Number(job.Salary_Range[1]) >=
-          salaryRanges.find(
-            (range) => range.label.toLowerCase() === selectedSalaryRange,
-          )!.min;
+    const filtered = jobs
+      .map((job, index) => ({ job, originalIndex: index })) // Store original indices
+      .filter(({ job }) => {
+        const matchesSalary =
+          selectedSalaryRange === "all ranges" ||
+          Number(job.Salary_Range[1]) >=
+            salaryRanges.find(
+              (range) => range.label.toLowerCase() === selectedSalaryRange,
+            )!.min;
 
-      const matchesSkills =
-        filters.skills.length === 0 ||
-        filters.skills.every((skill) =>
-          job.Required_skills.some((jobSkill) =>
-            jobSkill.toLowerCase().includes(skill.toLowerCase()),
-          ),
+        const matchesSkills =
+          filters.skills.length === 0 ||
+          filters.skills.every((skill) =>
+            job.Required_skills.some((jobSkill) =>
+              jobSkill.toLowerCase().includes(skill.toLowerCase()),
+            ),
+          );
+
+        const matchesExperienceLevel =
+          !filters.experienceLevel ||
+          job.Experience_level.toLowerCase() ===
+            filters.experienceLevel.toLowerCase();
+
+        const matchesEmploymentType =
+          !filters.employmentType ||
+          job.Employment_type.toLowerCase() ===
+            filters.employmentType.toLowerCase();
+
+        const matchesWorkMode =
+          !filters.workMode ||
+          job.Work_Mode.toLowerCase() === filters.workMode.toLowerCase();
+
+        const matchesJobLocation =
+          !filters.jobLocation ||
+          job.Job_Location.toLowerCase().includes(
+            filters.jobLocation.toLowerCase(),
+          );
+
+        const matchesYearsOfExperience = (() => {
+          if (
+            !Array.isArray(job.Years_of_Experience_Required) ||
+            job.Years_of_Experience_Required.length !== 2
+          ) {
+            return false;
+          }
+
+          const [jobMin, jobMax] = job.Years_of_Experience_Required;
+          const { min: filterMin, max: filterMax } = filters.yearsOfExperience;
+
+          const rule1 = filterMin === 0 || filterMin <= jobMax;
+
+          const rule2 = filterMin === 0 || filterMin >= jobMin;
+
+          const rule4 = filterMax !== 0 && filterMax >= jobMin;
+
+          return (rule1 && rule2) || rule4;
+        })();
+
+        const matchesIndustry =
+          !filters.industry ||
+          job.Client_Industry.toLowerCase() === filters.industry.toLowerCase();
+
+        return (
+          matchesSalary &&
+          matchesSkills &&
+          matchesExperienceLevel &&
+          matchesEmploymentType &&
+          matchesWorkMode &&
+          matchesJobLocation &&
+          matchesYearsOfExperience &&
+          matchesIndustry
         );
-
-      const matchesExperienceLevel =
-        !filters.experienceLevel ||
-        job.Experience_level.toLowerCase() ===
-          filters.experienceLevel.toLowerCase();
-
-      const matchesEmploymentType =
-        !filters.employmentType ||
-        job.Employment_type.toLowerCase() ===
-          filters.employmentType.toLowerCase();
-
-      const matchesWorkMode =
-        !filters.workMode ||
-        job.Work_Mode.toLowerCase() === filters.workMode.toLowerCase();
-
-      const matchesJobLocation =
-        !filters.jobLocation ||
-        job.Job_Location.toLowerCase().includes(
-          filters.jobLocation.toLowerCase(),
-        );
-
-      const matchesYearsOfExperience = (() => {
-        if (
-          !Array.isArray(job.Years_of_Experience_Required) ||
-          job.Years_of_Experience_Required.length !== 2
-        ) {
-          return false;
-        }
-
-        const [jobMin, jobMax] = job.Years_of_Experience_Required;
-        const { min: filterMin, max: filterMax } = filters.yearsOfExperience;
-
-        const rule1 = filterMin === 0 || filterMin <= jobMax;
-
-        const rule2 = filterMin === 0 || filterMin >= jobMin;
-
-        const rule4 = filterMax !== 0 && filterMax >= jobMin;
-
-        return (rule1 && rule2) || rule4;
-      })();
-
-      const matchesIndustry =
-        !filters.industry ||
-        job.Client_Industry.toLowerCase() === filters.industry.toLowerCase();
-
-      return (
-        matchesSalary &&
-        matchesSkills &&
-        matchesExperienceLevel &&
-        matchesEmploymentType &&
-        matchesWorkMode &&
-        matchesJobLocation &&
-        matchesYearsOfExperience &&
-        matchesIndustry
-      );
-    });
+      });
 
     setFilteredJobs(filtered);
   }, [jobs, selectedSalaryRange, filters]);
@@ -190,8 +194,8 @@ export default function JobList({
       {/* Job Listings */}
       <div className="mx-auto max-w-6xl space-y-4 p-6">
         {filteredJobs.length > 0 ? (
-          filteredJobs.map((job, index) => (
-            <Link key={index} href={`/jobs/${index}`}>
+          filteredJobs.map(({ job, originalIndex }) => (
+            <Link key={originalIndex} href={`/jobs/${originalIndex}`}>
               <Card className="bg-white transition-all hover:scale-[1.01] mb-4">
                 <div className="p-6">
                   <div className="flex flex-col md:flex-row items-start justify-between gap-4">
