@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import type { JobListing } from "@/lib/types";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export function JobApplication({ job }: { job: JobListing }) {
   const [answers, setAnswers] = useState<string[]>([]);
@@ -15,6 +16,7 @@ export function JobApplication({ job }: { job: JobListing }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const handleAnswerChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -185,7 +187,7 @@ export function JobApplication({ job }: { job: JobListing }) {
 
       // Show success toast
       toast.success("Application submitted successfully!", {
-        duration: 4000,
+        duration: 5000,
         position: "bottom-center",
         style: {
           background: "#4BB543",
@@ -197,6 +199,9 @@ export function JobApplication({ job }: { job: JobListing }) {
       setAnswers([]);
       setFile(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
+      setTimeout(() => {
+        router.push("/jobs");
+      }, 800);
     } catch (error) {
       console.error("Submission error:", error);
       const errorMessage =

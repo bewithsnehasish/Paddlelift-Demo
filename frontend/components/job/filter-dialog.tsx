@@ -158,24 +158,6 @@ export function FilterDialog({
             </div>
           </div>
           <div className="grid gap-2">
-            <Label>Position</Label>
-            <Select
-              value={filters.position}
-              onValueChange={(value) => handleFilterChange("position", value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select position" />
-              </SelectTrigger>
-              <SelectContent>
-                {positions.map((position) => (
-                  <SelectItem key={position} value={position}>
-                    {position}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid gap-2">
             <Label>Experience Level</Label>
             <Select
               value={filters.experienceLevel}
@@ -266,7 +248,7 @@ export function FilterDialog({
                   <SelectValue placeholder="Min" />
                 </SelectTrigger>
                 <SelectContent>
-                  {[0, 1, 2, 3, 5, 7, 10].map((year) => (
+                  {[0, 1, 2, 3, 5, 7, 10, 15, 20].map((year) => (
                     <SelectItem key={year} value={year.toString()}>
                       {year}+
                     </SelectItem>

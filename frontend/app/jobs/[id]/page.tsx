@@ -8,6 +8,7 @@ import { getJobs } from "@/lib/api";
 import { JobApplication } from "@/components/job/JobApplication";
 import { JobDetailsSkeleton } from "@/components/job/job-details-skeleton";
 import Navbar from "@/components/Navbar";
+import { SharePopup } from "@/components/job/SharePopup";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -55,9 +56,12 @@ async function JobDetails({ params }: PageProps) {
             <div className="px-4 py-5 sm:p-6">
               <div className="md:flex md:items-center md:justify-between">
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                    {job.Title}
-                  </h2>
+                  <div className="flex items-center gap-4">
+                    <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                      {job.Title}
+                    </h2>
+                    <SharePopup jobTitle={job.Title} jobId={id} />
+                  </div>
                   <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                     <div className="mt-2 flex items-center text-sm text-gray-500">
                       {job.Client_Name && (
@@ -164,10 +168,7 @@ async function JobDetails({ params }: PageProps) {
                   </div>
                 </dl>
               </div>
-              <div className="mt-6">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Benefits
-                </h3>
+              <div className="">
                 <dl className="mt-2 divide-y divide-gray-100">
                   {job.Other_Benefits && (
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

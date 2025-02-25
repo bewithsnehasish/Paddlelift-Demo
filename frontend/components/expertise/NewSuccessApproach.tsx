@@ -1,6 +1,6 @@
 "use client";
 import { Card } from "@/components/ui/card";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   ClipboardList,
   Users,
@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   UserCheck,
 } from "lucide-react";
-import { useRef } from "react";
 
 const steps = [
   {
@@ -57,50 +56,16 @@ const steps = [
 const MotionCard = motion(Card);
 
 export default function SuccessApproach() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const yOffsets = steps.map((_, index) => {
-    return useTransform(scrollYProgress, [0, 1], [50 * (index + 1), 0]);
-  });
-
-  const headerVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const backgroundVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 1.2,
-      },
-    },
-  };
-
   return (
     <main className="min-h-screen bg-[#09090B] text-white overflow-hidden">
-      <div
-        className="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-16"
-        ref={containerRef}
-      >
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        {/* Header */}
         <motion.div
           className="mb-8 sm:mb-12"
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          variants={headerVariants}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3 text-white max-w-4xl leading-[110%]">
             Our Success <span className="text-teal-400">Approach</span>
@@ -110,36 +75,35 @@ export default function SuccessApproach() {
           </p>
         </motion.div>
 
+        {/* Background Gradient */}
         <div className="relative">
           <motion.div
             className="absolute inset-0 bg-gradient-to-b from-[#FF00FF]/10 via-[#00FFFF]/5 to-[#FF1744]/10 blur-3xl -z-10"
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            variants={backgroundVariants}
+            transition={{ duration: 1.2 }}
           />
+
+          {/* Cards */}
           {steps.map((step, index) => {
-            const yOffset = yOffsets[index];
-            const xInitial = index % 2 === 0 ? 100 : -100;
+            // Alternate slide-in from right or left
+            const xInitial = index % 2 === 0 ? 300 : -300;
 
             return (
               <motion.div
                 key={step.id}
-                style={{ y: yOffset }}
+                initial={{ opacity: 0, x: xInitial }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.8,
+                  delay: index * 0.5,
+                  ease: "easeOut",
+                }}
+                viewport={{ once: true, margin: "-50px" }}
                 className="mb-6 sm:mb-8"
               >
                 <MotionCard
-                  initial={{ opacity: 0, x: xInitial }}
-                  whileInView={{
-                    opacity: 1,
-                    x: 0,
-                    transition: {
-                      duration: 0.8,
-                      delay: index * 0.2,
-                      ease: "easeOut",
-                    },
-                  }}
-                  viewport={{ once: true, margin: "-50px" }}
                   className={`
                     group relative overflow-hidden border-0
                     bg-gradient-to-r ${step.color}
@@ -149,14 +113,17 @@ export default function SuccessApproach() {
                     hover:scale-[1.01]
                   `}
                 >
+                  {/* Backdrop Blur Overlay */}
                   <motion.div
                     className="absolute inset-0 bg-black/40 backdrop-blur-sm"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.2 }}
+                    transition={{ duration: 1, delay: 0.2 }}
                   />
+
                   <div className="relative p-6 sm:p-8 lg:p-10">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8">
+                      {/* Icon Container */}
                       <motion.div
                         className="flex-shrink-0"
                         initial={{ scale: 0 }}
@@ -165,21 +132,20 @@ export default function SuccessApproach() {
                           type: "spring",
                           stiffness: 200,
                           damping: 20,
-                          delay: index * 0.2 + 0.3,
+                          delay: 0.4,
                         }}
                       >
                         <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-sm border border-white/30 group-hover:scale-105 transition-transform duration-300 group-hover:border-white/50">
                           {step.icon}
                         </div>
                       </motion.div>
+
+                      {/* Text Content */}
                       <motion.div
                         className="flex-grow"
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        transition={{
-                          duration: 0.5,
-                          delay: index * 0.2 + 0.4,
-                        }}
+                        transition={{ duration: 1, delay: 0.5 }}
                       >
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-3">
                           <span className="text-sm sm:text-base font-bold px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 group-hover:border-white/50 group-hover:bg-white/30 transition-all duration-300">
@@ -195,6 +161,8 @@ export default function SuccessApproach() {
                       </motion.div>
                     </div>
                   </div>
+
+                  {/* Decorative Circle Elements */}
                   <motion.div
                     className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-white/20 transition-all duration-300"
                     initial={{ scale: 0 }}
@@ -203,7 +171,7 @@ export default function SuccessApproach() {
                       type: "spring",
                       stiffness: 200,
                       damping: 20,
-                      delay: index * 0.2 + 0.5,
+                      delay: 0.6,
                     }}
                   />
                   <motion.div
@@ -214,7 +182,7 @@ export default function SuccessApproach() {
                       type: "spring",
                       stiffness: 200,
                       damping: 20,
-                      delay: index * 0.2 + 0.6,
+                      delay: 0.7,
                     }}
                   />
                 </MotionCard>

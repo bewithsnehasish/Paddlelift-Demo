@@ -95,9 +95,7 @@ export default function JobList({
 
       const matchesYearsOfExperience =
         Array.isArray(job.Years_of_Experience_Required) &&
-        (filters.yearsOfExperience.min === 0 ||
-          job.Years_of_Experience_Required[0] >=
-            filters.yearsOfExperience.min) &&
+        job.Years_of_Experience_Required[0] >= filters.yearsOfExperience.min &&
         (filters.yearsOfExperience.max === 0 ||
           job.Years_of_Experience_Required[1] <= filters.yearsOfExperience.max);
 
@@ -192,70 +190,76 @@ export default function JobList({
       </div>
       {/* Job Listings */}
       <div className="mx-auto max-w-6xl space-y-4 p-6">
-        {filteredJobs.map((job, index) => (
-          <Link key={index} href={`/jobs/${index}`}>
-            <Card className="bg-white transition-all hover:scale-[1.01] mb-4">
-              <div className="p-6">
-                <div className="flex flex-col md:flex-row items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900">
-                      {job.Title}
-                    </h3>
-                    <p className="text-gray-600">{job.Client_Name}</p>
+        {filteredJobs.length > 0 ? (
+          filteredJobs.map((job, index) => (
+            <Link key={index} href={`/jobs/${index}`}>
+              <Card className="bg-white transition-all hover:scale-[1.01] mb-4">
+                <div className="p-6">
+                  <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900">
+                        {job.Title}
+                      </h3>
+                      <p className="text-gray-600">{job.Client_Name}</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm text-gray-600">
+                        {job.Employment_type}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-sm text-gray-600">
-                      {job.Employment_type}
+
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    {job.Required_skills.map((skill) => (
+                      <Badge
+                        key={skill}
+                        variant="outline"
+                        className="border-blue-200 text-blue-800"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  <Badge
+                    variant="secondary"
+                    className="mb-2 bg-blue-100 text-blue-800"
+                  >
+                    ₹{job.Salary_Range[0]} - ₹{job.Salary_Range[1]}
+                  </Badge>
+
+                  <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        variant="secondary"
+                        className="h-2 w-2 rounded-full bg-blue-500 p-0"
+                      />
+                      {job.Job_Location}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        variant="secondary"
+                        className="h-2 w-2 rounded-full bg-blue-500 p-0"
+                      />
+                      {job.Work_Mode}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge
+                        variant="secondary"
+                        className="h-2 w-2 rounded-full bg-blue-500 p-0"
+                      />
+                      {job.Experience_level}
                     </div>
                   </div>
                 </div>
-
-                <div className="mb-4 flex flex-wrap gap-2">
-                  {job.Required_skills.map((skill) => (
-                    <Badge
-                      key={skill}
-                      variant="outline"
-                      className="border-blue-200 text-blue-800"
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-
-                <Badge
-                  variant="secondary"
-                  className="mb-2 bg-blue-100 text-blue-800"
-                >
-                  ₹{job.Salary_Range[0]} - ₹{job.Salary_Range[1]}
-                </Badge>
-
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <Badge
-                      variant="secondary"
-                      className="h-2 w-2 rounded-full bg-blue-500 p-0"
-                    />
-                    {job.Job_Location}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge
-                      variant="secondary"
-                      className="h-2 w-2 rounded-full bg-blue-500 p-0"
-                    />
-                    {job.Work_Mode}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge
-                      variant="secondary"
-                      className="h-2 w-2 rounded-full bg-blue-500 p-0"
-                    />
-                    {job.Experience_level}
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </Link>
-        ))}
+              </Card>
+            </Link>
+          ))
+        ) : (
+          <div className="flex flex-grow items-center justify-center text-xl font-semibold text-white min-h-[50vh]">
+            No Jobs are available in this filter. Please check back later.
+          </div>
+        )}
       </div>
     </div>
   );
