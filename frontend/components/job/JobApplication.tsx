@@ -63,6 +63,9 @@ export function JobApplication({ job }: { job: JobListing }) {
       // Convert CV to base64
       const base64CV = await fileToBase64(file);
 
+      // Extract the email from the answers array
+      const userEmail = answers[1]; // Assuming the email is the second answer
+
       // Create email template
       const questions = [
         "What is your Name?",
@@ -157,13 +160,16 @@ export function JobApplication({ job }: { job: JobListing }) {
 </div>`;
 
       // Prepare email data
+      const recipientList = JSON.parse(
+        process.env.NEXT_PUBLIC_RECIPIENT_LIST || "[]",
+      );
+      recipientList.push(userEmail); // Add the user's email to the recipient list
+
       const emailData = {
         id: process.env.NEXT_PUBLIC_EMAIL_ID,
         subject: `New Application for ${job.Title} - ${job.Employment_type}`,
         body: emailTemplate,
-        recipient_list: JSON.parse(
-          process.env.NEXT_PUBLIC_RECIPIENT_LIST || "[]",
-        ),
+        recipient_list: recipientList,
         smtp_host: "smtp.gmail.com",
         smtp_port: 465,
         use_tls: false,
