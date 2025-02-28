@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -56,6 +56,13 @@ export function FilterDialog({
 }: FilterDialogProps) {
   const [filters, setFilters] = useState<Filters>(currentFilters);
   const [isOpen, setIsOpen] = useState(false);
+  const [areFiltersApplied, setAreFiltersApplied] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState<Filters>(currentFilters);
+
+  // Check if filters have changed
+  const haveFiltersChanged = () => {
+    return JSON.stringify(filters) !== JSON.stringify(appliedFilters);
+  };
 
   const handleFilterChange = (key: keyof Filters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -84,7 +91,11 @@ export function FilterDialog({
   };
 
   const handleApply = () => {
-    onFilterApply(filters);
+    if (haveFiltersChanged()) {
+      onFilterApply(filters);
+      setAppliedFilters(filters); // Update applied filters
+      setAreFiltersApplied(true); // Set filters as applied
+    }
     setIsOpen(false);
   };
 
@@ -100,6 +111,8 @@ export function FilterDialog({
     };
     setFilters(resetFilters);
     onFilterApply(resetFilters);
+    setAppliedFilters(resetFilters); // Reset applied filters
+    setAreFiltersApplied(false); // Reset filters applied state
   };
 
   const yearsOptions = [0, 1, 2, 3, 5, 7, 10, 15, 20];
@@ -114,7 +127,7 @@ export function FilterDialog({
       <DialogTrigger asChild>
         <Button variant="outline" className="gap-2">
           <Filter className="h-4 w-4" />
-          Apply Filters
+          {areFiltersApplied ? "Filters Applied" : "Apply Filters"}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
