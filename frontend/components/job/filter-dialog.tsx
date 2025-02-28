@@ -55,6 +55,7 @@ export function FilterDialog({
   jobLocations,
 }: FilterDialogProps) {
   const [filters, setFilters] = useState<Filters>(currentFilters);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleFilterChange = (key: keyof Filters, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -84,6 +85,7 @@ export function FilterDialog({
 
   const handleApply = () => {
     onFilterApply(filters);
+    setIsOpen(false);
   };
 
   const handleReset = () => {
@@ -100,7 +102,6 @@ export function FilterDialog({
     onFilterApply(resetFilters);
   };
 
-  // Years of Experience Options
   const yearsOptions = [0, 1, 2, 3, 5, 7, 10, 15, 20];
 
   // Filter max options based on selected min
@@ -109,31 +110,11 @@ export function FilterDialog({
   );
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="gap-2">
           <Filter className="h-4 w-4" />
           Apply Filters
-          {/*
-          {Object.values(currentFilters).some((value) =>
-            Array.isArray(value)
-              ? value.length > 0
-              : value !== "" && value !== 0,
-          ) && (
-            <Badge
-              variant="secondary"
-              className="ml-2 h-5 w-5 rounded-full p-0"
-            >
-              {
-                Object.values(currentFilters).filter((value) =>
-                  Array.isArray(value)
-                    ? value.length > 0
-                    : value !== "" && value !== 0,
-                ).length
-              }
-            </Badge>
-          )}
-          */}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">

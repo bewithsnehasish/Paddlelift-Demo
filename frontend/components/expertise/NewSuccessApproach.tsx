@@ -13,7 +13,7 @@ const steps = [
   {
     id: 1,
     title: "Consult",
-    icon: <ClipboardList className="w-4 h-4 sm:w-8 sm:h-8" />,
+    icon: <ClipboardList className="w-4 h-4 sm:w-6 sm:h-6" />,
     description: "Industry Benchmarking / Market Mapping / Budgeting",
     color: "from-[#FF0080] via-[#FF00FF] to-[#8A2BE2]",
     glowColor: "group-hover:shadow-[#FF0080]/50",
@@ -21,7 +21,7 @@ const steps = [
   {
     id: 2,
     title: "Access",
-    icon: <Users className="w-6 h-6 sm:w-8 sm:h-8" />,
+    icon: <Users className="w-4 h-4 sm:w-6 sm:h-6" />,
     description: "Recruitment Plan / Search Strategy / Sourcing & Head-hunting",
     color: "from-[#00FF00] via-[#00FFFF] to-[#0080FF]",
     glowColor: "group-hover:shadow-[#00FF00]/50",
@@ -29,7 +29,7 @@ const steps = [
   {
     id: 3,
     title: "Assess",
-    icon: <FileSearch className="w-6 h-6 sm:w-8 sm:h-8" />,
+    icon: <FileSearch className="w-4 h-4 sm:w-6 sm:h-6" />,
     description: "Assessment Development / Interview Service",
     color: "from-[#FF3D00] via-[#FF9100] to-[#FFEA00]",
     glowColor: "group-hover:shadow-[#FF3D00]/50",
@@ -37,7 +37,7 @@ const steps = [
   {
     id: 4,
     title: "Select",
-    icon: <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8" />,
+    icon: <CheckCircle2 className="w-4 h-4 sm:w-6 sm:h-6" />,
     description:
       "Candidate & Stakeholder Management / Decisioning & Negotiation",
     color: "from-[#7C4DFF] via-[#536DFE] to-[#00B0FF]",
@@ -46,7 +46,7 @@ const steps = [
   {
     id: 5,
     title: "Onboard",
-    icon: <UserCheck className="w-6 h-6 sm:w-8 sm:h-8" />,
+    icon: <UserCheck className="w-4 h-4 sm:w-6 sm:h-6" />,
     description: "Candidate Engagements / Client Feedbacks",
     color: "from-[#FF1744] via-[#FF4081] to-[#D500F9]",
     glowColor: "group-hover:shadow-[#FF1744]/50",
@@ -57,8 +57,8 @@ const MotionCard = motion(Card);
 
 export default function SuccessApproach() {
   return (
-    <main className="min-h-screen bg-[#09090B] text-white overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-12 sm:py-16">
+    <main className=" bg-[#09090B] text-white overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Header */}
         <motion.div
           className="mb-8 sm:mb-12"
@@ -101,7 +101,7 @@ export default function SuccessApproach() {
                   ease: "easeOut",
                 }}
                 viewport={{ once: true, margin: "-50px" }}
-                className="mb-6 sm:mb-8"
+                className="mb-4 sm:mb-6"
               >
                 <MotionCard
                   className={`
@@ -121,8 +121,8 @@ export default function SuccessApproach() {
                     transition={{ duration: 1.5, delay: 0.3 }}
                   />
 
-                  <div className="relative p-4 sm:p-6 lg:p-8">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+                  <div className="relative p-4 sm:p-5 lg:p-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                       {/* Icon Container */}
                       <motion.div
                         className="flex-shrink-0"
@@ -135,7 +135,7 @@ export default function SuccessApproach() {
                           delay: 0.5,
                         }}
                       >
-                        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm border border-white/30 group-hover:scale-105 transition-transform duration-300 group-hover:border-white/50">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm border border-white/30 group-hover:scale-105 transition-transform duration-300 group-hover:border-white/50">
                           {step.icon}
                         </div>
                       </motion.div>
@@ -147,15 +147,15 @@ export default function SuccessApproach() {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 1.5, delay: 0.6 }}
                       >
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-3">
-                          <span className="text-sm sm:text-base font-bold px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 group-hover:border-white/50 group-hover:bg-white/30 transition-all duration-300">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 mb-2">
+                          <span className="text-xs sm:text-sm font-bold px-2 py-1 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 group-hover:border-white/50 group-hover:bg-white/30 transition-all duration-300">
                             Step {step.id}
                           </span>
-                          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white group-hover:scale-[1.02] transition-transform duration-300">
+                          <h2 className="text-lg sm:text-xl font-bold tracking-tight text-white group-hover:scale-[1.02] transition-transform duration-300">
                             {step.title}
                           </h2>
                         </div>
-                        <p className="text-white/90 text-base sm:text-lg font-medium tracking-wide max-w-2xl">
+                        <p className="text-white/80 text-sm sm:text-base font-medium tracking-wide max-w-2xl">
                           {step.description}
                         </p>
                       </motion.div>

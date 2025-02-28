@@ -30,12 +30,13 @@ export function ManagementCard({
 
   return (
     <Card
-      className="relative overflow-hidden group cursor-pointer bg-[#09090B] max-w-sm w-full shadow-lg transition-transform duration-300 hover:scale-[1.02]"
+      className="relative overflow-hidden group cursor-pointer bg-[#09090B] max-w-[280px] w-full shadow-lg transition-transform duration-300 hover:scale-[1.02]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <CardContent className="p-0">
-        <div className="relative w-full h-96 sm:h-96 md:h-[400px]">
+        {/* Image Container */}
+        <div className="relative w-full h-72 sm:h-80">
           <Image
             src={photo}
             alt={name}
@@ -46,20 +47,22 @@ export function ManagementCard({
             priority
           />
         </div>
-        <div className="p-4 space-y-1 sm:text-left">
-          <h3 className="text-lg font-semibold text-white tracking-wide">
+
+        {/* Card Content */}
+        <div className="p-4 space-y-3 sm:text-left">
+          <h3 className="text-base font-semibold text-white tracking-wide">
             {name}
           </h3>
-          <p className="text-sm text-gray-300 font-medium">{title}</p>
-          <p className="text-sm text-gray-300 font-medium">{position}</p>
-          <div className="flex justify-end sm:justify-end gap-4 mt-2">
+          <p className="text-xs text-gray-300 font-medium">{title}</p>
+          <p className="text-xs text-gray-300 font-medium">{position}</p>
+          <div className="flex justify-end sm:justify-end gap-2 mt-3">
             {socials.linkedin && (
               <a
                 href={socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Linkedin className="w-5 h-5 text-white" />
+                <Linkedin className="w-4 h-4 text-white" />
               </a>
             )}
             {socials.twitter && (
@@ -68,7 +71,7 @@ export function ManagementCard({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Twitter className="w-5 h-5 text-white" />
+                <Twitter className="w-4 h-4 text-white" />
               </a>
             )}
             {socials.github && (
@@ -77,11 +80,13 @@ export function ManagementCard({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Github className="w-5 h-5 text-white" />
+                <Github className="w-4 h-4 text-white" />
               </a>
             )}
           </div>
         </div>
+
+        {/* Hover Overlay */}
         <AnimatePresence>
           {isHovered && (
             <motion.div
@@ -91,20 +96,23 @@ export function ManagementCard({
               transition={{ duration: 0.2 }}
               className="absolute inset-0 bg-black/80 flex flex-col justify-between"
             >
-              <div className="p-6">
-                <p className="text-sm text-gray-100 leading-relaxed">
+              {/* Description */}
+              <div className="p-4">
+                <p className="text-xs text-gray-100 leading-relaxed">
                   {description}
                 </p>
               </div>
+
+              {/* Social Icons */}
               <div className="p-4 bg-black/40">
-                <div className="flex justify-end sm:justify-end gap-4">
+                <div className="flex justify-end sm:justify-end gap-5">
                   {socials.linkedin && (
                     <a
                       href={socials.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Linkedin className="w-5 h-5 text-white" />
+                      <Linkedin className="w-4 h-4 text-white" />
                     </a>
                   )}
                   {socials.twitter && (
@@ -113,7 +121,7 @@ export function ManagementCard({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Twitter className="w-5 h-5 text-white" />
+                      <Twitter className="w-4 h-4 text-white" />
                     </a>
                   )}
                   {socials.github && (
@@ -122,7 +130,7 @@ export function ManagementCard({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Github className="w-5 h-5 text-white" />
+                      <Github className="w-4 h-4 text-white" />
                     </a>
                   )}
                 </div>

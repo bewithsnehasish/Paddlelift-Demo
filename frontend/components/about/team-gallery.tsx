@@ -135,17 +135,17 @@ export function TeamGallery() {
           >
             <motion.div
               className="flex gap-6"
-              animate={isInView ? { x: ["0%", "-50%"] } : {}}
+              animate={{ x: ["0%", "-100%"] }}
               transition={{
                 x: {
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   repeatType: "loop",
-                  duration: 20,
+                  duration: 40,
                   ease: "linear",
                 },
               }}
             >
-              {photos.map((photo, index) => (
+              {[...photos, ...photos].map((photo, index) => (
                 <motion.div
                   key={`left-${index}`}
                   variants={itemVariants}
@@ -173,17 +173,17 @@ export function TeamGallery() {
           >
             <motion.div
               className="flex gap-6"
-              animate={isInView ? { x: ["-50%", "0%"] } : {}}
+              animate={{ x: ["-100%", "0%"] }}
               transition={{
                 x: {
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   repeatType: "loop",
-                  duration: 20,
+                  duration: 40,
                   ease: "linear",
                 },
               }}
             >
-              {[...photos].reverse().map((photo, index) => (
+              {[...photos, ...photos].reverse().map((photo, index) => (
                 <motion.div
                   key={`right-${index}`}
                   variants={itemVariants}
@@ -196,7 +196,6 @@ export function TeamGallery() {
                     fill
                     className="rounded-xl object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    priority
                     loading="eager"
                   />
                 </motion.div>

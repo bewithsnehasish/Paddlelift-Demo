@@ -7,8 +7,8 @@ import HeroSection from "@/components/portfolio/herosection";
 import PortfolioSection from "@/components/portfolio/portfoliosection";
 import Testimonials from "@/components/portfolio/testimonial";
 import CompanyTestimonials from "@/components/portfolio/company-testimonials";
-import ElfsightReviews from "@/components/services/elfsight";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import GoogleReviewsCarousel from "@/components/services/GoogleReviews";
 
 // Create a QueryClient instance
 const queryClient = new QueryClient();
@@ -49,6 +49,7 @@ const PortfolioPage: React.FC = () => {
         <PortfolioSection />
         <Testimonials />
         <CompanyTestimonials />
+        <GoogleReviewsCarousel />
         <Footer />
       </div>
       {/*
