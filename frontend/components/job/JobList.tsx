@@ -5,13 +5,6 @@ import { useState, useEffect } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import type { JobListing } from "@/lib/types";
 import { FilterDialog, type Filters } from "./filter-dialog";
 
@@ -210,7 +203,9 @@ export default function JobList({
                     variant="secondary"
                     className="mb-2 bg-blue-100 text-blue-800"
                   >
-                    ₹{job.Salary_Range[0]} - ₹{job.Salary_Range[1]}
+                    {job.Currency}
+                    {job.Salary_Range[0]} - {job.Currency}
+                    {job.Salary_Range[1]}
                   </Badge>
 
                   <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600">

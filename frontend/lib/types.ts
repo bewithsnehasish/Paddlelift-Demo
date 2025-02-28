@@ -6,6 +6,7 @@ export interface JobListing {
   Work_Mode: string;
   Job_Location: string;
   Years_of_Experience_Required: number;
+  Currency: string;
   Salary_Range: string;
   Educational_Qualifications: string;
   Certifications: string;

@@ -80,7 +80,9 @@ async function JobDetails({ params }: PageProps) {
                       variant="secondary"
                       className="ml-2 bg-blue-100 text-blue-800"
                     >
-                      ₹{job.Salary_Range[0]} - ₹{job.Salary_Range[1]}
+                      {job.Currency}
+                      {job.Salary_Range[0]} - {job.Currency}
+                      {job.Salary_Range[1]}
                     </Badge>
                   )}
                 </div>
