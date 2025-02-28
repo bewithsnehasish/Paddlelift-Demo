@@ -111,8 +111,8 @@ export function FilterDialog({
     };
     setFilters(resetFilters);
     onFilterApply(resetFilters);
-    setAppliedFilters(resetFilters); // Reset applied filters
-    setAreFiltersApplied(false); // Reset filters applied state
+    setAppliedFilters(resetFilters);
+    setAreFiltersApplied(false);
   };
 
   const yearsOptions = [0, 1, 2, 3, 5, 7, 10, 15, 20];

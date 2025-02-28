@@ -28,29 +28,23 @@ export function TeamGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
+  // Animation variants for the container
   const containerVariants = {
-    hidden: { opacity: 0, y: 100 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
-        duration: 0.8,
-        ease: "easeOut",
         staggerChildren: 0.2,
+        delayChildren: 0.3,
       },
     },
   };
 
+  // Animation variants for individual items
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
+    visible: { opacity: 1, y: 0 },
+    hover: { scale: 1.05, transition: { duration: 0.3 } },
   };
 
   return (
@@ -126,9 +120,9 @@ export function TeamGallery() {
           </motion.h2>
         </div>
 
-        {/* Gallery Rows */}
+        {/* Gallery Rows with Smooth Infinite Marquee Effect */}
         <div className="flex flex-col gap-16">
-          {/* Left to Right Row */}
+          {/* First Row: Left to Right */}
           <motion.div
             className="relative overflow-hidden"
             variants={containerVariants}
@@ -140,7 +134,7 @@ export function TeamGallery() {
                 x: {
                   repeat: Number.POSITIVE_INFINITY,
                   repeatType: "loop",
-                  duration: 40,
+                  duration: photos.length * 4, // Adjust duration based on the number of photos
                   ease: "linear",
                 },
               }}
@@ -150,7 +144,7 @@ export function TeamGallery() {
                   key={`left-${index}`}
                   variants={itemVariants}
                   className="relative min-w-[300px] aspect-video"
-                  whileHover={{ scale: 1.05 }}
+                  whileHover="hover"
                 >
                   <Image
                     src={photo.src}
@@ -166,7 +160,7 @@ export function TeamGallery() {
             </motion.div>
           </motion.div>
 
-          {/* Right to Left Row */}
+          {/* Second Row: Right to Left */}
           <motion.div
             className="relative overflow-hidden"
             variants={containerVariants}
@@ -178,7 +172,7 @@ export function TeamGallery() {
                 x: {
                   repeat: Number.POSITIVE_INFINITY,
                   repeatType: "loop",
-                  duration: 40,
+                  duration: photos.length * 4,
                   ease: "linear",
                 },
               }}
@@ -188,7 +182,7 @@ export function TeamGallery() {
                   key={`right-${index}`}
                   variants={itemVariants}
                   className="relative min-w-[300px] aspect-video"
-                  whileHover={{ scale: 1.05 }}
+                  whileHover="hover"
                 >
                   <Image
                     src={photo.src}
