@@ -113,7 +113,8 @@ export function FilterDialog({
       <DialogTrigger asChild>
         <Button variant="outline" className="gap-2">
           <Filter className="h-4 w-4" />
-          Filters
+          Apply Filters
+          {/*
           {Object.values(currentFilters).some((value) =>
             Array.isArray(value)
               ? value.length > 0
@@ -132,6 +133,7 @@ export function FilterDialog({
               }
             </Badge>
           )}
+          */}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">

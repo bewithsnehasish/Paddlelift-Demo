@@ -13,7 +13,7 @@ const steps = [
   {
     id: 1,
     title: "Consult",
-    icon: <ClipboardList className="w-8 h-8 sm:w-10 sm:h-10" />,
+    icon: <ClipboardList className="w-4 h-4 sm:w-8 sm:h-8" />,
     description: "Industry Benchmarking / Market Mapping / Budgeting",
     color: "from-[#FF0080] via-[#FF00FF] to-[#8A2BE2]",
     glowColor: "group-hover:shadow-[#FF0080]/50",
@@ -21,7 +21,7 @@ const steps = [
   {
     id: 2,
     title: "Access",
-    icon: <Users className="w-8 h-8 sm:w-10 sm:h-10" />,
+    icon: <Users className="w-6 h-6 sm:w-8 sm:h-8" />,
     description: "Recruitment Plan / Search Strategy / Sourcing & Head-hunting",
     color: "from-[#00FF00] via-[#00FFFF] to-[#0080FF]",
     glowColor: "group-hover:shadow-[#00FF00]/50",
@@ -29,7 +29,7 @@ const steps = [
   {
     id: 3,
     title: "Assess",
-    icon: <FileSearch className="w-8 h-8 sm:w-10 sm:h-10" />,
+    icon: <FileSearch className="w-6 h-6 sm:w-8 sm:h-8" />,
     description: "Assessment Development / Interview Service",
     color: "from-[#FF3D00] via-[#FF9100] to-[#FFEA00]",
     glowColor: "group-hover:shadow-[#FF3D00]/50",
@@ -37,7 +37,7 @@ const steps = [
   {
     id: 4,
     title: "Select",
-    icon: <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10" />,
+    icon: <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8" />,
     description:
       "Candidate & Stakeholder Management / Decisioning & Negotiation",
     color: "from-[#7C4DFF] via-[#536DFE] to-[#00B0FF]",
@@ -46,7 +46,7 @@ const steps = [
   {
     id: 5,
     title: "Onboard",
-    icon: <UserCheck className="w-8 h-8 sm:w-10 sm:h-10" />,
+    icon: <UserCheck className="w-6 h-6 sm:w-8 sm:h-8" />,
     description: "Candidate Engagements / Client Feedbacks",
     color: "from-[#FF1744] via-[#FF4081] to-[#D500F9]",
     glowColor: "group-hover:shadow-[#FF1744]/50",
@@ -65,7 +65,7 @@ export default function SuccessApproach() {
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 1, ease: "easeOut" }}
         >
           <h2 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3 text-white max-w-4xl leading-[110%]">
             Our Success <span className="text-teal-400">Approach</span>
@@ -82,13 +82,13 @@ export default function SuccessApproach() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.2 }}
+            transition={{ duration: 1.5 }}
           />
 
           {/* Cards */}
           {steps.map((step, index) => {
-            // Alternate slide-in from right or left
-            const xInitial = index % 2 === 0 ? 300 : -300;
+            // Slide-in from right or left based on index
+            const xInitial = index % 2 === 0 ? 1000 : -1000;
 
             return (
               <motion.div
@@ -96,8 +96,8 @@ export default function SuccessApproach() {
                 initial={{ opacity: 0, x: xInitial }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{
-                  duration: 0.8,
-                  delay: index * 0.5,
+                  duration: 1,
+                  delay: index * 0.4,
                   ease: "easeOut",
                 }}
                 viewport={{ once: true, margin: "-50px" }}
@@ -105,7 +105,7 @@ export default function SuccessApproach() {
               >
                 <MotionCard
                   className={`
-                    group relative overflow-hidden border-0
+                    group relative overflow-hidden border-0 rounded-full
                     bg-gradient-to-r ${step.color}
                     transition-all duration-300
                     hover:translate-y-[-0.25rem]
@@ -115,14 +115,14 @@ export default function SuccessApproach() {
                 >
                   {/* Backdrop Blur Overlay */}
                   <motion.div
-                    className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+                    className="absolute inset-0 bg-black/40 backdrop-blur-sm rounded-full"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 0.2 }}
+                    transition={{ duration: 1.5, delay: 0.3 }}
                   />
 
-                  <div className="relative p-6 sm:p-8 lg:p-10">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8">
+                  <div className="relative p-4 sm:p-6 lg:p-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
                       {/* Icon Container */}
                       <motion.div
                         className="flex-shrink-0"
@@ -132,10 +132,10 @@ export default function SuccessApproach() {
                           type: "spring",
                           stiffness: 200,
                           damping: 20,
-                          delay: 0.4,
+                          delay: 0.5,
                         }}
                       >
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-sm border border-white/30 group-hover:scale-105 transition-transform duration-300 group-hover:border-white/50">
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm border border-white/30 group-hover:scale-105 transition-transform duration-300 group-hover:border-white/50">
                           {step.icon}
                         </div>
                       </motion.div>
@@ -145,46 +145,22 @@ export default function SuccessApproach() {
                         className="flex-grow"
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, delay: 0.5 }}
+                        transition={{ duration: 1.5, delay: 0.6 }}
                       >
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-3">
-                          <span className="text-sm sm:text-base font-bold px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 group-hover:border-white/50 group-hover:bg-white/30 transition-all duration-300">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 mb-3">
+                          <span className="text-sm sm:text-base font-bold px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 group-hover:border-white/50 group-hover:bg-white/30 transition-all duration-300">
                             Step {step.id}
                           </span>
-                          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white group-hover:scale-[1.02] transition-transform duration-300">
+                          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-white group-hover:scale-[1.02] transition-transform duration-300">
                             {step.title}
                           </h2>
                         </div>
-                        <p className="text-white/90 text-lg sm:text-xl font-medium tracking-wide max-w-3xl">
+                        <p className="text-white/90 text-base sm:text-lg font-medium tracking-wide max-w-2xl">
                           {step.description}
                         </p>
                       </motion.div>
                     </div>
                   </div>
-
-                  {/* Decorative Circle Elements */}
-                  <motion.div
-                    className="absolute top-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-white/20 transition-all duration-300"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 20,
-                      delay: 0.6,
-                    }}
-                  />
-                  <motion.div
-                    className="absolute bottom-0 left-0 w-32 h-32 sm:w-40 sm:h-40 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2 group-hover:bg-white/20 transition-all duration-300"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 20,
-                      delay: 0.7,
-                    }}
-                  />
                 </MotionCard>
               </motion.div>
             );

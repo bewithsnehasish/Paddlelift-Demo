@@ -155,7 +155,7 @@ export default function JobList({
           <div className="flex flex-col items-start justify-between gap-4 border-b border-gray-800 pb-4 sm:flex-row">
             {/* Title and Filter Button */}
             <div className="flex items-center gap-4 w-full sm:w-auto">
-              <h2 className="text-xl font-semibold text-white">Recent Posts</h2>
+              <h2 className="text-xl font-semibold text-white">Recent Jobs</h2>
               <FilterDialog
                 onFilterApply={handleFilterApply}
                 currentFilters={filters}
@@ -166,24 +166,6 @@ export default function JobList({
             </div>
             {/* Salary Range and Job Count */}
             <div className="flex flex-col items-end gap-4 w-full sm:w-auto sm:flex-row">
-              <Select
-                value={selectedSalaryRange}
-                onValueChange={setSelectedSalaryRange}
-              >
-                <SelectTrigger className="w-full sm:w-[180px] bg-transparent text-white">
-                  <SelectValue placeholder="Salary Range" />
-                </SelectTrigger>
-                <SelectContent>
-                  {salaryRanges.map((range) => (
-                    <SelectItem
-                      key={range.label}
-                      value={range.label.toLowerCase()}
-                    >
-                      {range.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
               <span className="text-sm text-gray-400">
                 {filteredJobs.length} jobs found
               </span>
