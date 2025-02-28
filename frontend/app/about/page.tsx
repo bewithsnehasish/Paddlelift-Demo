@@ -3,7 +3,6 @@
 import { motion, useScroll, useSpring } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ManagementCard } from "@/components/about/management-card";
-import { TeamGallery } from "@/components/about/team-gallery";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Footer from "@/components/Footer";
@@ -13,6 +12,7 @@ import NewTimeline from "@/components/about/new-timeline";
 import SubHeading from "@/components/about/SubHeading";
 import Link from "next/link";
 import axios from "axios";
+import TeamGallery from "@/components/about/team-gallery";
 
 // Define the type for a team member
 interface TeamMember {
